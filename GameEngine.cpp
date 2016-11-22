@@ -34,7 +34,7 @@ bool GameEngine::init() {
         return false;
     }
 
-	if (CreateWindow() == false)
+	if (!CreateWindow())
 	{
 		return false;
 	}
