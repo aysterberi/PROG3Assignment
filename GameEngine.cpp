@@ -6,8 +6,8 @@
 #include <iostream>
 
 GameEngine::GameEngine() {
-    window = NULL;
-    surface = NULL;
+    window = nullptr;
+    surface = nullptr;
 }
 
 bool GameEngine::init() {
@@ -17,7 +17,7 @@ bool GameEngine::init() {
     }
 
     window = SDL_CreateWindow(WINDOW_TITLE, 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-    if (window == NULL) {
+    if (window == nullptr) {
         printf("Unable to create window: %s\n", SDL_GetError());
         return false;
     }
@@ -31,7 +31,7 @@ bool GameEngine::init() {
         printf("Unable to initialize SDL_ttf: %s\n", TTF_GetError());
     }
 
-    if (Mix_Init == 0) {
+    if (Mix_Init(0) == 0) {
         printf("Unable to initialize SDL_mixer: %s\n", Mix_GetError());
     }
 
@@ -41,16 +41,16 @@ bool GameEngine::init() {
 }
 
 SDL_Surface* GameEngine::loadSurface(std::string path) {
-    SDL_Surface* adjustedSurface = NULL;
+    SDL_Surface* adjustedSurface = nullptr;
     SDL_Surface* initialSurface = IMG_Load(path.c_str());
 
-    if (initialSurface == NULL) {
+    if (initialSurface == nullptr) {
         printf("Unable to load image %s: %s\n", path.c_str(), IMG_GetError());
-        return NULL;
+        return nullptr;
     }
 
     adjustedSurface = SDL_ConvertSurface(initialSurface, surface->format, 0);
-    if (adjustedSurface == NULL) {
+    if (adjustedSurface == nullptr) {
         printf("Unable to adjust image %s: %s\n", path.c_str(), SDL_GetError());
     }
 
