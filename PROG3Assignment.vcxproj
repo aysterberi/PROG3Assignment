@@ -100,7 +100,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)\lib\vc_libs\SDL2-2.0.5\include;$(SolutionDir)\lib\vc_libs\SDL2_image-2.0.1\include;$(SolutionDir)\lib\vc_libs\SDL2_mixer-2.0.1\include;$(SolutionDir)\lib\vc_libs\SDL2_ttf-2.0.14\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>$(SolutionDir)\lib\vc_libs\SDL2Main.lib;$(SolutionDir)\lib\vc_libs\SDL2.lib;$(SolutionDir)\lib\vc_libs\SDL2_image.lib;$(SolutionDir)\lib\vc_libs\SDL2_mixer.lib;$(SolutionDir)\lib\vc_libs\SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+      <LargeAddressAware>true</LargeAddressAware>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
