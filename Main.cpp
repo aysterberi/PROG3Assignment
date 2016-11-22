@@ -18,6 +18,7 @@ void checkIfImageExist(SDL_Surface*);
 
 int main(int argc, char* argv[])
 {
+
     // Init
     SDL_Init(SDL_INIT_EVERYTHING);
     IMG_Init(0);
@@ -40,7 +41,7 @@ int main(int argc, char* argv[])
     SDL_Rect scoreRect = { 250, 0, scoreWidth, scoreHeight };
     SDL_FreeSurface(scoreSurface);
 
-    SDL_Surface* ship = SDL_LoadBMP("ship.bmp");
+    SDL_Surface* ship = SDL_LoadBMP("res/ship.bmp");
     checkIfImageExist(ship);
 
     int w = ship->w, h = ship->h;
@@ -52,7 +53,7 @@ int main(int argc, char* argv[])
     SDL_Texture* shipTexture = SDL_CreateTextureFromSurface(renderer, ship);
     SDL_FreeSurface(ship);
 
-    SDL_Surface* bg = SDL_LoadBMP("bg.bmp");
+    SDL_Surface* bg = SDL_LoadBMP("res/bg.bmp");
     checkIfImageExist(bg);
     SDL_Texture* bgTexture = SDL_CreateTextureFromSurface(renderer, bg);
     SDL_FreeSurface(bg);
@@ -102,7 +103,7 @@ int main(int argc, char* argv[])
         string rotationsString = to_string(rotations);
         SDL_Surface* rotationsSurface = TTF_RenderText_Solid(font, rotationsString.c_str(), white);
         SDL_Texture* rotationsTexture = SDL_CreateTextureFromSurface(renderer, rotationsSurface);
-        SDL_Rect rotationsRect = { 400, 300, rotationsSurface->w, rotationsSurface->h };
+        SDL_Rect rotationsRect = { 400, 1, rotationsSurface->w, rotationsSurface->h };
 
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, bgTexture, NULL, NULL);
