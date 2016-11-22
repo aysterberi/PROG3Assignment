@@ -4,6 +4,7 @@
 #include <SDL_mixer.h>
 #include <iostream>
 #include <string>
+#include "GameEngine.h"
 
 using namespace std;
 
