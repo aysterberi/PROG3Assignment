@@ -19,7 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameEngine.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{79ECC669-7CCD-4767-8107-74D5B5DF3FF6}</ProjectGuid>
