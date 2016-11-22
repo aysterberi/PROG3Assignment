@@ -5,22 +5,39 @@
 #include <SDL_mixer.h>
 #include <iostream>
 
+GameEngine::GameSettings engineSettings;
+
 GameEngine::GameEngine() {
     window = nullptr;
     surface = nullptr;
 }
+GameEngine::GameEngine(GameSettings game_settings)
+{
+	window = nullptr;
+	surface = nullptr;
+	engineSettings = game_settings;
+}
+
+bool GameEngine::CreateWindow()
+{
+	window = SDL_CreateWindow(engineSettings.title, 100, 100, engineSettings.width, engineSettings.height, 0);
+	if (window == nullptr) {
+		printf("Unable to create window: %s\n", SDL_GetError());
+		return false;
+	}
+	return true;
+}
 
 bool GameEngine::init() {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        printf("Unable to initialize SDL: %s\n", SDL_GetError());
+        printf("Unable  to initialize SDL: %s\n", SDL_GetError());
         return false;
     }
 
-    window = SDL_CreateWindow(WINDOW_TITLE, 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-    if (window == nullptr) {
-        printf("Unable to create window: %s\n", SDL_GetError());
-        return false;
-    }
+	if (CreateWindow() == false)
+	{
+		return false;
+	}
 
     if (IMG_Init(0) == 0) {
         printf("Unable to initialize SDL_image: %s\n", IMG_GetError());

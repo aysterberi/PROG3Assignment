@@ -9,8 +9,16 @@
 class GameEngine
 {
 public:
+	struct GameSettings
+	{
+		char *title;
+		int width;
+		int height;
+	};
     GameEngine();
-    ~GameEngine();
+	GameEngine(GameSettings game_settings);
+	bool CreateWindow();
+	~GameEngine();
     bool init();
     SDL_Surface* loadSurface(std::string path);
     SDL_Surface* surface;
