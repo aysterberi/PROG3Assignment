@@ -39,7 +39,7 @@ bool GameEngine::init() {
 		return false;
 	}
 
-    if (IMG_Init(0) == 0) {
+    if (IMG_Init(IMG_INIT_PNG) == 0) {
         printf("Unable to initialize SDL_image: %s\n", IMG_GetError());
         return false;
     }
@@ -48,7 +48,7 @@ bool GameEngine::init() {
         printf("Unable to initialize SDL_ttf: %s\n", TTF_GetError());
     }
 
-    if (Mix_Init(0) == 0) {
+    if (Mix_Init(MIX_INIT_OGG) == 0) {
         printf("Unable to initialize SDL_mixer: %s\n", Mix_GetError());
     }
 
