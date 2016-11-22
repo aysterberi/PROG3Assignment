@@ -16,8 +16,10 @@ const int SCREEN_HEIGHT = 600;
 
 void checkIfImageExist(SDL_Surface*);
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
+    GameEngine gameEngine;
+    if (!gameEngine.init())
+        cout << "Failed to initialize game engine" << endl;
 
     // Init
     SDL_Init(SDL_INIT_EVERYTHING);
