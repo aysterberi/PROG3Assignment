@@ -21,8 +21,10 @@ public:
     bool init();
     bool createWindow();
     void playBackgroundMusic(std::string path);
+    void updateBackground();
     SDL_Renderer* createRenderer(SDL_Window* window);
     SDL_Surface* loadSurface(std::string path);
+    SDL_Surface* getWindowSurface(SDL_Window* window);
     SDL_Surface* surface;
     SDL_Window* window;
     SDL_Renderer* renderer;
