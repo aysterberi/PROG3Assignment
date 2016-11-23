@@ -113,7 +113,8 @@
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)*.dll" "$(TargetDir)"
 copy /Y "$(SolutionDir)res\*.ogg" "$(TargetDir)res"
-copy /Y "$(SolutionDir)res\*.png" "$(TargetDir)res"</Command>
+copy /Y "$(SolutionDir)res\*.png" "$(TargetDir)res"
+copy /Y "$(SolutionDir)res\*.ttf" "$(TargetDir)res"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,7 +148,8 @@ copy /Y "$(SolutionDir)res\*.png" "$(TargetDir)res"</Command>
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)*.dll" "$(TargetDir)"
 copy /Y "$(SolutionDir)res\*.ogg" "$(TargetDir)res"
-copy /Y "$(SolutionDir)res\*.png" "$(TargetDir)res"</Command>
+copy /Y "$(SolutionDir)res\*.png" "$(TargetDir)res"
+copy /Y "$(SolutionDir)res\*.ttf" "$(TargetDir)res"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
