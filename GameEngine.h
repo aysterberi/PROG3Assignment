@@ -22,12 +22,20 @@ public:
     bool createWindow();
     void playBackgroundMusic(std::string path);
     void updateBackground();
+    SDL_Texture* createText(std::string path,
+                    std::string message,
+                    int fontSize,
+                    int rColor,
+                    int gColor,
+                    int bColor);
     SDL_Renderer* createRenderer(SDL_Window* window);
     SDL_Surface* loadSurface(std::string path);
     SDL_Surface* getWindowSurface(SDL_Window* window);
     SDL_Surface* surface;
+    SDL_Texture* textTexture;
     SDL_Window* window;
     SDL_Renderer* renderer;
+    SDL_Rect textRectangle;
     Mix_Chunk* backgroundMusic;
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 600;
