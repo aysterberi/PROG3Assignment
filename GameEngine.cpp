@@ -80,6 +80,11 @@ void GameEngine::playBackgroundMusic(std::string path) {
     Mix_PlayChannel(-1, backgroundMusic, -1);
 }
 
+void GameEngine::updateBackground() {
+    SDL_BlitSurface(surface, NULL, SDL_GetWindowSurface(window), NULL);
+    SDL_UpdateWindowSurface(window);
+}
+
 SDL_Surface* GameEngine::loadSurface(std::string path) {
     SDL_Surface* adjustedSurface = nullptr;
     SDL_Surface* initialSurface = IMG_Load(path.c_str());
@@ -98,6 +103,11 @@ SDL_Surface* GameEngine::loadSurface(std::string path) {
     return adjustedSurface;
 }
 
+SDL_Surface* GameEngine::getWindowSurface(SDL_Window* window)
+{
+    return window != nullptr ? SDL_GetWindowSurface(window) : nullptr;
+}
+
 SDL_Renderer* GameEngine::createRenderer(SDL_Window* window) {
     return SDL_CreateRenderer(window, -1, 0);
 }
@@ -105,6 +115,7 @@ SDL_Renderer* GameEngine::createRenderer(SDL_Window* window) {
 GameEngine::~GameEngine() {
     Mix_FreeChunk(backgroundMusic);
     Mix_CloseAudio();
+    SDL_FreeSurface(surface);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
