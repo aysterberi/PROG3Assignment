@@ -15,9 +15,15 @@ const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
 int main(int argc, char* argv[]) {
+
+    /**
+     *   Initiate the engine, outputs a message to the
+     *   console if any errors were encountered
+     **/
     GameEngine gameEngine;
     if (!gameEngine.init())
         cout << "Failed to initialize game engine" << endl;
+
 
     return 0;
 }
