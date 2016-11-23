@@ -19,8 +19,7 @@ int main(int argc, char* argv[]) {
         std::cout << "Failed to initialize game engine" << std::endl;
 
     gameEngine.surface = gameEngine.loadSurface("res/bg.png");
-    SDL_BlitSurface(gameEngine.surface, NULL, SDL_GetWindowSurface(gameEngine.window), NULL);
-    SDL_UpdateWindowSurface(gameEngine.window);
+    gameEngine.updateBackground();
     gameEngine.playBackgroundMusic("res/Solving1.ogg");
 
     SDL_Delay(2000);
