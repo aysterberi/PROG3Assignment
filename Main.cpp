@@ -21,6 +21,11 @@ int main(int argc, char* argv[]) {
     gameEngine.surface = gameEngine.loadSurface("res/bg.png");
     gameEngine.updateBackground();
     gameEngine.playBackgroundMusic("res/Solving1.ogg");
+    gameEngine.createText("res/djbgetdigital.ttf", "Hello!", 48, 255, 255, 255);
+
+    SDL_RenderClear(gameEngine.renderer);
+    SDL_RenderCopy(gameEngine.renderer, gameEngine.textTexture, NULL, &gameEngine.textRectangle);
+    SDL_RenderPresent(gameEngine.renderer);
 
     SDL_Delay(2000);
 
