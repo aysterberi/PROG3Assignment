@@ -11,7 +11,8 @@ GameEngine::GameSettings engineSettings;
 
 GameEngine::GameEngine() {
     window = nullptr;
-    surface = nullptr;
+    backgroundSurface = nullptr;
+    backgroundTexture = nullptr;
     renderer = nullptr;
     backgroundMusic = nullptr;
     textTexture = nullptr;
@@ -19,7 +20,8 @@ GameEngine::GameEngine() {
 GameEngine::GameEngine(GameSettings game_settings)
 {
     window = nullptr;
-    surface = nullptr;
+    backgroundSurface = nullptr;
+    backgroundTexture = nullptr;
     renderer = nullptr;
     backgroundMusic = nullptr;
     textTexture = nullptr;
@@ -60,14 +62,35 @@ bool GameEngine::init() {
         return false;
     }
 
-    if (surface == nullptr)
-        surface = SDL_GetWindowSurface(window);
+    if (backgroundSurface == nullptr)
+        backgroundSurface = SDL_GetWindowSurface(window);
 
     if (renderer == nullptr)
         renderer = createRenderer(window);
 
 
     return true;
+}
+
+void GameEngine::gameLoop() {
+    bool quit = false;
+    const int TPR = 1000; // Time per rotation
+
+    while (!quit) {
+        Uint32 nextTick = SDL_GetTicks() + TPR;
+        SDL_Event event;
+
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+            case SDL_QUIT: quit = true; break;
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.sym) {
+                case SDLK_ESCAPE: quit = true; break;
+                }
+            }
+        }
+        renderEverything();
+    }
 }
 
 void GameEngine::playBackgroundMusic(std::string path) {
@@ -82,9 +105,11 @@ void GameEngine::playBackgroundMusic(std::string path) {
     Mix_PlayChannel(-1, backgroundMusic, -1);
 }
 
-void GameEngine::updateBackground() {
-    SDL_BlitSurface(surface, NULL, SDL_GetWindowSurface(window), NULL);
-    SDL_UpdateWindowSurface(window);
+void GameEngine::renderEverything() {
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
+    SDL_RenderCopy(renderer, textTexture, NULL, &textRectangle);
+    SDL_RenderPresent(renderer);
 }
 
 SDL_Texture* GameEngine::createText(std::string path, std::string message,
@@ -102,7 +127,7 @@ SDL_Texture* GameEngine::createText(std::string path, std::string message,
     return textTexture;
 }
 
-SDL_Surface* GameEngine::loadSurface(std::string path) {
+SDL_Texture* GameEngine::loadTexture(std::string path) {
     SDL_Surface* adjustedSurface = nullptr;
     SDL_Surface* initialSurface = IMG_Load(path.c_str());
 
@@ -111,13 +136,15 @@ SDL_Surface* GameEngine::loadSurface(std::string path) {
         return nullptr;
     }
 
-    adjustedSurface = SDL_ConvertSurface(initialSurface, surface->format, 0);
+    adjustedSurface = SDL_ConvertSurface(initialSurface, backgroundSurface->format, 0);
     if (adjustedSurface == nullptr) {
         printf("Unable to adjust image %s: %s\n", path.c_str(), SDL_GetError());
     }
 
     SDL_FreeSurface(initialSurface);
-    return adjustedSurface;
+    backgroundTexture = SDL_CreateTextureFromSurface(renderer, adjustedSurface);
+    SDL_FreeSurface(adjustedSurface);
+    return backgroundTexture;
 }
 
 SDL_Surface* GameEngine::getWindowSurface(SDL_Window* window)
@@ -132,7 +159,9 @@ SDL_Renderer* GameEngine::createRenderer(SDL_Window* window) {
 GameEngine::~GameEngine() {
     Mix_FreeChunk(backgroundMusic);
     Mix_CloseAudio();
-    SDL_FreeSurface(surface);
+    SDL_FreeSurface(backgroundSurface);
+    SDL_DestroyTexture(textTexture);
+    SDL_DestroyTexture(backgroundTexture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 

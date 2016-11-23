@@ -18,16 +18,11 @@ int main(int argc, char* argv[]) {
     if (!gameEngine.init())
         std::cout << "Failed to initialize game engine" << std::endl;
 
-    gameEngine.surface = gameEngine.loadSurface("res/bg.png");
-    gameEngine.updateBackground();
+    gameEngine.backgroundTexture = gameEngine.loadTexture("res/bg.png");
     gameEngine.playBackgroundMusic("res/Solving1.ogg");
     gameEngine.createText("res/djbgetdigital.ttf", "Hello!", 48, 255, 255, 255);
 
-    SDL_RenderClear(gameEngine.renderer);
-    SDL_RenderCopy(gameEngine.renderer, gameEngine.textTexture, NULL, &gameEngine.textRectangle);
-    SDL_RenderPresent(gameEngine.renderer);
-
-    SDL_Delay(2000);
+    gameEngine.gameLoop();
 
     return 0;
 }
