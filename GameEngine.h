@@ -21,7 +21,8 @@ public:
     bool init();
     bool createWindow();
     void playBackgroundMusic(std::string path);
-    void updateBackground();
+    void renderEverything();
+    void gameLoop();
     SDL_Texture* createText(std::string path,
                     std::string message,
                     int fontSize,
@@ -29,9 +30,10 @@ public:
                     int gColor,
                     int bColor);
     SDL_Renderer* createRenderer(SDL_Window* window);
-    SDL_Surface* loadSurface(std::string path);
+    SDL_Texture* loadTexture(std::string path);
     SDL_Surface* getWindowSurface(SDL_Window* window);
-    SDL_Surface* surface;
+    SDL_Surface* backgroundSurface;
+    SDL_Texture* backgroundTexture;
     SDL_Texture* textTexture;
     SDL_Window* window;
     SDL_Renderer* renderer;
