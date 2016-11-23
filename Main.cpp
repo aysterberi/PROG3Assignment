@@ -6,13 +6,6 @@
 #include <string>
 #include "GameEngine.h"
 
-using namespace std;
-
-#define FPS 60
-
-//Screen dimension constants
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
 
 int main(int argc, char* argv[]) {
 
@@ -20,10 +13,12 @@ int main(int argc, char* argv[]) {
      *   Initiate the engine, outputs a message to the
      *   console if any errors were encountered
      **/
-    GameEngine gameEngine;
+    GameEngine::GameSettings gameSettings = { "Space Invaders", 800, 600 };
+    GameEngine gameEngine(gameSettings);
     if (!gameEngine.init())
-        cout << "Failed to initialize game engine" << endl;
+        std::cout << "Failed to initialize game engine" << std::endl;
 
+    
 
     return 0;
 }
