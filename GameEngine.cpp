@@ -13,12 +13,14 @@ GameEngine::GameEngine() {
     window = nullptr;
     surface = nullptr;
     renderer = nullptr;
+    backgroundMusic = nullptr;
 }
 GameEngine::GameEngine(GameSettings game_settings)
 {
 	window = nullptr;
 	surface = nullptr;
     renderer = nullptr;
+    backgroundMusic = nullptr;
 	engineSettings = game_settings;
 }
 
@@ -64,6 +66,18 @@ bool GameEngine::init() {
     
 
     return true;
+}
+
+void GameEngine::playBackgroundMusic(std::string path) {
+    if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 4096))
+        printf("Error loading audio: %s\n", Mix_GetError());
+
+    backgroundMusic = Mix_LoadWAV(path.c_str());
+
+    if (!backgroundMusic)
+        printf("Error playing audio: %s\n", Mix_GetError());
+
+    Mix_PlayChannel(-1, backgroundMusic, -1);
 }
 
 SDL_Surface* GameEngine::loadSurface(std::string path) {
