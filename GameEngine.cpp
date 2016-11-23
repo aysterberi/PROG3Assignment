@@ -10,15 +10,17 @@ GameEngine::GameSettings engineSettings;
 GameEngine::GameEngine() {
     window = nullptr;
     surface = nullptr;
+    renderer = nullptr;
 }
 GameEngine::GameEngine(GameSettings game_settings)
 {
 	window = nullptr;
 	surface = nullptr;
+    renderer = nullptr;
 	engineSettings = game_settings;
 }
 
-bool GameEngine::CreateWindow()
+bool GameEngine::createWindow()
 {
 	window = SDL_CreateWindow(engineSettings.title, 100, 100, engineSettings.width, engineSettings.height, 0);
 	if (window == nullptr) {
@@ -34,10 +36,8 @@ bool GameEngine::init() {
         return false;
     }
 
-	if (!CreateWindow())
-	{
+	if (!createWindow())
 		return false;
-	}
 
     if (IMG_Init(IMG_INIT_PNG) == 0) {
         printf("Unable to initialize SDL_image: %s\n", IMG_GetError());
@@ -46,13 +46,20 @@ bool GameEngine::init() {
 
     if (TTF_Init() == -1) {
         printf("Unable to initialize SDL_ttf: %s\n", TTF_GetError());
+        return false;
     }
 
     if (Mix_Init(MIX_INIT_OGG) == 0) {
         printf("Unable to initialize SDL_mixer: %s\n", Mix_GetError());
+        return false;
     }
 
-    surface = SDL_GetWindowSurface(window);
+    if (surface == nullptr)
+        surface = SDL_GetWindowSurface(window);
+
+    if (renderer == nullptr)
+        renderer = createRenderer(window);
+    
 
     return true;
 }
@@ -75,10 +82,14 @@ SDL_Surface* GameEngine::loadSurface(std::string path) {
     return adjustedSurface;
 }
 
+SDL_Renderer* GameEngine::createRenderer(SDL_Window* window) {
+    return SDL_CreateRenderer(window, -1, 0);
+}
 
 GameEngine::~GameEngine() {
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    window = NULL;
+    window = nullptr;
 
     TTF_Quit();
     Mix_Quit();
