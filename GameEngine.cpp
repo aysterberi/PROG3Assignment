@@ -5,6 +5,8 @@
 #include <SDL_mixer.h>
 #include <iostream>
 
+#define FPS 60
+
 GameEngine::GameSettings engineSettings;
 
 GameEngine::GameEngine() {
