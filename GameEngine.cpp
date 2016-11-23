@@ -103,9 +103,10 @@ SDL_Renderer* GameEngine::createRenderer(SDL_Window* window) {
 }
 
 GameEngine::~GameEngine() {
+    Mix_FreeChunk(backgroundMusic);
+    Mix_CloseAudio();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    window = nullptr;
 
     TTF_Quit();
     Mix_Quit();
