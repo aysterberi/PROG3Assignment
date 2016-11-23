@@ -14,24 +14,26 @@ GameEngine::GameEngine() {
     surface = nullptr;
     renderer = nullptr;
     backgroundMusic = nullptr;
+    textTexture = nullptr;
 }
 GameEngine::GameEngine(GameSettings game_settings)
 {
-	window = nullptr;
-	surface = nullptr;
+    window = nullptr;
+    surface = nullptr;
     renderer = nullptr;
     backgroundMusic = nullptr;
-	engineSettings = game_settings;
+    textTexture = nullptr;
+    engineSettings = game_settings;
 }
 
 bool GameEngine::createWindow()
 {
-	window = SDL_CreateWindow(engineSettings.title, 100, 100, engineSettings.width, engineSettings.height, 0);
-	if (window == nullptr) {
-		printf("Unable to create window: %s\n", SDL_GetError());
-		return false;
-	}
-	return true;
+    window = SDL_CreateWindow(engineSettings.title, 100, 100, engineSettings.width, engineSettings.height, 0);
+    if (window == nullptr) {
+        printf("Unable to create window: %s\n", SDL_GetError());
+        return false;
+    }
+    return true;
 }
 
 bool GameEngine::init() {
@@ -40,8 +42,8 @@ bool GameEngine::init() {
         return false;
     }
 
-	if (!createWindow())
-		return false;
+    if (!createWindow())
+        return false;
 
     if (IMG_Init(IMG_INIT_PNG) == 0) {
         printf("Unable to initialize SDL_image: %s\n", IMG_GetError());
@@ -63,7 +65,7 @@ bool GameEngine::init() {
 
     if (renderer == nullptr)
         renderer = createRenderer(window);
-    
+
 
     return true;
 }
@@ -83,6 +85,21 @@ void GameEngine::playBackgroundMusic(std::string path) {
 void GameEngine::updateBackground() {
     SDL_BlitSurface(surface, NULL, SDL_GetWindowSurface(window), NULL);
     SDL_UpdateWindowSurface(window);
+}
+
+SDL_Texture* GameEngine::createText(std::string path, std::string message,
+    int fontSize, int rColor, int gColor, int bColor) {
+
+    if (textTexture == nullptr) {
+        TTF_Font* font = TTF_OpenFont(path.c_str(), fontSize);
+        SDL_Color color = { rColor, gColor, bColor };
+        SDL_Surface* textSurface = TTF_RenderText_Solid(font, message.c_str(), color);
+        textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+        int textWidth = textSurface->w, textHeight = textSurface->h;
+        textRectangle = { 400, 300, textWidth, textHeight };
+        SDL_FreeSurface(textSurface);
+    }
+    return textTexture;
 }
 
 SDL_Surface* GameEngine::loadSurface(std::string path) {
