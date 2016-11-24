@@ -17,7 +17,7 @@ public:
     };
     struct Texture {
         SDL_Texture* texture;
-        SDL_Rect* dstRect;
+        SDL_Rect dstRect;
     };
     GameEngine();
     GameEngine(GameSettings game_settings);
@@ -38,10 +38,8 @@ public:
     SDL_Surface* getWindowSurface(SDL_Window* window);
     SDL_Surface* backgroundSurface;
     SDL_Texture* backgroundTexture;
-    SDL_Texture* textTexture;
     SDL_Window* window;
     SDL_Renderer* renderer;
-    SDL_Rect textRectangle;
     Mix_Chunk* backgroundMusic;
     std::vector<Texture> toRender;
     const int SCREEN_WIDTH = 800;

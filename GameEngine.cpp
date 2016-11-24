@@ -15,7 +15,6 @@ GameEngine::GameEngine() {
     backgroundTexture = nullptr;
     renderer = nullptr;
     backgroundMusic = nullptr;
-    textTexture = nullptr;
 }
 GameEngine::GameEngine(GameSettings game_settings)
 {
@@ -24,7 +23,6 @@ GameEngine::GameEngine(GameSettings game_settings)
     backgroundTexture = nullptr;
     renderer = nullptr;
     backgroundMusic = nullptr;
-    textTexture = nullptr;
     engineSettings = game_settings;
 }
 
@@ -108,29 +106,24 @@ void GameEngine::playBackgroundMusic(std::string path) {
 void GameEngine::renderEverything() {
     SDL_RenderClear(renderer);
     for each (Texture var in toRender) {
-        if (&var.dstRect != NULL)
-            SDL_RenderCopy(renderer, var.texture, NULL, var.dstRect);
-        else
-            SDL_RenderCopy(renderer, var.texture, NULL, NULL);
+        SDL_RenderCopy(renderer, var.texture, NULL,
+            &var.dstRect != NULL ? &var.dstRect : NULL);
     }
-    //SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
-    //SDL_RenderCopy(renderer, textTexture, NULL, &textRectangle);
     SDL_RenderPresent(renderer);
 }
 
 SDL_Texture* GameEngine::createText(std::string path, std::string message,
     int fontSize, Uint8 rColor, Uint8 gColor, Uint8 bColor) {
 
-    if (textTexture == nullptr) {
-        TTF_Font* font = TTF_OpenFont(path.c_str(), fontSize);
-        SDL_Color color = { rColor, gColor, bColor };
-        SDL_Surface* textSurface = TTF_RenderText_Solid(font, message.c_str(), color);
-        textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-        int textWidth = textSurface->w, textHeight = textSurface->h;
-        textRectangle = { 100, 300, textWidth, textHeight };
-        SDL_FreeSurface(textSurface);
-    }
-    Texture txt = { textTexture, &textRectangle };
+    TTF_Font* font = TTF_OpenFont(path.c_str(), fontSize);
+    SDL_Color color = { rColor, gColor, bColor };
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font, message.c_str(), color);
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    int textWidth = textSurface->w, textHeight = textSurface->h;
+    SDL_Rect textRectangle = { 100, 250, textWidth, textHeight };
+
+    SDL_FreeSurface(textSurface);
+    Texture txt = { textTexture, textRectangle };
     toRender.emplace_back(txt);
     return textTexture;
 }
@@ -157,8 +150,7 @@ SDL_Texture* GameEngine::loadTexture(std::string path) {
     return backgroundTexture;
 }
 
-SDL_Surface* GameEngine::getWindowSurface(SDL_Window* window)
-{
+SDL_Surface* GameEngine::getWindowSurface(SDL_Window* window) {
     return window != nullptr ? SDL_GetWindowSurface(window) : nullptr;
 }
 
@@ -170,7 +162,6 @@ GameEngine::~GameEngine() {
     Mix_FreeChunk(backgroundMusic);
     Mix_CloseAudio();
     SDL_FreeSurface(backgroundSurface);
-    SDL_DestroyTexture(textTexture);
     SDL_DestroyTexture(backgroundTexture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
