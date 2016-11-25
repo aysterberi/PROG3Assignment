@@ -84,7 +84,8 @@ void GameEngine::gameLoop() {
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
                 case SDLK_ESCAPE: quit = true; break;
-                case SDLK_w: playSoundEffect("res/KirbyStyleLaser.ogg"); break;
+                case SDLK_LCTRL:
+                case SDLK_RCTRL: playSoundEffect("res/KirbyStyleLaser.ogg"); break;
                 case SDLK_y:
                 case SDLK_a:
                 case SDLK_LEFT: break;
@@ -101,19 +102,19 @@ void GameEngine::playBackgroundMusic(std::string path) {
     if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 4096))
         printf("Error loading audio: %s\n", Mix_GetError());
 
-    backgroundMusic = Mix_LoadWAV(path.c_str());
+    backgroundMusic = Mix_LoadMUS(path.c_str());
 
     if (!backgroundMusic)
         printf("Error playing audio: %s\n", Mix_GetError());
 
-    Mix_PlayChannel(-1, backgroundMusic, -1);
+    Mix_PlayMusic(backgroundMusic, -1);
 }
 
 void GameEngine::playSoundEffect(std::string path) {
     if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 1024))
         printf("Error loading audio: %s\n", Mix_GetError());
 
-    shotSound = Mix_LoadWAV(path.c_str());
+    Mix_Chunk* shotSound = Mix_LoadWAV(path.c_str());
 
     if (!shotSound)
         printf("Error playing audio: %s\n", Mix_GetError());
@@ -181,8 +182,7 @@ SDL_Renderer* GameEngine::createRenderer(SDL_Window* window) {
 }
 
 GameEngine::~GameEngine() {
-    Mix_FreeChunk(backgroundMusic);
-    Mix_FreeChunk(shotSound);
+    Mix_FreeMusic(backgroundMusic);
     Mix_CloseAudio();
     SDL_FreeSurface(backgroundSurface);
     SDL_DestroyTexture(backgroundTexture);

@@ -42,8 +42,7 @@ public:
     SDL_Texture* backgroundTexture;
     SDL_Window* window;
     SDL_Renderer* renderer;
-    Mix_Chunk* backgroundMusic;
-    Mix_Chunk* shotSound;
+    Mix_Music* backgroundMusic;
     std::vector<Texture> toRender;
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 600;
