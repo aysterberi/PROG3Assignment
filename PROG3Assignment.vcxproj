@@ -119,16 +119,6 @@ copy /Y "$(SolutionDir)res\*.ogg" "$(TargetDir)res"
 copy /Y "$(SolutionDir)res\*.png" "$(TargetDir)res"
 copy /Y "$(SolutionDir)res\*.ttf" "$(TargetDir)res"</Command>
     </PostBuildEvent>
-    <PreBuildEvent>
-      <Command>pushd "\\goofy2\HT14\bibe1744\Desktop\proj\PROG3Assignment"  
-</Command>
-    </PreBuildEvent>
-    <CustomBuildStep>
-      <Command>popd  </Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message>Popping temporary directory</Message>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
