@@ -34,7 +34,7 @@ public:
         Uint8 gColor,
         Uint8 bColor);
     SDL_Renderer* createRenderer(SDL_Window* window);
-    SDL_Texture* loadTexture(std::string path);
+    SDL_Texture* loadBackgroundTexture(std::string path);
     SDL_Surface* getWindowSurface(SDL_Window* window);
     SDL_Surface* backgroundSurface;
     SDL_Texture* backgroundTexture;

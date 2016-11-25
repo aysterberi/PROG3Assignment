@@ -84,6 +84,11 @@ void GameEngine::gameLoop() {
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
                 case SDLK_ESCAPE: quit = true; break;
+                case SDLK_y:
+                case SDLK_a:
+                case SDLK_LEFT: break;
+                case SDLK_d:
+                case SDLK_RIGHT: break;
                 }
             }
         }
@@ -128,7 +133,7 @@ SDL_Texture* GameEngine::createText(std::string path, std::string message,
     return textTexture;
 }
 
-SDL_Texture* GameEngine::loadTexture(std::string path) {
+SDL_Texture* GameEngine::loadBackgroundTexture(std::string path) {
     SDL_Surface* adjustedSurface = nullptr;
     SDL_Surface* initialSurface = IMG_Load(path.c_str());
 
