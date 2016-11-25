@@ -44,7 +44,7 @@ bool GameEngine::createWindow()
 
 bool GameEngine::init() {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        printf("Unable  to initialize SDL: %s\n", SDL_GetError());
+        printf("UnableÂ  to initialize SDL: %s\n", SDL_GetError());
         return false;
     }
 
@@ -131,16 +131,17 @@ void GameEngine::playBackgroundMusic(std::string path) {
 }
 
 void GameEngine::playSoundEffect(std::string path) {
-    if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 1024))
+    if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, AUDIO_S16SYS, 1, 4096))
         printf("Error loading audio: %s\n", Mix_GetError());
-
     Mix_Chunk* shotSound = Mix_LoadWAV(path.c_str());
-
     if (!shotSound)
         printf("Error playing audio: %s\n", Mix_GetError());
 
-    Mix_PlayChannel(-1, shotSound, 1);
-    Mix_FreeChunk(shotSound);
+    Mix_PlayChannel(-1, shotSound, 1);	
+    //Mix_FreeChunk(shotSound);
+	// TODO: freeing the chunk right after we try to play it seems 
+	// to not work since no sound is played, investigate docs to figure out why
+	// this cannot stand, will cause memory leaks over time.
 }
 
 void GameEngine::renderEverything() {
