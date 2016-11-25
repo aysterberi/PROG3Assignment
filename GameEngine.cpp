@@ -97,7 +97,7 @@ void GameEngine::gameLoop() {
                 case SDLK_LEFT: break;
 				case SDLK_d: break;
                 case SDLK_RIGHT: break;
-				case SDLK_F8: toggleMusic(); break;
+				case SDLK_F8: toggleMusic(); std::cout << "WTF" << std::endl;  break;
                 }
             }
         }
@@ -108,12 +108,12 @@ void GameEngine::gameLoop() {
 void toggleMusic() {
 	if (musicPlaying)
 	{
-		volume = Mix_Volume(-1, -1); //save original volume as int (0-128)
-		Mix_Volume(-1, 0); //set volume to 0 for all channels (-1)
+		volume = Mix_VolumeMusic(-1);
+		Mix_VolumeMusic(0); //set volume to 0 for all channels (-1)
 		musicPlaying = false;
 	}
 	else {
-		Mix_Volume(-1, volume); //restore original volume
+		Mix_VolumeMusic(volume); //restore original volume
 		musicPlaying = true;
 	}
 }
