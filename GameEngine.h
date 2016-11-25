@@ -25,9 +25,11 @@ public:
     bool init();
     bool createWindow();
     void playBackgroundMusic(std::string path);
+    void playSoundEffect(std::string path);
     void renderEverything();
     void gameLoop();
-    SDL_Texture* createText(std::string path,
+    SDL_Texture* createObjectTexture(std::string path);
+    SDL_Texture* createTextTexture(std::string path,
         std::string message,
         int fontSize,
         Uint8 rColor,
@@ -41,6 +43,7 @@ public:
     SDL_Window* window;
     SDL_Renderer* renderer;
     Mix_Chunk* backgroundMusic;
+    Mix_Chunk* shotSound;
     std::vector<Texture> toRender;
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 600;

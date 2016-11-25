@@ -84,6 +84,7 @@ void GameEngine::gameLoop() {
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
                 case SDLK_ESCAPE: quit = true; break;
+                case SDLK_w: playSoundEffect("res/KirbyStyleLaser.ogg"); break;
                 case SDLK_y:
                 case SDLK_a:
                 case SDLK_LEFT: break;
@@ -108,6 +109,19 @@ void GameEngine::playBackgroundMusic(std::string path) {
     Mix_PlayChannel(-1, backgroundMusic, -1);
 }
 
+void GameEngine::playSoundEffect(std::string path) {
+    if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 1024))
+        printf("Error loading audio: %s\n", Mix_GetError());
+
+    shotSound = Mix_LoadWAV(path.c_str());
+
+    if (!shotSound)
+        printf("Error playing audio: %s\n", Mix_GetError());
+
+    Mix_PlayChannel(-1, shotSound, 1);
+    Mix_FreeChunk(shotSound);
+}
+
 void GameEngine::renderEverything() {
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
@@ -117,7 +131,12 @@ void GameEngine::renderEverything() {
     SDL_RenderPresent(renderer);
 }
 
-SDL_Texture* GameEngine::createText(std::string path, std::string message,
+SDL_Texture* GameEngine::createObjectTexture(std::string path)
+{
+    return nullptr;
+}
+
+SDL_Texture* GameEngine::createTextTexture(std::string path, std::string message,
     int fontSize, Uint8 rColor, Uint8 gColor, Uint8 bColor) {
 
     TTF_Font* font = TTF_OpenFont(path.c_str(), fontSize);
@@ -163,6 +182,7 @@ SDL_Renderer* GameEngine::createRenderer(SDL_Window* window) {
 
 GameEngine::~GameEngine() {
     Mix_FreeChunk(backgroundMusic);
+    Mix_FreeChunk(shotSound);
     Mix_CloseAudio();
     SDL_FreeSurface(backgroundSurface);
     SDL_DestroyTexture(backgroundTexture);
