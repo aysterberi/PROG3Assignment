@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
 
     gameEngine.backgroundTexture = gameEngine.loadBackgroundTexture("res/bg.png");
     gameEngine.playBackgroundMusic("res/Solving1.ogg");
-    gameEngine.createText("res/djbgetdigital.ttf", "PRESS 'Y' TO START A NEW GAME", 48, 255, 255, 255);
+    gameEngine.createTextTexture("res/djbgetdigital.ttf", "PRESS 'Y' TO START A NEW GAME", 48, 255, 255, 255);
 
     gameEngine.gameLoop();
 
