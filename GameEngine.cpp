@@ -105,9 +105,9 @@ void GameEngine::playBackgroundMusic(std::string path) {
 
 void GameEngine::renderEverything() {
     SDL_RenderClear(renderer);
-    for each (Texture var in toRender) {
-        SDL_RenderCopy(renderer, var.texture, NULL,
-            &var.dstRect != NULL ? &var.dstRect : NULL);
+    SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
+    for (Texture var : toRender) {
+        SDL_RenderCopy(renderer, var.texture, NULL, &var.dstRect);
     }
     SDL_RenderPresent(renderer);
 }
@@ -145,8 +145,6 @@ SDL_Texture* GameEngine::loadTexture(std::string path) {
     SDL_FreeSurface(initialSurface);
     backgroundTexture = SDL_CreateTextureFromSurface(renderer, adjustedSurface);
     SDL_FreeSurface(adjustedSurface);
-    Texture txt = { backgroundTexture, NULL };
-    toRender.emplace_back(txt);
     return backgroundTexture;
 }
 
