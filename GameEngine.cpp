@@ -7,6 +7,12 @@
 
 #define FPS 60
 
+//forward declarations
+//faster than using an include
+void toggleMusic();
+bool musicPlaying;
+int volume;
+
 GameEngine::GameSettings engineSettings;
 
 GameEngine::GameEngine() {
@@ -84,13 +90,14 @@ void GameEngine::gameLoop() {
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
                 case SDLK_ESCAPE: quit = true; break;
-                case SDLK_LCTRL:
+				case SDLK_LCTRL: break;
                 case SDLK_RCTRL: playSoundEffect("res/KirbyStyleLaser.ogg"); break;
-                case SDLK_y:
-                case SDLK_a:
+				case SDLK_y: break;
+				case SDLK_a: break;
                 case SDLK_LEFT: break;
-                case SDLK_d:
+				case SDLK_d: break;
                 case SDLK_RIGHT: break;
+				case SDLK_F8: toggleMusic(); break;
                 }
             }
         }
@@ -98,6 +105,18 @@ void GameEngine::gameLoop() {
     }
 }
 
+void toggleMusic() {
+	if (musicPlaying)
+	{
+		volume = Mix_Volume(-1, -1); //save original volume as int (0-128)
+		Mix_Volume(-1, 0); //set volume to 0 for all channels (-1)
+		musicPlaying = false;
+	}
+	else {
+		Mix_Volume(-1, volume); //restore original volume
+		musicPlaying = true;
+	}
+}
 void GameEngine::playBackgroundMusic(std::string path) {
     if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 4096))
         printf("Error loading audio: %s\n", Mix_GetError());
@@ -108,6 +127,7 @@ void GameEngine::playBackgroundMusic(std::string path) {
         printf("Error playing audio: %s\n", Mix_GetError());
 
     Mix_PlayMusic(backgroundMusic, -1);
+	musicPlaying = true;
 }
 
 void GameEngine::playSoundEffect(std::string path) {
@@ -194,3 +214,4 @@ GameEngine::~GameEngine() {
     IMG_Quit();
     SDL_Quit();
 }
+
