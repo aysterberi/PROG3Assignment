@@ -90,7 +90,7 @@ void GameEngine::gameLoop() {
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
                 case SDLK_ESCAPE: quit = true; break;
-				case SDLK_LCTRL: break;
+				case SDLK_LCTRL:
                 case SDLK_RCTRL: playSoundEffect("res/KirbyStyleLaser.ogg"); break;
 				case SDLK_y: break;
 				case SDLK_a: break;
@@ -137,7 +137,7 @@ void GameEngine::playSoundEffect(std::string path) {
     if (!shotSound)
         printf("Error playing audio: %s\n", Mix_GetError());
 
-    Mix_PlayChannel(-1, shotSound, 1);	
+    Mix_PlayChannel(-1, shotSound, 0);	
     //Mix_FreeChunk(shotSound);
 	// TODO: freeing the chunk right after we try to play it seems 
 	// to not work since no sound is played, investigate docs to figure out why
