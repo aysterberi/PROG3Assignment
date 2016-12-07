@@ -1,4 +1,6 @@
-#pragma once
+#ifndef PLAYER_H
+#define PLAYER_H
+#include "DynamicSprite.h"
 class Player
 {
 public:
@@ -7,5 +9,9 @@ public:
 protected:
     Player();
 private:
+    bool alive;
+    int lives;
+    DynamicSprite DynamicSprite::playerSprite;
 };
 
+#endif
