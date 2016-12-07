@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
     if (!gameEngine.init())
         std::cout << "Failed to initialize game engine" << std::endl;
 
-    gameEngine.backgroundTexture = gameEngine.loadBackgroundTexture("res/bg.png");
+    gameEngine.loadBackgroundTexture("res/bg.png");
     gameEngine.playBackgroundMusic("res/Solving1.ogg");
     gameEngine.createTextTexture("res/djbgetdigital.ttf", "PRESS 'Y' TO START A NEW GAME", 48, 255, 255, 255);
 
