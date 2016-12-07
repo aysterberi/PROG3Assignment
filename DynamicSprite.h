@@ -7,6 +7,8 @@ class DynamicSprite :
 public:
     DynamicSprite();
     ~DynamicSprite();
+protected:
+private:
 };
 
 #endif
