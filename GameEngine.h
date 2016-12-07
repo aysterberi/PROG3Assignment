@@ -7,6 +7,7 @@
 #include <SDL_ttf.h>
 #include <string>
 #include <vector>
+#include "GameObject.h"
 
 class GameEngine
 {
@@ -39,12 +40,17 @@ public:
     SDL_Renderer* createRenderer(SDL_Window* window);
     SDL_Texture* loadBackgroundTexture(std::string path);
     SDL_Surface* getWindowSurface(SDL_Window* window);
+    SDL_Texture* getTexture() const { return backgroundTexture; }
+    void setTexture(std::string path);
+protected:
+private:
+    std::vector<Texture> toRender;
+    std::vector<GameObject*> gameObjects;
     SDL_Surface* backgroundSurface;
     SDL_Texture* backgroundTexture;
     SDL_Window* window;
     SDL_Renderer* renderer;
     Mix_Music* backgroundMusic;
-    std::vector<Texture> toRender;
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 600;
     const char* WINDOW_TITLE = "Space Invaders";

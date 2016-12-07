@@ -93,9 +93,9 @@ void GameEngine::gameLoop() {
 				case SDLK_LCTRL:
                 case SDLK_RCTRL: playSoundEffect("res/KirbyStyleLaser.ogg"); break;
 				case SDLK_y: break;
-				case SDLK_a: break;
+				case SDLK_a:
                 case SDLK_LEFT: break;
-				case SDLK_d: break;
+				case SDLK_d:
                 case SDLK_RIGHT: break;
 				case SDLK_F8: toggleMusic(); break;
                 }
@@ -196,6 +196,10 @@ SDL_Texture* GameEngine::loadBackgroundTexture(std::string path) {
 
 SDL_Surface* GameEngine::getWindowSurface(SDL_Window* window) {
     return window != nullptr ? SDL_GetWindowSurface(window) : nullptr;
+}
+
+void GameEngine::setTexture(std::string path) {
+    backgroundTexture = loadBackgroundTexture(path);
 }
 
 SDL_Renderer* GameEngine::createRenderer(SDL_Window* window) {
