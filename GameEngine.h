@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAMEENGINE_H
+#define GAMEENGINE_H
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -49,3 +50,4 @@ public:
     const char* WINDOW_TITLE = "Space Invaders";
 };
 
+#endif

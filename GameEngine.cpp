@@ -97,7 +97,7 @@ void GameEngine::gameLoop() {
                 case SDLK_LEFT: break;
 				case SDLK_d: break;
                 case SDLK_RIGHT: break;
-				case SDLK_F8: toggleMusic(); std::cout << "WTF" << std::endl;  break;
+				case SDLK_F8: toggleMusic(); break;
                 }
             }
         }
