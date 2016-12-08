@@ -80,6 +80,7 @@ namespace Engine {
 
     void GameEngine::gameLoop() {
         bool quit = false;
+        bool gameStarted = false;
         const int TPR = 1000; // Time per rotation
 
         while (!quit) {
@@ -94,7 +95,13 @@ namespace Engine {
                     case SDLK_ESCAPE: quit = true; break;
                     case SDLK_LCTRL:
                     case SDLK_RCTRL: playSoundEffect("res/KirbyStyleLaser.ogg"); break;
-                    case SDLK_y: break;
+                    case SDLK_y: 
+                        if (!gameStarted) {
+                            startNewGame();
+                            gameStarted = true;
+                        }
+                        std::cout << "here\n";
+                        break;
                     case SDLK_a:
                     case SDLK_LEFT: break;
                     case SDLK_d:
@@ -105,6 +112,10 @@ namespace Engine {
             }
             renderEverything();
         }
+    }
+
+    void GameEngine::startNewGame() {
+        gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
     }
 
     void toggleMusic() {
@@ -149,8 +160,8 @@ namespace Engine {
     void GameEngine::renderEverything() {
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
-        for (Texture var : toRender) {
-            SDL_RenderCopy(renderer, var.texture, NULL, &var.dstRect);
+        for (std::pair<std::string, Texture> var : gameObjects) {
+            SDL_RenderCopy(renderer, var.second.texture, NULL, &var.second.dstRect);
         }
         SDL_RenderPresent(renderer);
     }
@@ -172,6 +183,7 @@ namespace Engine {
 
         SDL_FreeSurface(textSurface);
         Texture txt = { textTexture, textRectangle };
+        gameObjects.insert({ "PRESS 'Y' TO START A NEW GAME", txt });
         toRender.emplace_back(txt);
         return textTexture;
     }
@@ -221,5 +233,7 @@ namespace Engine {
         IMG_Quit();
         SDL_Quit();
     }
+
+    GameEngine gameEngine;
 
 }
