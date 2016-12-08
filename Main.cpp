@@ -16,6 +16,7 @@ int main(int argc, char* argv[]) {
      **/
     GameEngine::GameSettings gameSettings = { "Space Invaders", 800, 600 };
     GameEngine gameEngine(gameSettings);
+    gameEngine.setPlayerSurface("res\ship.png");
     if (!gameEngine.init())
         std::cout << "Failed to initialize game engine" << std::endl;
 
