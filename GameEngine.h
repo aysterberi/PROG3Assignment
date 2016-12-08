@@ -7,6 +7,7 @@
 #include <SDL_ttf.h>
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include "GameObject.h"
 namespace Engine {
     class GameEngine
@@ -26,6 +27,7 @@ namespace Engine {
         ~GameEngine();
         bool init();
         bool createWindow();
+        void startNewGame();
         void playBackgroundMusic(std::string path);
         void playSoundEffect(std::string path);
         void renderEverything();
@@ -38,14 +40,15 @@ namespace Engine {
             Uint8 gColor,
             Uint8 bColor);
         SDL_Renderer* createRenderer(SDL_Window* window);
+        SDL_Renderer* getRenderer() const { return renderer; }
         SDL_Texture* loadBackgroundTexture(std::string path);
         SDL_Surface* getWindowSurface(SDL_Window* window);
         SDL_Texture* getTexture() const { return backgroundTexture; }
         void setTexture(std::string path);
     protected:
     private:
+        std::unordered_map<std::string, Texture> gameObjects;
         std::vector<Texture> toRender;
-        std::vector<GameObject*> gameObjects;
         SDL_Surface* backgroundSurface;
         SDL_Texture* backgroundTexture;
         SDL_Window* window;
