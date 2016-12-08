@@ -10,7 +10,7 @@ namespace Engine {
 
     int DynamicSprite::getNumberOfImages() const
     {
-        return 0;
+        return numberOfImages;
     }
 
     void DynamicSprite::draw()
