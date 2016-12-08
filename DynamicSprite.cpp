@@ -1,6 +1,7 @@
 #include "DynamicSprite.h"
 #include "Sprite.h"
 #include "GameObject.h"
+#include "GameEngine.h"
 namespace Engine {
 
     DynamicSprite::DynamicSprite(const SDL_Rect & rect,
@@ -13,8 +14,8 @@ namespace Engine {
         return numberOfImages;
     }
 
-    void DynamicSprite::draw()
-    {
+    void DynamicSprite::draw() {
+        SDL_RenderCopy(gameEngine.getRenderer(), getTexture(), NULL, &getRect());
     }
 
     DynamicSprite::~DynamicSprite()
