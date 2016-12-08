@@ -45,6 +45,7 @@ namespace Engine {
         SDL_Surface* getWindowSurface(SDL_Window* window);
         SDL_Texture* getTexture() const { return backgroundTexture; }
         void setTexture(std::string path);
+        void setPlayerSurface(std::string path);
     protected:
     private:
         std::unordered_map<std::string, Texture> gameObjects;
@@ -57,6 +58,8 @@ namespace Engine {
         const int SCREEN_WIDTH = 800;
         const int SCREEN_HEIGHT = 600;
         const char* WINDOW_TITLE = "Space Invaders";
+        SDL_Surface* playerSurface;
+        SDL_Texture* playerTexture;
     };
 
     extern GameEngine gameEngine;

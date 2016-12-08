@@ -1,4 +1,5 @@
 #include "GameEngine.h"
+#include "Player.h"
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
@@ -23,6 +24,7 @@ namespace Engine {
         backgroundTexture = nullptr;
         renderer = nullptr;
         backgroundMusic = nullptr;
+        playerSurface = nullptr;
     }
     GameEngine::GameEngine(GameSettings game_settings)
     {
@@ -31,6 +33,7 @@ namespace Engine {
         backgroundTexture = nullptr;
         renderer = nullptr;
         backgroundMusic = nullptr;
+        playerSurface = nullptr;
         engineSettings = game_settings;
     }
 
@@ -74,6 +77,10 @@ namespace Engine {
         if (renderer == nullptr)
             renderer = createRenderer(window);
 
+        if (playerSurface != nullptr) {
+            playerTexture = SDL_CreateTextureFromSurface(renderer, playerSurface);
+        }
+
 
         return true;
     }
@@ -100,7 +107,6 @@ namespace Engine {
                             startNewGame();
                             gameStarted = true;
                         }
-                        std::cout << "here\n";
                         break;
                     case SDLK_a:
                     case SDLK_LEFT: break;
@@ -116,6 +122,8 @@ namespace Engine {
 
     void GameEngine::startNewGame() {
         gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
+        DynamicSprite* playerSprite = new DynamicSprite({100,100,100,100}, playerTexture, 3);
+        Player* player = Player::getInstance("player", true, 3, playerSprite);
     }
 
     void toggleMusic() {
@@ -184,7 +192,6 @@ namespace Engine {
         SDL_FreeSurface(textSurface);
         Texture txt = { textTexture, textRectangle };
         gameObjects.insert({ "PRESS 'Y' TO START A NEW GAME", txt });
-        toRender.emplace_back(txt);
         return textTexture;
     }
 
@@ -214,6 +221,10 @@ namespace Engine {
 
     void GameEngine::setTexture(std::string path) {
         backgroundTexture = loadBackgroundTexture(path);
+    }
+
+    void GameEngine::setPlayerSurface(std::string path) {
+        playerSurface = IMG_Load(path.c_str());
     }
 
     SDL_Renderer* GameEngine::createRenderer(SDL_Window* window) {
