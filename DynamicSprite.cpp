@@ -5,8 +5,8 @@
 namespace Engine {
 
     DynamicSprite::DynamicSprite(const SDL_Rect & rect,
-        SDL_Texture * texture, int numberOfImages): Sprite(rect, texture),
-        numberOfImages(numberOfImages) {
+        SDL_Texture * texture, int numberOfImages): Sprite(rect, texture) {
+        numberOfImages = numberOfImages;
     }
 
     int DynamicSprite::getNumberOfImages() const
