@@ -13,6 +13,9 @@ namespace Engine {
         std::string name;
         bool alive;
         int lives;
+        int numberOfImages;
+        SDL_Rect rect;
+        SDL_Texture* texture;
         DynamicSprite playerSprite;
     };
 }
