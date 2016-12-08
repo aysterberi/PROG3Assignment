@@ -5,10 +5,10 @@
 namespace Engine {
     class Player {
     public:
-        static Player* getInstance(std::string name, bool alive, int lives, DynamicSprite playerSprite);
+        static Player* getInstance(std::string name, bool alive, int lives, DynamicSprite* playerSprite);
         ~Player();
     protected:
-        Player(std::string name, bool alive, int lives, DynamicSprite playerSprite);
+        Player(std::string name, bool alive, int lives, DynamicSprite* playerSprite);
     private:
         std::string name;
         bool alive;
@@ -16,7 +16,7 @@ namespace Engine {
         int numberOfImages;
         SDL_Rect rect;
         SDL_Texture* texture;
-        DynamicSprite playerSprite;
+        DynamicSprite* playerSprite;
     };
 }
 #endif
