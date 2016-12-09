@@ -34,8 +34,11 @@ namespace Engine {
         void gameLoop();
         void setTexture(std::string path);
         void setPlayerPath(std::string path);
-        void createObjectTexture(std::string path, std::string name, int, int);
-        SDL_Texture* createTextTexture(std::string path,
+        void createObjectTexture(std::string path,
+            std::string name,
+            int initialPosX,
+            int initialPosY);
+        void createTextTexture(std::string path,
             std::string message,
             int fontSize,
             Uint8 rColor,

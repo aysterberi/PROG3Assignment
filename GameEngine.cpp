@@ -182,7 +182,7 @@ namespace Engine {
         gameObjects.insert({name, myTexture});
     }
 
-    SDL_Texture* GameEngine::createTextTexture(std::string path, std::string message,
+    void GameEngine::createTextTexture(std::string path, std::string message,
         int fontSize, Uint8 rColor, Uint8 gColor, Uint8 bColor) {
 
         TTF_Font* font = TTF_OpenFont(path.c_str(), fontSize);
@@ -195,7 +195,6 @@ namespace Engine {
         SDL_FreeSurface(textSurface);
         Texture txt = { textTexture, textRectangle };
         gameObjects.insert({ "PRESS 'Y' TO START A NEW GAME", txt });
-        return textTexture;
     }
 
     SDL_Texture* GameEngine::loadBackgroundTexture(std::string path) {
