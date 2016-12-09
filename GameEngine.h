@@ -32,7 +32,9 @@ namespace Engine {
         void playSoundEffect(std::string path);
         void renderEverything();
         void gameLoop();
-        SDL_Texture* createObjectTexture(std::string path);
+        void setTexture(std::string path);
+        void setPlayerPath(std::string path);
+        void createObjectTexture(std::string path, std::string name, int, int);
         SDL_Texture* createTextTexture(std::string path,
             std::string message,
             int fontSize,
@@ -44,8 +46,6 @@ namespace Engine {
         SDL_Texture* loadBackgroundTexture(std::string path);
         SDL_Surface* getWindowSurface(SDL_Window* window);
         SDL_Texture* getTexture() const { return backgroundTexture; }
-        void setTexture(std::string path);
-        void setPlayerSurface(std::string path);
     protected:
     private:
         std::unordered_map<std::string, Texture> gameObjects;
@@ -55,6 +55,7 @@ namespace Engine {
         SDL_Window* window;
         SDL_Renderer* renderer;
         Mix_Music* backgroundMusic;
+        std::string playerPath;
         const int SCREEN_WIDTH = 800;
         const int SCREEN_HEIGHT = 600;
         const char* WINDOW_TITLE = "Space Invaders";
