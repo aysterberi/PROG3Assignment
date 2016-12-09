@@ -77,11 +77,6 @@ namespace Engine {
         if (renderer == nullptr)
             renderer = createRenderer(window);
 
-        if (playerSurface != nullptr) {
-            playerTexture = SDL_CreateTextureFromSurface(renderer, playerSurface);
-        }
-
-
         return true;
     }
 
@@ -124,6 +119,7 @@ namespace Engine {
         gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
         DynamicSprite* playerSprite = new DynamicSprite({100,100,100,100}, playerTexture, 3);
         Player* player = Player::getInstance("player", true, 3, playerSprite);
+        createObjectTexture("res/ship.png", "player", 100, 100);
     }
 
     void toggleMusic() {
@@ -171,12 +167,19 @@ namespace Engine {
         for (std::pair<std::string, Texture> var : gameObjects) {
             SDL_RenderCopy(renderer, var.second.texture, NULL, &var.second.dstRect);
         }
+
         SDL_RenderPresent(renderer);
     }
 
-    SDL_Texture* GameEngine::createObjectTexture(std::string path)
+    void GameEngine::createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY)
     {
-        return nullptr;
+        SDL_Surface* surface = IMG_Load(path.c_str());
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+        int textureWidth = surface->w, textureHeight = surface->h;
+        SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
+        SDL_FreeSurface(surface);
+        Texture myTexture = {texture, textureRectangle};
+        gameObjects.insert({name, myTexture});
     }
 
     SDL_Texture* GameEngine::createTextTexture(std::string path, std::string message,
@@ -223,8 +226,8 @@ namespace Engine {
         backgroundTexture = loadBackgroundTexture(path);
     }
 
-    void GameEngine::setPlayerSurface(std::string path) {
-        playerSurface = IMG_Load(path.c_str());
+    void GameEngine::setPlayerPath(std::string path) {
+        playerPath = path;
     }
 
     SDL_Renderer* GameEngine::createRenderer(SDL_Window* window) {
