@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include "GameEngine.h"
+using namespace Engine;
 
 
 int main(int argc, char* argv[]) {
@@ -19,6 +20,7 @@ int main(int argc, char* argv[]) {
         std::cout << "Failed to initialize game engine" << std::endl;
 
     gameEngine.loadBackgroundTexture("res/bg.png");
+    gameEngine.setPlayerPath("res/ship.png");
     gameEngine.playBackgroundMusic("res/Solving1.ogg");
     gameEngine.createTextTexture("res/djbgetdigital.ttf", "PRESS 'Y' TO START A NEW GAME", 48, 255, 255, 255);
 
