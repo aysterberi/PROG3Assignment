@@ -6,6 +6,17 @@ namespace Engine {
     }
 
 
+	void GameObject::setPosition(int xPos, int yPos)
+	{
+		objectPosition.xPos = xPos;
+		objectPosition.yPos = yPos;
+	}
+
+	GameObject::Position GameObject::getPosition()
+	{
+		return objectPosition;
+	}
+
     GameObject::~GameObject() {
     }
 }
