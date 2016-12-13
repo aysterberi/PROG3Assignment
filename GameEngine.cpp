@@ -117,7 +117,11 @@ namespace Engine {
 
 	void notifyKeyPress(SDL_Event event)
     {
-	    
+		std::list<Player> listenerList;
+    	for (Player p : listenerList)
+    	{
+			
+    	}
     }
     void GameEngine::startNewGame() {
         gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
