@@ -129,10 +129,8 @@ namespace Engine {
 
 	void keyBindings()
     {
-		//create a binding for the toggleMusic function
-		//hook our binding to the keycode m
-		KeyHandler::FunctionHook soundToggle = std::bind(&toggleMusic);
-		key_handler.hook(soundToggle, SDLK_m);
+		//hook our function to the key m
+		key_handler.hook(&toggleMusic, SDLK_m);
     }
     void toggleMusic() {
         if (musicPlaying)
