@@ -105,7 +105,7 @@ namespace Engine {
                         break;
                     case SDLK_a:
                     case SDLK_LEFT: break;
-                    case SDLK_d:
+					case SDLK_d: break;
                     case SDLK_RIGHT: break;
                     case SDLK_F8: toggleMusic(); break;
                     }
@@ -115,6 +115,10 @@ namespace Engine {
         }
     }
 
+	void notifyKeyPress(SDL_Event event)
+    {
+	    
+    }
     void GameEngine::startNewGame() {
         gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
         DynamicSprite* playerSprite = new DynamicSprite({100,100,100,100}, playerTexture, 3);
