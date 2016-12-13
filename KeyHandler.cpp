@@ -15,7 +15,7 @@ namespace Engine {
 	void KeyHandler::notify(SDL_Keycode keycode)
 	{
 		std::vector<FunctionHook> func_vect = function_map[keycode];
-		for (FunctionHook function : func_vect)
+		for (auto& function : func_vect)
 		{
 			function();
 		}
