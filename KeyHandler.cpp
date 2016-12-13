@@ -1,8 +1,6 @@
 #include "KeyHandler.h"
 #include <unordered_map>
 namespace Engine {
-	std::unordered_map<SDL_Keycode, std::vector<KeyHandler::FunctionHook>> function_map;
-
 	KeyHandler::KeyHandler()
 	{
 	}
