@@ -1,8 +1,11 @@
 #include "KeyHandler.h"
 #include <unordered_map>
+#include <iostream>
+
 namespace Engine {
 	KeyHandler::KeyHandler()
 	{
+
 	}
 
 
@@ -12,6 +15,7 @@ namespace Engine {
 
 	void KeyHandler::notify(SDL_Keycode keycode)
 	{
+		std::cout << "KeyHandler::notify(" << keycode << ")\n";
 		std::vector<FunctionHook> func_vect = function_map[keycode];
 		for (auto& function : func_vect)
 		{
