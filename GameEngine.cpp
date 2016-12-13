@@ -120,7 +120,7 @@ namespace Engine {
 		std::list<Player> listenerList;
     	for (Player p : listenerList)
     	{
-			
+    		p.position;
     	}
     }
     void GameEngine::startNewGame() {

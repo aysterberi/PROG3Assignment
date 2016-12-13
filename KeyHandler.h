@@ -11,8 +11,8 @@ namespace Engine {
 		typedef std::function<void()> FunctionHook;
 		KeyHandler();
 		~KeyHandler();
-		void notify(SDL_KeyboardEvent &event);
-		void hook(FunctionHook func, SDL_Keycode);
+		void notify(SDL_Keycode key);
+		void hook(FunctionHook func, SDL_Keycode key);
 		void hook(FunctionHook func, KeyVector keys);
 		void unhook(FunctionHook func, SDL_Keycode key);
 		void unhook(FunctionHook func, KeyVector keys);
