@@ -5,6 +5,7 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <iostream>
+#include "KeyHandler.h"
 
 #define FPS 60
 
@@ -15,6 +16,8 @@ namespace Engine {
     void toggleMusic();
     bool musicPlaying;
     int volume;
+	KeyHandler key_handler;
+	void keyBindings();
 
     GameEngine::GameSettings engineSettings;
 
@@ -25,6 +28,8 @@ namespace Engine {
         renderer = nullptr;
         backgroundMusic = nullptr;
         playerSurface = nullptr;
+
+
     }
     GameEngine::GameEngine(GameSettings game_settings)
     {
@@ -79,7 +84,7 @@ namespace Engine {
         bool quit = false;
         bool gameStarted = false;
         const int TPR = 1000; // Time per rotation
-
+		keyBindings();
         while (!quit) {
             Uint32 nextTick = SDL_GetTicks() + TPR;
             SDL_Event event;
@@ -88,8 +93,10 @@ namespace Engine {
                 switch (event.type) {
                 case SDL_QUIT: quit = true; break;
                 case SDL_KEYDOWN:
-					//we should let our keyhandler
-					// deal with this.
+					key_handler.notify(event.key.keysym.sym);
+                default: break;
+
+	                /*
                     switch (event.key.keysym.sym) {
                     case SDLK_ESCAPE: quit = true; break;
                     case SDLK_LCTRL:
@@ -106,6 +113,7 @@ namespace Engine {
                     case SDLK_RIGHT: break;
                     case SDLK_F8: toggleMusic(); break;
                     }
+ */
                 }
             }
             renderEverything();
@@ -119,6 +127,13 @@ namespace Engine {
         createObjectTexture("res/ship.png", "player", 100, 100);
     }
 
+	void keyBindings()
+    {
+		//create a binding for the toggleMusic function
+		//hook our binding to the keycode m
+		KeyHandler::FunctionHook soundToggle = std::bind(&toggleMusic);
+		key_handler.hook(soundToggle, SDLK_m);
+    }
     void toggleMusic() {
         if (musicPlaying)
         {
