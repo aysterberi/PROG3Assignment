@@ -28,12 +28,7 @@ namespace Engine {
     }
     GameEngine::GameEngine(GameSettings game_settings)
     {
-        window = nullptr;
-        backgroundSurface = nullptr;
-        backgroundTexture = nullptr;
-        renderer = nullptr;
-        backgroundMusic = nullptr;
-        playerSurface = nullptr;
+		GameEngine();
         engineSettings = game_settings;
     }
 
@@ -93,6 +88,8 @@ namespace Engine {
                 switch (event.type) {
                 case SDL_QUIT: quit = true; break;
                 case SDL_KEYDOWN:
+					//we should let our keyhandler
+					// deal with this.
                     switch (event.key.keysym.sym) {
                     case SDLK_ESCAPE: quit = true; break;
                     case SDLK_LCTRL:
