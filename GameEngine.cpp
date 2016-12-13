@@ -115,14 +115,6 @@ namespace Engine {
         }
     }
 
-	void notifyKeyPress(SDL_Event event)
-    {
-		std::list<Player> listenerList;
-    	for (Player p : listenerList)
-    	{
-    		p.position;
-    	}
-    }
     void GameEngine::startNewGame() {
         gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
         DynamicSprite* playerSprite = new DynamicSprite({100,100,100,100}, playerTexture, 3);
