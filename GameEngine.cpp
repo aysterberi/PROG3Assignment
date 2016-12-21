@@ -97,7 +97,7 @@ namespace Engine {
                     case SDLK_ESCAPE: quit = true; break;
                     case SDLK_LCTRL:
                     case SDLK_RCTRL: playSoundEffect("res/KirbyStyleLaser.ogg"); break;
-                    case SDLK_y: 
+                    case SDLK_y:
                         if (!gameStarted) {
                             startNewGame();
                             gameStarted = true;
@@ -117,9 +117,20 @@ namespace Engine {
 
     void GameEngine::startNewGame() {
         gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
-        DynamicSprite* playerSprite = new DynamicSprite({100,100,100,100}, playerTexture, 3);
+        DynamicSprite* playerSprite = new DynamicSprite({ 100,100,100,100 }, playerTexture, 3);
         Player* player = Player::getInstance("player", true, 3, playerSprite);
-        createObjectTexture("res/ship.png", "player", 100, 100);
+        createObjectTexture("res/ship.png", "player", 368, 500);
+        int enemyX = 25; int enemyY = 25;
+        std::string enemyName = "enemy";
+        for (auto i = 0; i < numberOfEnemies; i++) {
+            createObjectTexture("res/enemy.png", enemyName, enemyX, enemyY);
+            enemyX += 70;
+            if (i != 0 && i % 11 == 0) {
+                enemyX = 25;
+                enemyY += 70;
+            }
+            enemyName = "enemy" + std::to_string(i);
+        }
     }
 
     void toggleMusic() {
@@ -178,8 +189,8 @@ namespace Engine {
         int textureWidth = surface->w, textureHeight = surface->h;
         SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
         SDL_FreeSurface(surface);
-        Texture myTexture = {texture, textureRectangle};
-        gameObjects.insert({name, myTexture});
+        Texture myTexture = { texture, textureRectangle };
+        gameObjects.insert({ name, myTexture });
     }
 
     void GameEngine::createTextTexture(std::string path, std::string message,
@@ -194,7 +205,7 @@ namespace Engine {
 
         SDL_FreeSurface(textSurface);
         Texture txt = { textTexture, textRectangle };
-        gameObjects.insert({ "PRESS 'Y' TO START A NEW GAME", txt });
+        gameObjects.insert({ message, txt });
     }
 
     SDL_Texture* GameEngine::loadBackgroundTexture(std::string path) {
