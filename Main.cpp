@@ -23,6 +23,7 @@ int main(int argc, char* argv[]) {
     gameEngine.setPlayerPath("res/ship.png");
     gameEngine.playBackgroundMusic("res/Solving1.ogg");
     gameEngine.createTextTexture("res/djbgetdigital.ttf", "PRESS 'Y' TO START A NEW GAME", 48, 255, 255, 255);
+    gameEngine.setNumberOfEnemies(25);
 
     gameEngine.gameLoop();
 
