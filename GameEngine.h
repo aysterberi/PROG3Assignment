@@ -21,6 +21,7 @@ namespace Engine {
         struct Texture {
             SDL_Texture* texture;
             SDL_Rect dstRect;
+            bool movable;
         };
         GameEngine();
         GameEngine(GameSettings game_settings);
@@ -37,7 +38,8 @@ namespace Engine {
         void createObjectTexture(std::string path,
             std::string name,
             int initialPosX,
-            int initialPosY);
+            int initialPosY,
+            bool movable = false);
         void createTextTexture(std::string path,
             std::string message,
             int fontSize,
@@ -53,6 +55,10 @@ namespace Engine {
         void setNumberOfEnemies(int newNumber) { numberOfEnemies = newNumber; }
     protected:
     private:
+        void moveLeft();
+        void moveRight();
+        void moveMovables();
+        void moveEnemiesDown();
         std::unordered_map<std::string, Texture> gameObjects;
         std::vector<Texture> toRender;
         SDL_Surface* backgroundSurface;
@@ -61,10 +67,15 @@ namespace Engine {
         SDL_Renderer* renderer;
         Mix_Music* backgroundMusic;
         std::string playerPath;
+        bool gameStarted = false;
         const int SCREEN_WIDTH = 800;
         const int SCREEN_HEIGHT = 600;
         const char* WINDOW_TITLE = "Space Invaders";
+        const int playerY = 500;
+        int playerX = 368;
         int numberOfEnemies;
+        int movementDirection = 1;
+        SDL_Rect playerRect;
         SDL_Surface* playerSurface;
         SDL_Texture* playerTexture;
     };
