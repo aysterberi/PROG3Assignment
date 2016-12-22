@@ -82,11 +82,9 @@ namespace Engine {
 
     void GameEngine::gameLoop() {
         bool quit = false;
-        bool gameStarted = false;
-        const int TPR = 1000; // Time per rotation
 
         while (!quit) {
-            Uint32 nextTick = SDL_GetTicks() + TPR;
+            Uint32 nextTick = SDL_GetTicks() + FPS;
             SDL_Event event;
 
             while (SDL_PollEvent(&event)) {
@@ -104,14 +102,53 @@ namespace Engine {
                         }
                         break;
                     case SDLK_a:
-                    case SDLK_LEFT: break;
+                    case SDLK_LEFT: moveLeft(); break;
                     case SDLK_d:
-                    case SDLK_RIGHT: break;
+                    case SDLK_RIGHT: moveRight(); break;
                     case SDLK_F8: toggleMusic(); break;
                     }
                 }
             }
+            int delay = nextTick - SDL_GetTicks();
+            if (delay > 0)
+                SDL_Delay(delay);
+            moveMovables();
             renderEverything();
+        }
+    }
+
+    void GameEngine::moveLeft() {
+        auto search = gameObjects.find("player");
+        search->second.dstRect.x -= 5;
+    }
+
+    void GameEngine::moveRight() {
+        auto search = gameObjects.find("player");
+        search->second.dstRect.x += 5;
+    }
+
+    void GameEngine::moveEnemiesDown() {
+        for (auto i = 0; i < numberOfEnemies; i++) {
+            auto search = gameObjects.find("enemy" + std::to_string(i));
+            search->second.dstRect.y += 5;
+        }
+    }
+
+    void GameEngine::moveMovables() {
+        if (gameStarted) {
+            for (auto i = 0; i < numberOfEnemies; i++) {
+                std::string enemyName = "enemy" + std::to_string(i);
+                auto search = gameObjects.find(enemyName);
+                if (enemyName == "enemy10" && search->second.dstRect.x > 780) {
+                    moveEnemiesDown();
+                    movementDirection = -1;
+                }
+                if (enemyName == "enemy0" && search->second.dstRect.x < 0) {
+                    moveEnemiesDown();
+                    movementDirection = 1;
+                }
+                search->second.dstRect.x += movementDirection;
+            }
         }
     }
 
@@ -119,17 +156,17 @@ namespace Engine {
         gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
         DynamicSprite* playerSprite = new DynamicSprite({ 100,100,100,100 }, playerTexture, 3);
         Player* player = Player::getInstance("player", true, 3, playerSprite);
-        createObjectTexture("res/ship.png", "player", 368, 500);
-        int enemyX = 25; int enemyY = 25;
+        createObjectTexture("res/ship.png", "player", playerX, playerY);
+        int enemyX = 25; int enemyY = 5;
         std::string enemyName = "enemy";
         for (auto i = 0; i < numberOfEnemies; i++) {
-            createObjectTexture("res/enemy.png", enemyName, enemyX, enemyY);
+            enemyName = "enemy" + std::to_string(i);
+            createObjectTexture("res/enemy.png", enemyName, enemyX, enemyY, true);
             enemyX += 70;
             if (i != 0 && i % 11 == 0) {
                 enemyX = 25;
                 enemyY += 70;
             }
-            enemyName = "enemy" + std::to_string(i);
         }
     }
 
@@ -182,14 +219,14 @@ namespace Engine {
         SDL_RenderPresent(renderer);
     }
 
-    void GameEngine::createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY)
+    void GameEngine::createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool movable)
     {
         SDL_Surface* surface = IMG_Load(path.c_str());
         SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
         int textureWidth = surface->w, textureHeight = surface->h;
         SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
         SDL_FreeSurface(surface);
-        Texture myTexture = { texture, textureRectangle };
+        Texture myTexture = { texture, textureRectangle, movable };
         gameObjects.insert({ name, myTexture });
     }
 
@@ -245,6 +282,7 @@ namespace Engine {
     }
 
     GameEngine::~GameEngine() {
+        gameObjects.clear();
         Mix_FreeMusic(backgroundMusic);
         Mix_CloseAudio();
         SDL_FreeSurface(backgroundSurface);
