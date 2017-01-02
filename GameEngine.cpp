@@ -109,6 +109,7 @@ namespace Engine {
                     }
                 }
             }
+
             int delay = nextTick - SDL_GetTicks();
             if (delay > 0)
                 SDL_Delay(delay);
@@ -202,6 +203,7 @@ namespace Engine {
             musicPlaying = true;
         }
     }
+
     void GameEngine::playBackgroundMusic(std::string path) {
         if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 4096))
             printf("Error loading audio: %s\n", Mix_GetError());
@@ -213,20 +215,6 @@ namespace Engine {
 
         Mix_PlayMusic(backgroundMusic, -1);
         musicPlaying = true;
-    }
-
-    void GameEngine::playSoundEffect(std::string path) {
-        if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, AUDIO_S16SYS, 1, 4096))
-            printf("Error loading audio: %s\n", Mix_GetError());
-        Mix_Chunk* shotSound = Mix_LoadWAV(path.c_str());
-        if (!shotSound)
-            printf("Error playing audio: %s\n", Mix_GetError());
-
-        Mix_PlayChannel(-1, shotSound, 0);
-        //Mix_FreeChunk(shotSound);
-        // TODO: freeing the chunk right after we try to play it seems 
-        // to not work since no sound is played, investigate docs to figure out why
-        // this cannot stand, will cause memory leaks over time.
     }
 
     void GameEngine::renderEverything() {
@@ -251,7 +239,6 @@ namespace Engine {
     }
 
     void GameEngine::fireProjectile() {
-        playSoundEffect("res/KirbyStyleLaser.ogg");
         SDL_Surface* surface = IMG_Load("res/projectile.png");
         SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
         int projectileWidth = surface->w, projectileHeight = surface->h;

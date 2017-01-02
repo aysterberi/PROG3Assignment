@@ -31,7 +31,6 @@ namespace Engine {
         bool createWindow();
         void startNewGame();
         void playBackgroundMusic(std::string path);
-        void playSoundEffect(std::string path);
         void renderEverything();
         void gameLoop();
         void setTexture(std::string path);
@@ -67,7 +66,6 @@ namespace Engine {
         int getPlayerY();
         std::unordered_map<std::string, Texture> gameObjects;
         std::vector<Texture> projectiles;
-        
         SDL_Surface* backgroundSurface;
         SDL_Texture* backgroundTexture;
         SDL_Window* window;
