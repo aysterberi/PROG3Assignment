@@ -22,6 +22,7 @@ namespace Engine {
             SDL_Texture* texture;
             SDL_Rect dstRect;
             bool movable;
+            bool isDrawn;
         };
         GameEngine();
         GameEngine(GameSettings game_settings);
@@ -39,7 +40,8 @@ namespace Engine {
             std::string name,
             int initialPosX,
             int initialPosY,
-            bool movable = false);
+            bool movable = false,
+            bool isDrawn = true);
         void createTextTexture(std::string path,
             std::string message,
             int fontSize,
@@ -59,8 +61,13 @@ namespace Engine {
         void moveRight();
         void moveMovables();
         void moveEnemiesDown();
+        void fireProjectile();
+        void moveOrDestroyProjectile(std::vector<Texture> projectiles);
+        int getPlayerX();
+        int getPlayerY();
         std::unordered_map<std::string, Texture> gameObjects;
-        std::vector<Texture> toRender;
+        std::vector<Texture> projectiles;
+        
         SDL_Surface* backgroundSurface;
         SDL_Texture* backgroundTexture;
         SDL_Window* window;
@@ -68,6 +75,7 @@ namespace Engine {
         Mix_Music* backgroundMusic;
         std::string playerPath;
         bool gameStarted = false;
+        static const int PROJECTILE_VELOCITY = 5;
         const int SCREEN_WIDTH = 800;
         const int SCREEN_HEIGHT = 600;
         const char* WINDOW_TITLE = "Space Invaders";
