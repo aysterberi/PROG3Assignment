@@ -94,7 +94,7 @@ namespace Engine {
                     switch (event.key.keysym.sym) {
                     case SDLK_ESCAPE: quit = true; break;
                     case SDLK_LCTRL:
-                    case SDLK_RCTRL: playSoundEffect("res/KirbyStyleLaser.ogg"); break;
+                    case SDLK_RCTRL: fireProjectile(); break;
                     case SDLK_y:
                         if (!gameStarted) {
                             startNewGame();
@@ -139,31 +139,51 @@ namespace Engine {
             for (auto i = 0; i < numberOfEnemies; i++) {
                 std::string enemyName = "enemy" + std::to_string(i);
                 auto search = gameObjects.find(enemyName);
-                if (enemyName == "enemy10" && search->second.dstRect.x > 780) {
-                    moveEnemiesDown();
-                    movementDirection = -1;
+                if (search != gameObjects.end()) {
+                    if (enemyName == "enemy10" && search->second.dstRect.x > 740) {
+                        moveEnemiesDown();
+                        movementDirection = -1;
+                    }
+                    if (enemyName == "enemy0" && search->second.dstRect.x < 0) {
+                        moveEnemiesDown();
+                        movementDirection = 1;
+                    }
+                    search->second.dstRect.x += movementDirection;
                 }
-                if (enemyName == "enemy0" && search->second.dstRect.x < 0) {
-                    moveEnemiesDown();
-                    movementDirection = 1;
+            }
+            moveOrDestroyProjectile(projectiles);
+        }
+    }
+
+    void GameEngine::moveOrDestroyProjectile(std::vector<GameEngine::Texture>) {
+        for (auto i = 0; i < projectiles.size(); i++) {
+            auto &projectile = projectiles.at(i);
+            projectile.dstRect.y -= PROJECTILE_VELOCITY;
+            if (projectile.dstRect.y < 0) {
+                projectiles.erase(projectiles.begin() + i);
+            }
+            for (auto j = 0; j < numberOfEnemies; j++) {
+                std::string enemyName = "enemy" + std::to_string(j);
+                auto search = gameObjects.find(enemyName);
+                if (SDL_HasIntersection(&projectile.dstRect, &search->second.dstRect) && search->second.isDrawn) {
+                    projectiles.erase(projectiles.begin() + i);
+                    search->second.isDrawn = false;
+                    break;
                 }
-                search->second.dstRect.x += movementDirection;
             }
         }
     }
 
     void GameEngine::startNewGame() {
         gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
-        DynamicSprite* playerSprite = new DynamicSprite({ 100,100,100,100 }, playerTexture, 3);
-        Player* player = Player::getInstance("player", true, 3, playerSprite);
-        createObjectTexture("res/ship.png", "player", playerX, playerY);
+        createObjectTexture("res/ship.png", "player", playerX, playerY, true, true);
         int enemyX = 25; int enemyY = 5;
         std::string enemyName = "enemy";
         for (auto i = 0; i < numberOfEnemies; i++) {
             enemyName = "enemy" + std::to_string(i);
-            createObjectTexture("res/enemy.png", enemyName, enemyX, enemyY, true);
+            createObjectTexture("res/enemy.png", enemyName, enemyX, enemyY, true, true);
             enemyX += 70;
-            if (i != 0 && i % 11 == 0) {
+            if (i != 0 && i % 10 == 0) {
                 enemyX = 25;
                 enemyY += 70;
             }
@@ -213,20 +233,42 @@ namespace Engine {
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
         for (std::pair<std::string, Texture> var : gameObjects) {
-            SDL_RenderCopy(renderer, var.second.texture, NULL, &var.second.dstRect);
+            if (var.second.isDrawn)
+                SDL_RenderCopy(renderer, var.second.texture, NULL, &var.second.dstRect);
+        }
+        for (Texture var : projectiles) {
+            SDL_RenderCopy(renderer, var.texture, NULL, &var.dstRect);
         }
 
         SDL_RenderPresent(renderer);
     }
 
-    void GameEngine::createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool movable)
+    int GameEngine::getPlayerX() {
+        return gameObjects.find("player")->second.dstRect.x;
+    }
+    int GameEngine::getPlayerY() {
+        return gameObjects.find("player")->second.dstRect.y;
+    }
+
+    void GameEngine::fireProjectile() {
+        playSoundEffect("res/KirbyStyleLaser.ogg");
+        SDL_Surface* surface = IMG_Load("res/projectile.png");
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+        int projectileWidth = surface->w, projectileHeight = surface->h;
+        SDL_Rect projectileRectangle = { getPlayerX() + 30, getPlayerY() + 10, projectileWidth, projectileHeight };
+        SDL_FreeSurface(surface);
+        Texture projectileTexture = { texture, projectileRectangle, true, true };
+        projectiles.emplace_back(projectileTexture);
+    }
+
+    void GameEngine::createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool movable, bool isDrawn)
     {
         SDL_Surface* surface = IMG_Load(path.c_str());
         SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
         int textureWidth = surface->w, textureHeight = surface->h;
         SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
         SDL_FreeSurface(surface);
-        Texture myTexture = { texture, textureRectangle, movable };
+        Texture myTexture = { texture, textureRectangle, movable, isDrawn };
         gameObjects.insert({ name, myTexture });
     }
 
@@ -241,7 +283,7 @@ namespace Engine {
         SDL_Rect textRectangle = { 100, 250, textWidth, textHeight };
 
         SDL_FreeSurface(textSurface);
-        Texture txt = { textTexture, textRectangle };
+        Texture txt = { textTexture, textRectangle, false, true };
         gameObjects.insert({ message, txt });
     }
 
