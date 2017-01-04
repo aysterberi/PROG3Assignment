@@ -19,23 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DynamicSprite.cpp" />
     <ClCompile Include="GameEngine.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="ResourceLoader.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="StaticSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DynamicSprite.h" />
     <ClInclude Include="GameEngine.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="StaticSprite.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{79ECC669-7CCD-4767-8107-74D5B5DF3FF6}</ProjectGuid>
