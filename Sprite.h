@@ -1,25 +1,26 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include "GameObject.h"
 #include <string>
 #include <SDL.h>
 #include <SDL_image.h>
 namespace Engine {
-    class Sprite :
-        public GameObject
-    {
+    class Sprite {
     public:
-        virtual void draw() = 0;
-        virtual ~Sprite();
-        SDL_Texture* getTexture() const { return spriteTexture; }
-    protected:
-        Sprite(const SDL_Rect& rect, SDL_Texture* texture);
+        Sprite(SDL_Texture*, SDL_Rect, bool);
+        ~Sprite();
+        SDL_Texture* getTexture() const { return texture; }
+        SDL_Rect getRect() const { return rect; }
+        void setRectY(int newY) { rect.y = newY; }
+        void setRectX(int newX) { rect.x = newX; }
+        void incrementRectX(int inc);
+        void incrementRectY(int inc);
+        bool isDrawn() const { return drawn; }
+        void setDrawn(bool newValue) { drawn = newValue; }
     private:
         SDL_Rect rect;
-        SDL_Texture* spriteTexture;
-        Sprite(const Sprite&) = delete;
-        const Sprite& operator=(const Sprite&) = delete;
+        SDL_Texture* texture;
+        bool drawn;
     };
 }
 #endif
