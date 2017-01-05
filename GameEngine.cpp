@@ -126,18 +126,18 @@ namespace Engine {
 
     void GameEngine::moveLeft() {
         auto search = gameObjects.find("player");
-        search->second.incrementRectX(-5);
+        search->second->incrementRectX(-5);
     }
 
     void GameEngine::moveRight() {
         auto search = gameObjects.find("player");
-        search->second.incrementRectX(5);
+        search->second->incrementRectX(5);
     }
 
     void GameEngine::moveEnemiesDown() {
         for (auto i = 0; i < numberOfEnemies; i++) {
             auto search = gameObjects.find("enemy" + std::to_string(i));
-            search->second.incrementRectY(5);
+            search->second->incrementRectY(5);
 
         }
     }
@@ -148,34 +148,37 @@ namespace Engine {
                 std::string enemyName = "enemy" + std::to_string(i);
                 auto search = gameObjects.find(enemyName);
                 if (search != gameObjects.end()) {
-                    if (enemyName == "enemy10" && search->second.getRect().x > 740) {
+                    if (enemyName == "enemy10" && search->second->getRect().x > 740) {
                         moveEnemiesDown();
                         movementDirection = -1;
                     }
-                    if (enemyName == "enemy0" && search->second.getRect().x < 0) {
+                    if (enemyName == "enemy0" && search->second->getRect().x < 0) {
                         moveEnemiesDown();
                         movementDirection = 1;
                     }
-                    search->second.incrementRectX(movementDirection);
+                    search->second->incrementRectX(movementDirection);
                 }
             }
             moveOrDestroyProjectile(projectiles);
         }
     }
 
-    void GameEngine::moveOrDestroyProjectile(std::vector<Sprite>) {
+    void GameEngine::moveOrDestroyProjectile(std::vector<Sprite*>) {
         for (auto i = 0; i < projectiles.size(); i++) {
-            auto &projectile = projectiles.at(i);
-            projectile.setRectY(projectile.getRect().y - PROJECTILE_VELOCITY);
-            if (projectile.getRect().y < 0) {
+            auto projectile = projectiles.at(i);
+            projectile->setRectY(projectile->getRect().y - PROJECTILE_VELOCITY);
+            if (projectile->getRect().y < 0) {
+				delete projectile;
                 projectiles.erase(projectiles.begin() + i);
+				break;
             }
             for (auto j = 0; j < numberOfEnemies; j++) {
                 std::string enemyName = "enemy" + std::to_string(j);
                 auto search = gameObjects.find(enemyName);
-                if (SDL_HasIntersection(&projectile.getRect(), &search->second.getRect()) && search->second.isDrawn()) {
+                if (SDL_HasIntersection(&projectile->getRect(), &search->second->getRect()) && search->second->isDrawn()) {
+					delete projectile;
                     projectiles.erase(projectiles.begin() + i);
-                    search->second.setDrawn(false);
+                    search->second->setDrawn(false);
                     break;
                 }
             }
@@ -227,22 +230,22 @@ namespace Engine {
     void GameEngine::renderEverything() {
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
-        for (std::pair<std::string, Sprite> var : gameObjects) {
-            if (var.second.isDrawn())
-                SDL_RenderCopy(renderer, var.second.getTexture(), NULL, &var.second.getRect());
+        for (std::pair<std::string, Sprite*> var : gameObjects) {
+            if (var.second->isDrawn())
+                SDL_RenderCopy(renderer, var.second->getTexture(), NULL, &var.second->getRect());
         }
-        for (Sprite var : projectiles) {
-            SDL_RenderCopy(renderer, var.getTexture(), NULL, &var.getRect());
+        for (Sprite* var : projectiles) {
+			SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
         }
 
         SDL_RenderPresent(renderer);
     }
 
     int GameEngine::getPlayerX() {
-        return gameObjects.find("player")->second.getRect().x;
+		return gameObjects.find("player")->second->getRect().x;
     }
     int GameEngine::getPlayerY() {
-        return gameObjects.find("player")->second.getRect().y;
+        return gameObjects.find("player")->second->getRect().y;
     }
 
     void GameEngine::fireProjectile() {
@@ -251,7 +254,7 @@ namespace Engine {
         int projectileWidth = surface->w, projectileHeight = surface->h;
         SDL_Rect projectileRectangle = { getPlayerX() + 30, getPlayerY() + 10, projectileWidth, projectileHeight };
         SDL_FreeSurface(surface);
-        Sprite projectileTexture = Sprite(texture, projectileRectangle, true);
+        Sprite* projectileTexture = new Sprite(texture, projectileRectangle, true);
         projectiles.emplace_back(projectileTexture);
     }
 
@@ -262,7 +265,7 @@ namespace Engine {
         int textureWidth = surface->w, textureHeight = surface->h;
         SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
         SDL_FreeSurface(surface);
-        Sprite myTexture = Sprite(texture, textureRectangle, drawn);
+        Sprite* myTexture = new Sprite(texture, textureRectangle, drawn);
         gameObjects.insert({ name, myTexture });
     }
 
@@ -277,7 +280,7 @@ namespace Engine {
         SDL_Rect textRectangle = { 100, 250, textWidth, textHeight };
 
         SDL_FreeSurface(textSurface);
-        Sprite txt = Sprite(textTexture, textRectangle, true);
+        Sprite* txt = new Sprite(textTexture, textRectangle, true);
         gameObjects.insert({ message, txt });
     }
 
@@ -318,6 +321,9 @@ namespace Engine {
     }
 
     GameEngine::~GameEngine() {
+		for (std::pair<std::string, Sprite*> var : gameObjects) {
+			delete var.second;
+		}
         gameObjects.clear();
         projectiles.clear();
         Mix_FreeMusic(backgroundMusic);

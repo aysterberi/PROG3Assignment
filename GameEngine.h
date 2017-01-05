@@ -54,11 +54,11 @@ namespace Engine {
         void moveMovables();
         void moveEnemiesDown();
         void fireProjectile();
-        void moveOrDestroyProjectile(std::vector<Sprite> projectiles);
+        void moveOrDestroyProjectile(std::vector<Sprite*> projectiles);
         int getPlayerX();
         int getPlayerY();
-        std::unordered_map<std::string, Sprite> gameObjects;
-        std::vector<Sprite> projectiles;
+        std::unordered_map<std::string, Sprite*> gameObjects;
+        std::vector<Sprite*> projectiles;
         SDL_Surface* backgroundSurface;
         SDL_Texture* backgroundTexture;
         SDL_Window* window;

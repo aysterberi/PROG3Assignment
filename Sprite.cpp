@@ -9,7 +9,7 @@ namespace Engine {
     }
 
     Sprite::~Sprite() {
-        texture = NULL;
+		SDL_DestroyTexture(texture);
     }
 
     void Sprite::incrementRectX(int inc) {
