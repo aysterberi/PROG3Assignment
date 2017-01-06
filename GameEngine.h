@@ -74,6 +74,7 @@ namespace Engine {
         SDL_Renderer* renderer;
         Mix_Music* backgroundMusic;
         std::vector<Sprite*> projectiles;
+		std::vector<Sprite*> gameSprites;
         std::unordered_map<std::string, Sprite*> gameObjects;
         std::string playerPath;
         bool gameStarted = false;

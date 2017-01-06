@@ -104,6 +104,11 @@ namespace Engine {
                     case SDLK_d:
                     case SDLK_RIGHT: moveRight(); break;
                     case SDLK_F8: toggleMusic(); break;
+					default:
+						for (auto sprite : gameSprites)
+						{
+							sprite->react(event);
+						}
                     }
                 }
             }
