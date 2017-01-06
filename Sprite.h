@@ -16,7 +16,8 @@ namespace Engine {
         void incrementRectX(int inc);
         void incrementRectY(int inc);
         bool isDrawn() const { return drawn; }
-        void setDrawn(bool newValue) { drawn = newValue; }
+		void setDrawn(bool newValue) { drawn = newValue; }
+		void react(SDL_Event event);
     private:
         SDL_Rect rect;
         SDL_Texture* texture;
