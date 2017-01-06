@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include "Player.h"
+
 namespace Engine {
     class GameEngine
     {
@@ -26,7 +28,8 @@ namespace Engine {
         void playBackgroundMusic(std::string path);
         void gameLoop();
         void setNumberOfEnemies(int newNumber) { numberOfEnemies = newNumber; }
-        void createTextTexture(std::string path,
+		Sprite * createSprite(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
+		void createTextTexture(std::string path,
             std::string message,
             int fontSize,
             Uint8 rColor,
@@ -35,34 +38,28 @@ namespace Engine {
         SDL_Texture* loadBackgroundTexture(std::string path);
     protected:
     private:
+		Player* player;
         bool createWindow();
-        void createObjectTexture(std::string path,
-            std::string name,
-            int initialPosX,
-            int initialPosY,
-            bool isDrawn = true);
+        void createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
         void setTexture(std::string path);
         void renderEverything();
         void startNewGame();
+		void createPlayer();
 		void toggleMusic();
 		bool musicPlaying;
 		int volume;
-        void moveLeft();
-        void moveRight();
         void moveMovables();
         void moveEnemiesDown();
         void fireProjectile();
         void moveOrDestroyProjectile(std::vector<Sprite*> projectiles);
         int getNumberOfEnemies() const { return numberOfEnemies; }
-        int getPlayerX();
-        int getPlayerY();
         int playerX = 368;
+		int playerY = 500;
         int numberOfEnemies;
         int movementDirection = 1;
         const int PROJECTILE_VELOCITY = 5;
         const int SCREEN_WIDTH = 800;
         const int SCREEN_HEIGHT = 600;
-        const int PLAYER_Y = 500;
         const char* WINDOW_TITLE = "Space Invaders";
         SDL_Window* window;
         SDL_Surface* backgroundSurface;

@@ -97,14 +97,9 @@ namespace Engine {
                             gameStarted = true;
                         }
                         break;
-                    case SDLK_a:
-                    case SDLK_LEFT:
-                        moveLeft();
-                        break;
-                    case SDLK_d:
-                    case SDLK_RIGHT: moveRight(); break;
                     case SDLK_F8: toggleMusic(); break;
 					default:
+						player->react(event);
 						for (auto sprite : gameSprites)
 						{
 							sprite->react(event);
@@ -119,16 +114,6 @@ namespace Engine {
             moveMovables();
             renderEverything();
         }
-    }
-
-    void GameEngine::moveLeft() {
-        auto search = gameObjects.find("player");
-        search->second->incrementRectX(-5);
-    }
-
-    void GameEngine::moveRight() {
-        auto search = gameObjects.find("player");
-        search->second->incrementRectX(5);
     }
 
     void GameEngine::moveEnemiesDown() {
@@ -184,7 +169,7 @@ namespace Engine {
 
     void GameEngine::startNewGame() {
         gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
-        createObjectTexture(playerPath, "player", playerX, PLAYER_Y, true);
+		createPlayer();
         int enemyX = 25; int enemyY = 5;
         std::string enemyName = "enemy";
         for (auto i = 0; i < numberOfEnemies; i++) {
@@ -197,7 +182,10 @@ namespace Engine {
             }
         }
     }
-
+	void GameEngine::createPlayer()
+    {		
+		player = new Player(createSprite(playerPath, "player", playerX, playerY, true));
+    } 
     void GameEngine::toggleMusic() {
         if (musicPlaying)
         {
@@ -238,18 +226,14 @@ namespace Engine {
         SDL_RenderPresent(renderer);
     }
 
-    int GameEngine::getPlayerX() {
-        return gameObjects.find("player")->second->getRect().x;
-    }
-    int GameEngine::getPlayerY() {
-        return gameObjects.find("player")->second->getRect().y;
-    }
+
 
     void GameEngine::fireProjectile() {
+		//TODO: move to the player class
         SDL_Surface* surface = IMG_Load("res/projectile.png");
         SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
         int projectileWidth = surface->w, projectileHeight = surface->h;
-        SDL_Rect projectileRectangle = { getPlayerX() + 30, getPlayerY() + 10, projectileWidth, projectileHeight };
+        SDL_Rect projectileRectangle = { player->getRect().x + 30, player->getRect().y + 10, projectileWidth, projectileHeight };
         SDL_FreeSurface(surface);
         Sprite* projectileTexture = new Sprite(texture, projectileRectangle, true);
         projectiles.emplace_back(projectileTexture);
@@ -266,6 +250,16 @@ namespace Engine {
         gameObjects.insert({ name, myTexture });
     }
 
+	Sprite* GameEngine::createSprite(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn)
+	{
+		SDL_Surface* surface = IMG_Load(path.c_str());
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+		int textureWidth = surface->w, textureHeight = surface->h;
+		SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
+		SDL_FreeSurface(surface);
+		Sprite* myTexture = new Sprite(texture, textureRectangle, drawn);
+		return myTexture;
+	}
     void GameEngine::createTextTexture(std::string path, std::string message,
         int fontSize, Uint8 rColor, Uint8 gColor, Uint8 bColor) {
 
