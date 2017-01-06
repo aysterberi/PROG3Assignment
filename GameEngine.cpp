@@ -24,7 +24,6 @@ namespace Engine {
         backgroundTexture = nullptr;
         renderer = nullptr;
         backgroundMusic = nullptr;
-        playerSurface = nullptr;
     }
     GameEngine::GameEngine(GameSettings game_settings)
     {
@@ -33,7 +32,6 @@ namespace Engine {
         backgroundTexture = nullptr;
         renderer = nullptr;
         backgroundMusic = nullptr;
-        playerSurface = nullptr;
         engineSettings = game_settings;
     }
 
@@ -187,7 +185,7 @@ namespace Engine {
 
     void GameEngine::startNewGame() {
         gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
-        createObjectTexture("res/ship.png", "player", playerX, playerY, true);
+        createObjectTexture("res/ship.png", "player", playerX, PLAYER_Y, true);
         int enemyX = 25; int enemyY = 5;
         std::string enemyName = "enemy";
         for (auto i = 0; i < numberOfEnemies; i++) {
