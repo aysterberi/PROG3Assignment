@@ -187,7 +187,7 @@ namespace Engine {
 
     void GameEngine::startNewGame() {
         gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
-        createObjectTexture("res/ship.png", "player", playerX, playerY, true);
+        createObjectTexture(playerPath, "player", playerX, playerY, true);
         int enemyX = 25; int enemyY = 5;
         std::string enemyName = "enemy";
         for (auto i = 0; i < numberOfEnemies; i++) {
