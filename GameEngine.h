@@ -44,6 +44,9 @@ namespace Engine {
         void setTexture(std::string path);
         void renderEverything();
         void startNewGame();
+		void toggleMusic();
+		bool musicPlaying;
+		int volume;
         void moveLeft();
         void moveRight();
         void moveMovables();

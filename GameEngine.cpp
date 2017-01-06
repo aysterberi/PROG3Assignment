@@ -10,12 +10,6 @@
 
 namespace Engine {
 
-    // forward declarations
-    // faster than using an include
-    void toggleMusic();
-    bool musicPlaying;
-    int volume;
-
     GameEngine::GameSettings engineSettings;
 
     GameEngine::GameEngine() {
@@ -199,7 +193,7 @@ namespace Engine {
         }
     }
 
-    void toggleMusic() {
+    void GameEngine::toggleMusic() {
         if (musicPlaying)
         {
             volume = Mix_VolumeMusic(-1);
