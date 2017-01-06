@@ -78,7 +78,7 @@ namespace Engine {
         while (!quit) {
             Uint32 nextTick = SDL_GetTicks() + FPS;
             SDL_Event event;
-            int numberOfProjectiles = projectiles.size();
+            size_t numberOfProjectiles = projectiles.size();
 
             while (SDL_PollEvent(&event)) {
                 switch (event.type) {
@@ -160,15 +160,15 @@ namespace Engine {
             auto projectile = projectiles.at(i);
             projectile->setRectY(projectile->getRect().y - PROJECTILE_VELOCITY);
             if (projectile->getRect().y < 0) {
-				delete projectile;
+                delete projectile;
                 projectiles.erase(projectiles.begin() + i);
-				break;
+                break;
             }
             for (auto j = 0; j < numberOfEnemies; j++) {
                 std::string enemyName = "enemy" + std::to_string(j);
                 auto search = gameObjects.find(enemyName);
                 if (SDL_HasIntersection(&projectile->getRect(), &search->second->getRect()) && search->second->isDrawn()) {
-					delete projectile;
+                    delete projectile;
                     projectiles.erase(projectiles.begin() + i);
                     search->second->setDrawn(false);
                     break;
@@ -227,14 +227,14 @@ namespace Engine {
                 SDL_RenderCopy(renderer, var.second->getTexture(), NULL, &var.second->getRect());
         }
         for (Sprite* var : projectiles) {
-			SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
+            SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
         }
 
         SDL_RenderPresent(renderer);
     }
 
     int GameEngine::getPlayerX() {
-		return gameObjects.find("player")->second->getRect().x;
+        return gameObjects.find("player")->second->getRect().x;
     }
     int GameEngine::getPlayerY() {
         return gameObjects.find("player")->second->getRect().y;
@@ -313,9 +313,9 @@ namespace Engine {
     }
 
     GameEngine::~GameEngine() {
-		for (std::pair<std::string, Sprite*> var : gameObjects) {
-			delete var.second;
-		}
+        for (std::pair<std::string, Sprite*> var : gameObjects) {
+            delete var.second;
+        }
         gameObjects.clear();
         projectiles.clear();
         Mix_FreeMusic(backgroundMusic);
