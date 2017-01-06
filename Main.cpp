@@ -1,6 +1,3 @@
-#define _CRTDBG_MAP_ALLOC  
-#include <stdlib.h>  
-#include <crtdbg.h>  
 #include <iostream>
 #include <string>
 #include "GameEngine.h"
@@ -32,6 +29,5 @@ int main(int argc, char* argv[]) {
 
     gameEngine.gameLoop();
 
-    _CrtDumpMemoryLeaks();
     return 0;
 }
