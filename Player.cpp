@@ -5,11 +5,6 @@
 
 namespace Engine {
 
-    Player::Player(SDL_Texture* texture, SDL_Rect rect, bool drawn): 
-        Sprite(texture, rect, drawn) {
-
-    }
-
     Player::~Player() {
 
     }
