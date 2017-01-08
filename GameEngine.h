@@ -45,7 +45,7 @@ namespace Engine {
         SDL_Texture* newTexture(SDL_Surface*);
 		Player* player;
         bool createWindow();
-        void createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
+        //void createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
         void setTexture(std::string path);
         void renderEverything();
         void startNewGame();

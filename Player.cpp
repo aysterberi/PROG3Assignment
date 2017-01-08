@@ -2,8 +2,8 @@
 #include "Sprite.h"
 namespace Engine {
 
-    Player::Player(Sprite * sprite):
-        Sprite(sprite->getTexture(), sprite->getRect(), sprite->isDrawn()) {
+    Player::Player(SDL_Texture* texture, SDL_Rect rect, bool drawn): 
+        Sprite(texture, rect, drawn) {
 
     }
 

@@ -3,11 +3,10 @@
 #include "Sprite.h"
 
 namespace Engine {
-    class Player : public Engine::Sprite
+    class Player : public Sprite
     {
     public:
-        using Sprite::Sprite;
-        Player(Sprite*);
+        Player(SDL_Texture*, SDL_Rect, bool);
         ~Player();
         void react(SDL_Event event) override;
         void tick(GameEngine &) override;
