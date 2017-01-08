@@ -203,7 +203,6 @@ namespace Engine {
         SDL_Rect rect = { playerX, playerY, surface->w, surface->h };
 		player = new Player(texture, rect, true);
         SDL_FreeSurface(surface);
-		//gameSprites.push_back(player);
     } 
 
     void GameEngine::toggleMusic() {

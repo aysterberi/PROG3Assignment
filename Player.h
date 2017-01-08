@@ -6,7 +6,7 @@ namespace Engine {
     class Player : public Sprite
     {
     public:
-        Player(SDL_Texture*, SDL_Rect, bool);
+        using Sprite::Sprite;
         ~Player();
         void react(SDL_Event event) override;
         void tick(GameEngine &) override;
