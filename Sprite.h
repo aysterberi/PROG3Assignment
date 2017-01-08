@@ -4,8 +4,11 @@
 #include <string>
 #include <SDL.h>
 #include <SDL_image.h>
+
 namespace Engine {
-    class Sprite {
+	class GameEngine;
+
+	class Sprite {
     public:
         Sprite(SDL_Texture*, SDL_Rect, bool);
 	    virtual ~Sprite();
@@ -18,6 +21,7 @@ namespace Engine {
         bool isDrawn() const { return drawn; }
 		void setDrawn(bool newValue) { drawn = newValue; }
 		virtual void react(SDL_Event event);
+		virtual void tick(GameEngine& engine);
     private:
         SDL_Texture* texture;
 		SDL_Rect rect;

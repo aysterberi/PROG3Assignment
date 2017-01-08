@@ -22,4 +22,7 @@ namespace Engine {
 	void Sprite::react(SDL_Event event)
 	{
 	}
+	void Sprite::tick(GameEngine & engine)
+	{
+	}
 }
