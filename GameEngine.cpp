@@ -18,6 +18,7 @@ namespace Engine {
         backgroundTexture = nullptr;
         renderer = nullptr;
         backgroundMusic = nullptr;
+        player = nullptr;
     }
     GameEngine::GameEngine(GameSettings game_settings)
     {
@@ -26,6 +27,7 @@ namespace Engine {
         backgroundTexture = nullptr;
         renderer = nullptr;
         backgroundMusic = nullptr;
+        player = nullptr;
         engineSettings = game_settings;
     }
 
@@ -193,8 +195,12 @@ namespace Engine {
         return myTexture;
     }
 
-	void GameEngine::createPlayer() {		
-		player = new Player(createSprite(playerPath, "player", playerX, playerY, true));
+	void GameEngine::createPlayer() {
+        SDL_Surface* surface = IMG_Load(playerPath.c_str());
+        SDL_Texture* texture = newTexture(surface);
+        SDL_Rect rect = { playerX, playerY, surface->w, surface->h };
+		player = new Player(texture, rect, true);
+        SDL_FreeSurface(surface);
 		//gameSprites.push_back(player);
     } 
 
@@ -227,6 +233,8 @@ namespace Engine {
     void GameEngine::renderEverything() {
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
+        if (player != nullptr)
+            SDL_RenderCopy(renderer, player->getTexture(), NULL, &player->getRect());
         for (std::pair<std::string, Sprite*> var : gameObjects) {
             if (var.second->isDrawn())
                 SDL_RenderCopy(renderer, var.second->getTexture(), NULL, &var.second->getRect());
