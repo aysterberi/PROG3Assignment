@@ -90,8 +90,10 @@ namespace Engine {
                     case SDLK_ESCAPE: quit = true; break;
                     case SDLK_LCTRL:
                     case SDLK_RCTRL:
-                        if (numberOfProjectiles < 10)
-                            fireProjectile();
+						if (numberOfProjectiles < 10)
+							//TODO: Rewrite projectile handling
+							/*fireProjectile();*/
+							std::cout << "Pew! Pew!";
                         break;
                     case SDLK_y:
                         if (!gameStarted) {
