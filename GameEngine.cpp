@@ -107,7 +107,7 @@ namespace Engine {
                     }
                 }
             }
-
+			
             int delay = nextTick - SDL_GetTicks();
             if (delay > 0)
                 SDL_Delay(delay);
@@ -115,6 +115,15 @@ namespace Engine {
             renderEverything();
         }
     }
+
+	bool GameEngine::hasCollision(Sprite & sprite)
+	{
+		for (auto other : gameSprites) {
+			if (SDL_HasIntersection(&sprite.getRect(), &other->getRect()))
+				return true;
+		}
+			return false;
+	}
 
     void GameEngine::moveEnemiesDown() {
         for (auto i = 0; i < numberOfEnemies; i++) {
