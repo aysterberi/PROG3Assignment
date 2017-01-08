@@ -54,10 +54,4 @@ namespace Engine {
         incrementRectX(+5);
     }
 
-
-    void Player::shoot()
-    {
-
-    }
-
 }

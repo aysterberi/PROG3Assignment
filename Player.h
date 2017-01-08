@@ -13,7 +13,6 @@ namespace Engine {
     private:
         void moveLeft();
         void moveRight();
-        void shoot();
 		bool shooting;
     };
 }
