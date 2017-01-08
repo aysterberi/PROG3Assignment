@@ -2,11 +2,15 @@
 #define PROJECTILE_H
 
 #include "Sprite.h"
-class Projectile : public Engine::Sprite
-{
-public:
-	using Sprite::Sprite;
-	~Projectile();
-};
 
+namespace Engine {
+    class Projectile : public Sprite
+    {
+    public:
+        using Sprite::Sprite;
+        ~Projectile();
+        void react(SDL_Event) override;
+        void tick(GameEngine &) override;
+    };
+}
 #endif
