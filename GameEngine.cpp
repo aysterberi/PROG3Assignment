@@ -4,6 +4,7 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <iostream>
+#include <atomic>
 
 
 #define FPS 60
@@ -115,6 +116,18 @@ namespace Engine {
             renderEverything();
         }
     }
+
+	bool GameEngine::hasCollision(Sprite & sprite)
+	{
+		for (auto other : gameSprites)
+		{
+			if (SDL_HasIntersection(&sprite.getRect(), &other->getRect()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
     void GameEngine::moveEnemiesDown() {
         for (auto i = 0; i < numberOfEnemies; i++) {

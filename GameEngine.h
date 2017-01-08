@@ -27,6 +27,7 @@ namespace Engine {
         void setPlayerPath(std::string path);
         void playBackgroundMusic(std::string path);
         void gameLoop();
+		bool hasCollision(Sprite& sprite);
         void setNumberOfEnemies(int newNumber) { numberOfEnemies = newNumber; }
 		Sprite * createSprite(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
 		void createTextTexture(std::string path,
