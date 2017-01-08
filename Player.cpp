@@ -34,7 +34,9 @@ namespace Engine {
 		{
 			//TODO: do something
 			std::cout << "Oops, I collided.";
+			engine.createTextTexture("res/djbgetdigital.ttf", "Ha! You lose.", 48, 255, 255, 255);
 		}
+		engine.createProjectile("res/projectile.png", *this);
     }
 
     void Player::moveLeft()

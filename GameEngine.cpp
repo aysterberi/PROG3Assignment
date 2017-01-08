@@ -135,7 +135,7 @@ namespace Engine {
                 var->tick(*this);
             }
 			player->tick(*this);
-            moveOrDestroyProjectile(projectiles);
+          //  moveOrDestroyProjectile(projectiles);
         }
     }
 
@@ -197,7 +197,17 @@ namespace Engine {
         Sprite* myTexture = new Sprite(texture, textureRectangle, drawn);
         return myTexture;
     }
-
+	void GameEngine::createProjectile(std::string path, Player & player)
+    {
+		auto x = player.getRect().x+30, y = player.getRect().y+10;
+		SDL_Surface* surface = IMG_Load(path.c_str());
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+		int textWidth = surface->w, textHeight = surface->h;
+		SDL_Rect textRect = { x, y, textWidth, textHeight };
+		SDL_FreeSurface(surface);
+		Projectile* projectile = new Projectile(texture, textRect, true);
+		projectiles.emplace_back(projectile);
+    }
 	void GameEngine::createPlayer() {
         SDL_Surface* surface = IMG_Load(playerPath.c_str());
         SDL_Texture* texture = newTexture(surface);
