@@ -28,6 +28,9 @@ void Player::react(SDL_Event event)
 		break;
 	}
 }
+void Player::tick()
+{
+}
 void Player::moveLeft()
 {
 	incrementRectX(-5);

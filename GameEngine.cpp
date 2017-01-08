@@ -185,6 +185,7 @@ namespace Engine {
 	void GameEngine::createPlayer()
     {		
 		player = new Player(createSprite(playerPath, "player", playerX, playerY, true));
+		gameSprites.push_back(player);
     } 
     void GameEngine::toggleMusic() {
         if (musicPlaying)
@@ -219,6 +220,10 @@ namespace Engine {
             if (var.second->isDrawn())
                 SDL_RenderCopy(renderer, var.second->getTexture(), NULL, &var.second->getRect());
         }
+		for (auto var : gameSprites)
+		{
+			SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
+		}
         for (Sprite* var : projectiles) {
             SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
         }

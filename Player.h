@@ -9,6 +9,7 @@ public:
 	Player(Sprite*);
 	~Player();
 	void react(SDL_Event event) override;
+	void tick();
 private:
 	void moveLeft();
 	void moveRight();
