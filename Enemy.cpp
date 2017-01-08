@@ -16,11 +16,11 @@ namespace Engine {
     void Enemy::tick(GameEngine &engine) {
         this->incrementRectX(direction);
         if (this->getRect().x > engine.getScreenWidth()) {
-            this->incrementRectY(5);
+            this->incrementRectY(150);
             invertDirection();
         }
         else if (this->getRect().x < 0) {
-            this->incrementRectY(5);
+            this->incrementRectY(150);
             invertDirection();
         }
     }

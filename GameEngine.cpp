@@ -134,6 +134,7 @@ namespace Engine {
             for (auto var : gameSprites) {
                 var->tick(*this);
             }
+			player->tick(*this);
             moveOrDestroyProjectile(projectiles);
         }
     }

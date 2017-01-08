@@ -1,5 +1,8 @@
 #include "Player.h"
 #include "Sprite.h"
+#include "GameEngine.h"
+#include <iostream>
+
 namespace Engine {
 
     Player::Player(SDL_Texture* texture, SDL_Rect rect, bool drawn): 
@@ -30,8 +33,13 @@ namespace Engine {
             break;
         }
     }
-    void Player::tick(GameEngine &)
+    void Player::tick(GameEngine &engine)
     {
+		if(engine.hasCollision(*this))
+		{
+			//TODO: do something
+			std::cout << "Oops, I collided.";
+		}
     }
 
     void Player::moveLeft()
