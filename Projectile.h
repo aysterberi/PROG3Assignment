@@ -11,6 +11,8 @@ namespace Engine {
         ~Projectile();
         void react(SDL_Event) override;
         void tick(GameEngine &) override;
+    private:
+		const int PROJECTILE_VELOCITY = 5;
     };
 }
 #endif

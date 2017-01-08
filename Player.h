@@ -14,6 +14,7 @@ namespace Engine {
         void moveLeft();
         void moveRight();
         void shoot();
+		bool shooting;
     };
 }
 #endif

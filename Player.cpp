@@ -22,7 +22,7 @@ namespace Engine {
             moveRight();
             break;
         case SDLK_LCTRL:
-            shoot();
+			shooting = true;
             break;
         default:
             break;
@@ -30,13 +30,18 @@ namespace Engine {
     }
     void Player::tick(GameEngine &engine)
     {
+		if(shooting)
+		{
+			engine.createProjectile("res/projectile.png", *this);
+			shooting = false;
+		}
 		if(engine.hasCollision(*this))
 		{
 			//TODO: do something
 			std::cout << "Oops, I collided.";
 			engine.createTextTexture("res/djbgetdigital.ttf", "Ha! You lose.", 48, 255, 255, 255);
 		}
-		engine.createProjectile("res/projectile.png", *this);
+
     }
 
     void Player::moveLeft()

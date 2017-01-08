@@ -30,6 +30,7 @@ namespace Engine {
         void playBackgroundMusic(std::string path);
         void gameLoop();
 		bool hasCollision(Sprite& sprite);
+		bool hasProjectileCollision(Sprite & sprite);
         void setNumberOfEnemies(int newNumber) { numberOfEnemies = newNumber; }
 		Sprite * createSprite(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
 		void createProjectile(std::string path, Player&);
@@ -62,7 +63,6 @@ namespace Engine {
 		int playerY = 500;
         int numberOfEnemies;
         int movementDirection = 1;
-        const int PROJECTILE_VELOCITY = 5;
         const int SCREEN_WIDTH = 800;
         const int SCREEN_HEIGHT = 600;
         const char* WINDOW_TITLE = "Space Invaders";

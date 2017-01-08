@@ -14,6 +14,10 @@ namespace Engine {
     void Enemy::react(SDL_Event) {}
 
     void Enemy::tick(GameEngine &engine) {
+		if(engine.hasProjectileCollision(*this))
+		{
+			setDrawn(false);
+		}
         this->incrementRectX(direction);
         if (this->getRect().x > engine.getScreenWidth()) {
             this->incrementRectY(150);
