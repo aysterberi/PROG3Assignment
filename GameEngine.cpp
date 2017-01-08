@@ -5,9 +5,7 @@
 #include <SDL_mixer.h>
 #include <iostream>
 
-
-#define FPS 60
-
+#define DEFAULT_FPS 60;
 namespace Engine {
 
 	GameEngine::GameSettings engineSettings;
@@ -19,6 +17,7 @@ namespace Engine {
 		renderer = nullptr;
 		backgroundMusic = nullptr;
 		player = nullptr;
+		FPS = DEFAULT_FPS;
 	}
 	GameEngine::GameEngine(GameSettings game_settings)
 	{
@@ -29,6 +28,7 @@ namespace Engine {
 		backgroundMusic = nullptr;
 		player = nullptr;
 		engineSettings = game_settings;
+		FPS = game_settings.fps;
 	}
 
 	bool GameEngine::createWindow()
@@ -264,6 +264,7 @@ namespace Engine {
 
 	void GameEngine::renderEverything() {
 		SDL_RenderClear(renderer);
+		createTextTexture("res/djbgetdigital.ttf", std::to_string(FPS), 48, 255, 255, 255);
 		SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
 		if (player != nullptr)
 			SDL_RenderCopy(renderer, player->getTexture(), NULL, &player->getRect());

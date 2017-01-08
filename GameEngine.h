@@ -21,6 +21,7 @@ namespace Engine {
             char* title;
             int width;
             int height;
+			int fps;
         };
         GameEngine();
         GameEngine(GameSettings game_settings);
@@ -44,6 +45,7 @@ namespace Engine {
         int getScreenWidth() { return SCREEN_WIDTH; }
     protected:
     private:
+		int FPS;
         SDL_Texture* newTexture(SDL_Surface*);
 		Player* player;
         bool createWindow();

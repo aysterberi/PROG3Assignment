@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
      *
      *   Use game settings to specify name of the game, window width, and window height.
      **/
-    GameEngine::GameSettings gameSettings = { "Space Invaders", 800, 600 };
+    GameEngine::GameSettings gameSettings = { "Space Invaders", 800, 600 , 60};
     GameEngine gameEngine(gameSettings);
 
 
