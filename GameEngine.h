@@ -1,7 +1,6 @@
 #ifndef GAMEENGINE_H
 #define GAMEENGINE_H
 
-#include "Sprite.h"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
@@ -9,7 +8,10 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include "Sprite.h"
 #include "Player.h"
+#include "Enemy.h"
+#include "Projectile.h"
 
 namespace Engine {
     class GameEngine
@@ -37,8 +39,10 @@ namespace Engine {
             Uint8 gColor,
             Uint8 bColor);
         SDL_Texture* loadBackgroundTexture(std::string path);
+        int getScreenWidth() { return SCREEN_WIDTH; }
     protected:
     private:
+        SDL_Texture* newTexture(SDL_Surface*);
 		Player* player;
         bool createWindow();
         void createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
@@ -50,7 +54,6 @@ namespace Engine {
 		bool musicPlaying;
 		int volume;
         void moveMovables();
-        void moveEnemiesDown();
         void fireProjectile();
         void moveOrDestroyProjectile(std::vector<Sprite*> projectiles);
         int getNumberOfEnemies() const { return numberOfEnemies; }
@@ -72,7 +75,7 @@ namespace Engine {
         SDL_Renderer* renderer;
         Mix_Music* backgroundMusic;
         std::vector<Sprite*> projectiles;
-		std::vector<Sprite*> gameSprites;
+		std::vector<Enemy*> gameSprites;
         std::unordered_map<std::string, Sprite*> gameObjects;
         std::string playerPath;
         bool gameStarted = false;

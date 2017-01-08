@@ -125,30 +125,10 @@ namespace Engine {
 			return false;
 	}
 
-    void GameEngine::moveEnemiesDown() {
-        for (auto i = 0; i < numberOfEnemies; i++) {
-            auto search = gameObjects.find("enemy" + std::to_string(i));
-            search->second->incrementRectY(5);
-
-        }
-    }
-
     void GameEngine::moveMovables() {
         if (gameStarted) {
-            for (auto i = 0; i < numberOfEnemies; i++) {
-                std::string enemyName = "enemy" + std::to_string(i);
-                auto search = gameObjects.find(enemyName);
-                if (search != gameObjects.end()) {
-                    if (enemyName == "enemy10" && search->second->getRect().x > 740) {
-                        moveEnemiesDown();
-                        movementDirection = -1;
-                    }
-                    if (enemyName == "enemy0" && search->second->getRect().x < 0) {
-                        moveEnemiesDown();
-                        movementDirection = 1;
-                    }
-                    search->second->incrementRectX(movementDirection);
-                }
+            for (auto var : gameSprites) {
+                var->tick(*this);
             }
             moveOrDestroyProjectile(projectiles);
         }
@@ -177,13 +157,17 @@ namespace Engine {
     }
 
     void GameEngine::startNewGame() {
-        gameObjects.erase("PRESS 'Y' TO START A NEW GAME");
+        gameObjects.erase("PRESS 'Y' TO START A NEW GAME"); // TODO: fix this
 		createPlayer();
         int enemyX = 25; int enemyY = 5;
-        std::string enemyName = "enemy";
+        Enemy* e = nullptr;
         for (auto i = 0; i < numberOfEnemies; i++) {
-            enemyName = "enemy" + std::to_string(i);
-            createObjectTexture("res/enemy.png", enemyName, enemyX, enemyY, true);
+            SDL_Surface* surface = IMG_Load("res/enemy.png");
+            SDL_Texture* texture = newTexture(surface);
+            SDL_Rect rect = { enemyX, enemyY, surface->w, surface->h };
+            e = new Enemy(texture, rect, true, 10);
+            gameSprites.emplace_back(e);
+            SDL_FreeSurface(surface);
             enemyX += 70;
             if (i != 0 && i % 10 == 0) {
                 enemyX = 25;
@@ -191,11 +175,29 @@ namespace Engine {
             }
         }
     }
-	void GameEngine::createPlayer()
-    {		
+
+    SDL_Texture * Engine::GameEngine::newTexture(SDL_Surface* surface)
+    {
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+        return texture;
+    }
+
+    Sprite* GameEngine::createSprite(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn)
+    {
+        SDL_Surface* surface = IMG_Load(path.c_str());
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+        int textureWidth = surface->w, textureHeight = surface->h;
+        SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
+        SDL_FreeSurface(surface);
+        Sprite* myTexture = new Sprite(texture, textureRectangle, drawn);
+        return myTexture;
+    }
+
+	void GameEngine::createPlayer() {		
 		player = new Player(createSprite(playerPath, "player", playerX, playerY, true));
-		gameSprites.push_back(player);
+		//gameSprites.push_back(player);
     } 
+
     void GameEngine::toggleMusic() {
         if (musicPlaying)
         {
@@ -229,14 +231,13 @@ namespace Engine {
             if (var.second->isDrawn())
                 SDL_RenderCopy(renderer, var.second->getTexture(), NULL, &var.second->getRect());
         }
-		for (auto var : gameSprites)
-		{
+		for (auto var : gameSprites) {
+            if (var->isDrawn())
 			SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
 		}
         for (Sprite* var : projectiles) {
             SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
         }
-
         SDL_RenderPresent(renderer);
     }
 
@@ -253,27 +254,17 @@ namespace Engine {
         projectiles.emplace_back(projectileTexture);
     }
 
-    void GameEngine::createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn)
-    {
-        SDL_Surface* surface = IMG_Load(path.c_str());
-        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-        int textureWidth = surface->w, textureHeight = surface->h;
-        SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
-        SDL_FreeSurface(surface);
-        Sprite* myTexture = new Sprite(texture, textureRectangle, drawn);
-        gameObjects.insert({ name, myTexture });
-    }
+    //void GameEngine::createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn)
+    //{
+    //    SDL_Surface* surface = IMG_Load(path.c_str());
+    //    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    //    int textureWidth = surface->w, textureHeight = surface->h;
+    //    SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
+    //    SDL_FreeSurface(surface);
+    //    Sprite* myTexture = new Sprite(texture, textureRectangle, drawn);
+    //    gameObjects.insert({ name, myTexture });
+    //}
 
-	Sprite* GameEngine::createSprite(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn)
-	{
-		SDL_Surface* surface = IMG_Load(path.c_str());
-		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-		int textureWidth = surface->w, textureHeight = surface->h;
-		SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
-		SDL_FreeSurface(surface);
-		Sprite* myTexture = new Sprite(texture, textureRectangle, drawn);
-		return myTexture;
-	}
     void GameEngine::createTextTexture(std::string path, std::string message,
         int fontSize, Uint8 rColor, Uint8 gColor, Uint8 bColor) {
 
