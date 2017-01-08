@@ -8,7 +8,7 @@ public:
 	using Sprite::Sprite;
 	Player(Sprite*);
 	~Player();
-	void react(SDL_Event event) override;
+	void react(SDL_Event event);
 	void tick();
 private:
 	void moveLeft();
