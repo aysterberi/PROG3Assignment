@@ -6,7 +6,7 @@
 namespace Engine {
 
     Player::~Player() {
-
+        SDL_DestroyTexture(this->getTexture);
     }
 
     void Player::react(SDL_Event event)
