@@ -264,7 +264,6 @@ namespace Engine {
 
 	void GameEngine::renderEverything() {
 		SDL_RenderClear(renderer);
-		createTextTexture("res/djbgetdigital.ttf", std::to_string(FPS), 48, 255, 255, 255);
 		SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
 		if (player != nullptr)
 			SDL_RenderCopy(renderer, player->getTexture(), NULL, &player->getRect());
