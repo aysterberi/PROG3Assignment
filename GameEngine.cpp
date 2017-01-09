@@ -217,7 +217,7 @@ namespace Engine {
 		Sprite* myTexture = new Sprite(texture, textureRectangle, drawn);
 		return myTexture;
 	}
-	void GameEngine::createProjectile(std::string path, Player & player)
+	void GameEngine::createProjectile(std::string path, SpaceGame::Player & player)
 	{
 		auto x = player.getRect().x + 30, y = player.getRect().y + 10;
 		SDL_Surface* surface = IMG_Load(path.c_str());
@@ -232,7 +232,7 @@ namespace Engine {
 		SDL_Surface* surface = IMG_Load(playerPath.c_str());
 		SDL_Texture* texture = newTexture(surface);
 		SDL_Rect rect = { playerX, playerY, surface->w, surface->h };
-		player = new Player(texture, rect, true);
+		player = new SpaceGame::Player(texture, rect, true);
 		SDL_FreeSurface(surface);
 	}
 

@@ -3,7 +3,7 @@
 #include "GameEngine.h"
 #include <iostream>
 
-namespace Engine {
+namespace SpaceGame {
 
     Player::~Player() {
 
@@ -28,7 +28,7 @@ namespace Engine {
             break;
         }
     }
-    void Player::tick(GameEngine &engine)
+    void Player::tick(Engine::GameEngine &engine)
     {
 		if(shooting)
 		{

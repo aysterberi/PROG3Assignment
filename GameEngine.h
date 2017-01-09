@@ -34,7 +34,7 @@ namespace Engine {
 		bool hasProjectileCollision(Sprite & sprite);
         void setNumberOfEnemies(int newNumber) { numberOfEnemies = newNumber; }
 		Sprite * createSprite(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
-		void createProjectile(std::string path, Player&);
+		void createProjectile(std::string path, SpaceGame::Player&);
 		void createTextTexture(std::string path,
             std::string message,
             int fontSize,
@@ -47,7 +47,7 @@ namespace Engine {
     private:
 		int FPS;
         SDL_Texture* newTexture(SDL_Surface*);
-		Player* player;
+	    SpaceGame::Player* player;
         bool createWindow();
         //void createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
         void setTexture(std::string path);
