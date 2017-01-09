@@ -123,7 +123,7 @@ namespace Engine {
 			//{
 			//	return false;
 			//}
-			if (SDL_HasIntersection(&sprite.getRect(), &other->getRect()))
+			if (SDL_HasIntersection(&sprite.getRect(), &other->getRect()) && other->isDrawn())
 				return true;
 		}
 		return false;
