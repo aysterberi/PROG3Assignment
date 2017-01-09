@@ -3,7 +3,7 @@
 #include "GameEngine.h"
 #include "Sprite.h"
 
-using namespace Engine;
+using namespace SpaceGame;
 
 
 int main(int argc, char* argv[]) {
@@ -14,8 +14,8 @@ int main(int argc, char* argv[]) {
      *
      *   Use game settings to specify name of the game, window width, and window height.
      **/
-    GameEngine::GameSettings gameSettings = { "Space Invaders", 800, 600 , 60};
-    GameEngine gameEngine(gameSettings);
+	Engine::GameEngine::GameSettings gameSettings = { "Space Invaders", 800, 600 , 60};
+	Engine::GameEngine gameEngine(gameSettings);
 
 
     if (!gameEngine.init())
