@@ -185,12 +185,12 @@ namespace Engine {
 		gameObjects.erase("PRESS 'Y' TO START A NEW GAME"); // TODO: fix this
 		createPlayer();
 		int enemyX = 25; int enemyY = 5;
-		Enemy* e = nullptr;
+		SpaceGame::Enemy* e = nullptr;
 		for (auto i = 0; i < numberOfEnemies; i++) {
 			SDL_Surface* surface = IMG_Load("res/enemy.png");
 			SDL_Texture* texture = newTexture(surface);
 			SDL_Rect rect = { enemyX, enemyY, surface->w, surface->h };
-			e = new Enemy(texture, rect, true, 10);
+			e = new SpaceGame::Enemy(texture, rect, true, 10);
 			gameSprites.emplace_back(e);
 			SDL_FreeSurface(surface);
 			enemyX += 70;

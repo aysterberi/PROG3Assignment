@@ -2,15 +2,15 @@
 #define ENEMY_H
 
 #include "Sprite.h"
-namespace Engine {
+namespace SpaceGame {
     class Enemy :
-        public Sprite
+        public Engine::Sprite
     {
     public:
         Enemy(SDL_Texture*, SDL_Rect, bool, int);
         ~Enemy();
         void react(SDL_Event) override;
-        void tick(GameEngine &engine) override;
+        void tick(Engine::GameEngine &engine) override;
         void invertDirection() { direction = -direction; }
     private:
         SDL_Texture* texture;

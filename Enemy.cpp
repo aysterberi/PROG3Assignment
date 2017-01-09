@@ -1,8 +1,7 @@
 #include "Enemy.h"
 #include "GameEngine.h"
 
-namespace Engine {
-    class GameEngine;
+namespace SpaceGame {
 
     Enemy::Enemy(SDL_Texture * texture, SDL_Rect rect, bool drawn = true, int dir = 3) :
         Sprite(texture, rect, drawn), direction(dir) {
@@ -13,7 +12,7 @@ namespace Engine {
 
     void Enemy::react(SDL_Event) {}
 
-    void Enemy::tick(GameEngine &engine) {
+    void Enemy::tick(Engine::GameEngine &engine) {
 		if(engine.hasProjectileCollision(*this))
 		{
 			setDrawn(false);
