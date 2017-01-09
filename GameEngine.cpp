@@ -360,6 +360,12 @@ namespace Engine {
 		for (std::pair<std::string, Sprite*> var : gameObjects) {
 			delete var.second;
 		}
+        for (auto var : gameSprites) {
+            delete var;
+        }
+        for (auto var : projectiles) {
+            delete var;
+        }
 		gameObjects.clear();
 		projectiles.clear();
 		Mix_FreeMusic(backgroundMusic);
