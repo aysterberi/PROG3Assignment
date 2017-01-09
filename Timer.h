@@ -8,7 +8,10 @@ namespace Engine
 	{
 	public:
 		Timer();
-
+		//use the default destructor
+		//as the datatypes are trivial
+		//c++11
+		virtual ~Timer() = default;
 		//clock actions
 		void start();
 		void stop();
