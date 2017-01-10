@@ -112,6 +112,7 @@ namespace Engine {
 		}
 
 	}
+
 	void GameEngine::gameLoop() {
 		bool quit = false;
 
@@ -252,6 +253,10 @@ namespace Engine {
 	void GameEngine::addSprite(Sprite* sprite)
 	{
 		sprites.emplace_back(sprite);
+	}
+	void GameEngine::removeGameObject(std::string key)
+	{
+		gameObjects.erase(key);
 	}
 	void GameEngine::startNewGame() {
 		gameObjects.erase("PRESS 'Y' TO START A NEW GAME"); // TODO: fix this
@@ -429,7 +434,7 @@ namespace Engine {
 		return window != nullptr ? SDL_GetWindowSurface(window) : nullptr;
 	}
 
-	void GameEngine::setTexture(std::string path) {
+	void GameEngine::setBackground(std::string path) {
 		backgroundTexture = loadBackgroundTexture(path);
 	}
 

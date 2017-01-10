@@ -31,6 +31,7 @@ namespace Engine {
 	    ~GameEngine();
         bool init();
 	    void loop();
+		void setBackground(std::string path);
 	    void setPlayerPath(std::string path);
         void playBackgroundMusic(std::string path);
 	    void render();
@@ -51,13 +52,13 @@ namespace Engine {
 		TextureShPtr createTexture(std::string path);
 	    GraphicShPtr createGraphic(std::string path);
 	    void addSprite(Sprite* sprite);
+	    void removeGameObject(std::string key);
     protected:
     private:
 		int FPS;
 	    SpaceGame::Player* player;
         bool createWindow();
         //void createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
-        void setTexture(std::string path);
 		SDL_Texture* newTexture(SDL_Surface*);
         void renderEverything();
 		void startNewGame();
