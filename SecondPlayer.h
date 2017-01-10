@@ -9,6 +9,7 @@ namespace SpaceGame
 	{
 	public:
 		using Player::Player;
+		void hello() { std::cout << "Player2 is being called" << std::endl; }
 		void react(SDL_Event& event) override;
 		~SecondPlayer();
 	};

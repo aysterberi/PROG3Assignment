@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "SmartPointers.h"
+#include <iostream>
 
 namespace Engine {
 	class GameEngine;
@@ -42,12 +43,12 @@ namespace Engine {
 		virtual Velocity getVelocity() { return velocity;  }
 		virtual void setVelocity(Velocity velocity);
 		virtual void move(float dt);
-
+		virtual void hello() { std::cout << "Sprite is being called" << std::endl; }
 		//deleting copy, assign constructors 
 		//to prevent value semantics
 		//i.e. enforce pointers and refs
-		Sprite(const Sprite &other) = delete;
-		Sprite& operator=(Sprite const &obj) = delete;
+		//Sprite(const Sprite &other) = delete;
+		//Sprite& operator=(Sprite const &obj) = delete;
 
 	private:
 		TextureShPtr texture_sh;

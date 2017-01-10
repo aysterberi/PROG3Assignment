@@ -26,6 +26,7 @@ namespace Engine {
 			static_cast<int>(position.y),
 			graphic->width(), 
 			graphic->height() };
+		std::cout << "Graphic size is " << graphic->width() << "w, " << graphic->height() << "h." << std::endl;
 		return { currentRect };
 	}
 

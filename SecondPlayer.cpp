@@ -11,6 +11,9 @@ namespace SpaceGame
 		case SDLK_l:
 			addPositionX(+5);
 			break;
+		case SDLK_i:
+			addPositionY(-5);
+			break;
 		case SDLK_RCTRL:
 			shooting = true;
 			break;

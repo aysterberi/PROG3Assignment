@@ -2,6 +2,8 @@
 #define ENEMY_H
 
 #include "Sprite.h"
+#include <iostream>
+
 namespace SpaceGame {
     class Enemy :
         public Engine::Sprite
@@ -13,6 +15,7 @@ namespace SpaceGame {
         void react(SDL_Event&) override;
         void tick(Engine::GameEngine &engine) override;
         void invertDirection() { direction = -direction; }
+		void hello() { std::cout << "Eneemy is being called" << std::endl; }
     private:
         SDL_Texture* texture;
         SDL_Rect rect;

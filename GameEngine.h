@@ -37,7 +37,8 @@ namespace Engine {
 	    void render();
 	    void gameLoop();
 		bool hasCollision(Sprite& sprite);
-		bool hasProjectileCollision(Sprite & sprite);
+	    bool AreEqual(const Sprite& a, const Sprite& b);
+	    bool hasProjectileCollision(Sprite & sprite);
         void setNumberOfEnemies(int newNumber) { numberOfEnemies = newNumber; }
 		Sprite * createSprite(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
 		void createProjectile(std::string path, SpaceGame::Player&);

@@ -31,7 +31,7 @@ namespace Engine {
 		engineSettings = game_settings;
 		FPS = game_settings.fps;
 	}
-	void GameEngine::configure (GameSettings settings)
+	void GameEngine::configure(GameSettings settings)
 	{
 		engineSettings = settings;
 	}
@@ -127,20 +127,27 @@ namespace Engine {
 
 	bool GameEngine::hasCollision(Sprite & sprite)
 	{
-		for (auto& other : sprites) {
-			if (!other->isDrawn())
+		bool crash = false;
+		for (auto item : sprites)
+		{
+			SDL_Rect* a(&sprite.getRect());
+			SDL_Rect* b(&item->getRect());
+			if (SDL_HasIntersection(a, b))
 			{
-			 return false;
+				crash = true;
 			}
-			//if (&sprite == other)
-			//{
-			//	//we can't collide with ourselves
-			//	return false;
-			//}
-			if (SDL_HasIntersection(&sprite.getRect(), &other->getRect()))
-				return true;
+			if (item == &sprite)
+			{
+				//we can't crash into ourselves
+				crash = false;
+			}
 		}
-		return false;
+		return crash;
+	}
+
+	bool GameEngine::AreEqual(const Sprite& a, const Sprite& b)
+	{
+		return &a == &b;
 	}
 	bool GameEngine::hasProjectileCollision(Sprite & sprite)
 	{
@@ -158,16 +165,14 @@ namespace Engine {
 
 	void GameEngine::moveMovables() {
 		if (gameStarted) {
-			for (auto var : gameSprites) {
-				var->tick(*this);
-			}
 			for (auto var : projectiles)
 			{
 				var->tick(*this);
 			}
 			for (auto var : sprites)
 			{
-				var->tick(*this);
+				if (var != nullptr)
+					var->tick(*this);
 			}
 			//player->tick(*this);
 			moveOrDestroyProjectile(projectiles);
@@ -310,7 +315,7 @@ namespace Engine {
 
 		SDL_FreeSurface(textSurface);
 		Sprite* txt = new Sprite(textTexture, textRectangle, true);
-		gameObjects.insert({ message, txt });
+		sprites.emplace_back(txt);
 	}
 
 	SDL_Texture* GameEngine::loadBackgroundTexture(std::string path) {
