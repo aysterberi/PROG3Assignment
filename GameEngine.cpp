@@ -127,11 +127,16 @@ namespace Engine {
 
 	bool GameEngine::hasCollision(Sprite & sprite)
 	{
-		for (auto other : sprites) {
-			//if (!other->isDrawn())
-			//{
-			//	return false;
-			//}
+		for (auto& other : sprites) {
+			if (!other->isDrawn())
+			{
+			 return false;
+			}
+			if (&sprite == other)
+			{
+				//we can't collide with ourselves
+				return false;
+			}
 			if (SDL_HasIntersection(&sprite.getRect(), &other->getRect()))
 				return true;
 		}

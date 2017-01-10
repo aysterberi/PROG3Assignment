@@ -21,7 +21,12 @@ namespace Engine {
 
 	SDL_Rect Sprite::getRect()
 	{
-		return { static_cast<int>(position.x), static_cast<int>(position.y), graphic->width(), graphic->height() };
+		SDL_Rect currentRect{ 
+			static_cast<int>(position.x),
+			static_cast<int>(position.y),
+			graphic->width(), 
+			graphic->height() };
+		return { currentRect };
 	}
 
 	void Sprite::incrementRectX(int inc) {

@@ -10,7 +10,7 @@ namespace Engine {
     }
     void Projectile::tick(GameEngine &engine)
     {
-		std::cout << "Projectile moving one step up.";
+		//std::cout << "Projectile moving one step up.";
 		incrementRectY(-PROJECTILE_VELOCITY); //move up
 		//if (getRect().y < 0)
 		//{
