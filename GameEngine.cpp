@@ -74,7 +74,7 @@ namespace Engine {
 
 		if (renderer == nullptr)
 			renderer = createRenderer(window);
-
+		SDL_GL_SetSwapInterval(0);
 		return true;
 	}
 
@@ -83,7 +83,7 @@ namespace Engine {
 		bool quit = false;
 		SDL_Event e;
 		//seconds timer
-		STimer timer;
+		Timer timer;
 
 		while(!quit)
 		{
@@ -97,7 +97,8 @@ namespace Engine {
 				{
 					sprite->react(e);
 				}
-				float timeStep = timer.getTimeElapsed();
+				float timeStep = timer.getTimeElapsed() / 1000.f;
+				std::cout << "FPS is \t" << timeStep;
 				moveAll(timeStep);
 				timer.start();
 				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
