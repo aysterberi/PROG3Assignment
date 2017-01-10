@@ -14,18 +14,20 @@
 #include "Projectile.h"
 
 namespace Engine {
+	struct GameSettings {
+		char* title;
+		int width;
+		int height;
+		int fps;
+	};
     class GameEngine
     {
     public:
-        struct GameSettings {
-            char* title;
-            int width;
-            int height;
-			int fps;
-        };
+	    static GameEngine& instance() { return _instance;  };
+		static void configure(GameSettings settings);
         GameEngine();
         GameEngine(GameSettings game_settings);
-        ~GameEngine();
+	    ~GameEngine();
         bool init();
         void setPlayerPath(std::string path);
         void playBackgroundMusic(std::string path);
@@ -43,10 +45,11 @@ namespace Engine {
             Uint8 bColor);
         SDL_Texture* loadBackgroundTexture(std::string path);
         int getScreenWidth() { return SCREEN_WIDTH; }
+		SDL_Texture* newTexture(SDL_Surface*);
     protected:
     private:
+		static GameEngine _instance;
 		int FPS;
-        SDL_Texture* newTexture(SDL_Surface*);
 	    SpaceGame::Player* player;
         bool createWindow();
         //void createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
@@ -83,7 +86,5 @@ namespace Engine {
         std::string playerPath;
         bool gameStarted = false;
     };
-
-    extern GameEngine gameEngine;
 }
 #endif

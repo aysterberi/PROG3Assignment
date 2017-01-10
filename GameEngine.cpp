@@ -8,8 +8,8 @@
 #define DEFAULT_FPS 60;
 namespace Engine {
 
-	GameEngine::GameSettings engineSettings;
-
+	GameEngine GameEngine::_instance;
+	GameSettings engineSettings;
 	GameEngine::GameEngine() {
 		window = nullptr;
 		backgroundSurface = nullptr;
@@ -30,7 +30,10 @@ namespace Engine {
 		engineSettings = game_settings;
 		FPS = game_settings.fps;
 	}
-
+	void GameEngine::configure (GameSettings settings)
+	{
+		engineSettings = settings;
+	}
 	bool GameEngine::createWindow()
 	{
 		window = SDL_CreateWindow(engineSettings.title, 100, 100, engineSettings.width, engineSettings.height, 0);
