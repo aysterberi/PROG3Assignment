@@ -15,11 +15,11 @@ namespace SpaceGame {
         {
         case SDLK_a:
         case SDLK_LEFT:
-			setVelocity({ -5, });
+            moveLeft();
             break;
         case SDLK_d:
         case SDLK_RIGHT:
-			setVelocity({ 5, });
+            moveRight();
             break;
         case SDLK_LCTRL:
 			shooting = true;
