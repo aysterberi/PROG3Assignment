@@ -33,7 +33,8 @@ namespace Engine {
         bool init();
         void setPlayerPath(std::string path);
         void playBackgroundMusic(std::string path);
-        void gameLoop();
+	    void render();
+	    void gameLoop();
 		bool hasCollision(Sprite& sprite);
 		bool hasProjectileCollision(Sprite & sprite);
         void setNumberOfEnemies(int newNumber) { numberOfEnemies = newNumber; }
@@ -84,6 +85,7 @@ namespace Engine {
         SDL_Renderer* createRenderer(SDL_Window* window);
         SDL_Renderer* renderer;
         Mix_Music* backgroundMusic;
+		std::vector<Sprite*> sprites;
         std::vector<Sprite*> projectiles;
 		std::vector<SpaceGame::Enemy*> gameSprites;
         std::unordered_map<std::string, Sprite*> gameObjects;

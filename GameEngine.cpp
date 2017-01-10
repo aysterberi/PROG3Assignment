@@ -188,6 +188,8 @@ namespace Engine {
 	{
 		SDL_Surface* surface = IMG_Load(path.c_str());
 		TextureShPtr ptr(newTexture(surface), SDL_DestroyTexture);
+		//free surface
+		SDL_FreeSurface(surface);
 		return ptr;
 	}
 	GraphicShPtr GameEngine::createGraphic(std::string path)
@@ -197,6 +199,9 @@ namespace Engine {
 		SDL_Texture* texture = newTexture(surface);
 		//create new Graphic object and create a shared_ptr
 		GraphicShPtr ptr(new Graphic(texture, getRenderer()));
+
+		//free surface
+		SDL_FreeSurface(surface);
 		//return this to the Sprite
 		return ptr;
 	}
@@ -281,6 +286,11 @@ namespace Engine {
 		musicPlaying = true;
 	}
 
+	void GameEngine::render()
+	{
+		SDL_RenderClear(renderer);
+
+	}
 	void GameEngine::renderEverything() {
 		SDL_RenderClear(renderer);
 		SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
