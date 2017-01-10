@@ -4,6 +4,7 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <iostream>
+#include <memory>
 
 #define DEFAULT_FPS 60;
 namespace Engine {
@@ -183,7 +184,12 @@ namespace Engine {
 			}
 		}
 	}
-
+	TextureShPtr GameEngine::createTexture(std::string path)
+	{
+		SDL_Surface* surface = IMG_Load(path.c_str());
+		TextureShPtr ptr(newTexture(surface), SDL_DestroyTexture);
+		return ptr;
+	}
 	void GameEngine::startNewGame() {
 		gameObjects.erase("PRESS 'Y' TO START A NEW GAME"); // TODO: fix this
 		createPlayer();
@@ -283,7 +289,6 @@ namespace Engine {
 		}
 		SDL_RenderPresent(renderer);
 	}
-
 
 
 	void GameEngine::fireProjectile() {

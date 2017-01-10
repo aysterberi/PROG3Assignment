@@ -12,8 +12,10 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Projectile.h"
+#include "SmartPointers.h"
 
 namespace Engine {
+
 	struct GameSettings {
 		char* title;
 		int width;
@@ -45,7 +47,7 @@ namespace Engine {
             Uint8 bColor);
         SDL_Texture* loadBackgroundTexture(std::string path);
         int getScreenWidth() { return SCREEN_WIDTH; }
-		SDL_Texture* newTexture(SDL_Surface*);
+		TextureShPtr createTexture(std::string path);
     protected:
     private:
 		static GameEngine _instance;
@@ -54,8 +56,9 @@ namespace Engine {
         bool createWindow();
         //void createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
         void setTexture(std::string path);
+		SDL_Texture* newTexture(SDL_Surface*);
         void renderEverything();
-        void startNewGame();
+		void startNewGame();
 		void createPlayer();
 		void toggleMusic();
 		bool musicPlaying;
