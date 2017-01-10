@@ -132,11 +132,11 @@ namespace Engine {
 			{
 			 return false;
 			}
-			if (&sprite == other)
-			{
-				//we can't collide with ourselves
-				return false;
-			}
+			//if (&sprite == other)
+			//{
+			//	//we can't collide with ourselves
+			//	return false;
+			//}
 			if (SDL_HasIntersection(&sprite.getRect(), &other->getRect()))
 				return true;
 		}
