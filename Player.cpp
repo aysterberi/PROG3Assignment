@@ -97,14 +97,4 @@ namespace SpaceGame {
 
 	}
 
-	void Player::moveLeft()
-	{
-		incrementRectX(-5);
-	}
-
-	void Player::moveRight()
-	{
-		incrementRectX(+5);
-	}
-
 }
