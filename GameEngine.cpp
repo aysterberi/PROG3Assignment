@@ -115,8 +115,9 @@ namespace Engine {
 			int delay = nextTick - SDL_GetTicks();
 			if (delay > 0)
 				SDL_Delay(delay);
-			moveMovables();
-			renderEverything();
+			//moveMovables();
+			//renderEverything();
+			render();
 		}
 	}
 
