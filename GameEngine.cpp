@@ -9,7 +9,6 @@
 #define DEFAULT_FPS 60;
 namespace Engine {
 
-	GameEngine GameEngine::_instance;
 	GameSettings engineSettings;
 	GameEngine::GameEngine() {
 		window = nullptr;
@@ -116,7 +115,7 @@ namespace Engine {
 			if (delay > 0)
 				SDL_Delay(delay);
 			//moveMovables();
-			//renderEverything();
+			renderEverything();
 			render();
 		}
 	}
@@ -294,12 +293,12 @@ namespace Engine {
 
 	void GameEngine::render()
 	{
-		SDL_RenderClear(renderer);
-		for (auto sprite : sprites)
-		{
-			sprite->render();
-		}
-		SDL_RenderPresent(renderer);
+		//SDL_RenderClear(renderer);
+		//for (auto sprite : sprites)
+		//{
+		//	sprite->render();
+		//}
+		//SDL_RenderPresent(renderer);
 
 	}
 	void GameEngine::renderEverything() {
@@ -311,12 +310,16 @@ namespace Engine {
 			if (var.second->isDrawn())
 				SDL_RenderCopy(renderer, var.second->getTexture(), NULL, &var.second->getRect());
 		}
-		for (auto var : gameSprites) {
-			if (var->isDrawn())
-				SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
-		}
+		//for (auto var : gameSprites) {
+		//	if (var->isDrawn())
+		//		SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
+		//}
 		for (Sprite* var : projectiles) {
 			SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
+		}
+		for (auto sprite : sprites)
+		{
+			sprite->render();
 		}
 		SDL_RenderPresent(renderer);
 	}

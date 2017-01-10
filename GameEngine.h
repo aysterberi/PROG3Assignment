@@ -25,7 +25,6 @@ namespace Engine {
     class GameEngine
     {
     public:
-	    static GameEngine& instance() { return _instance;  };
 		static void configure(GameSettings settings);
         GameEngine();
         GameEngine(GameSettings game_settings);
@@ -53,7 +52,6 @@ namespace Engine {
 	    void addSprite(Sprite* sprite);
     protected:
     private:
-		static GameEngine _instance;
 		int FPS;
 	    SpaceGame::Player* player;
         bool createWindow();
