@@ -198,7 +198,7 @@ namespace Engine {
 		//create raw graphic pointer
 		SDL_Texture* texture = newTexture(surface);
 		//create new Graphic object and create a shared_ptr
-		GraphicShPtr ptr(new Graphic(texture, getRenderer()));
+		GraphicShPtr ptr(new Graphic(texture, getRenderer(), surface->w, surface->h));
 
 		//free surface
 		SDL_FreeSurface(surface);
