@@ -2,17 +2,19 @@
 #include "GameEngine.h"
 
 namespace Engine {
+	//create a sprite with path = file and given position
 	Sprite::Sprite(std::string path, Position pos, GameEngine & engine)
 	{
 		graphic = engine.createGraphic(path);
 		position = pos;
 		drawn = true;
 	}
-	Sprite::Sprite(SDL_Texture * SpTexture,
-		SDL_Rect SpDstRect,
-		bool SpDrawn = true)
-		: texture(SpTexture), rect(SpDstRect), drawn(SpDrawn) {
 
+	//create a sprite that has no assigned graphic
+	Sprite::Sprite(Position pos)
+	{
+		position = pos;
+		drawn = false;
 	}
 
 	Sprite::~Sprite() {
@@ -29,13 +31,13 @@ namespace Engine {
 		return { currentRect };
 	}
 
-	void Sprite::incrementRectX(int inc) {
-		position.x += inc;
+	void Sprite::setGraphic(GraphicShPtr g)
+	{
+		//we have a graphic
+		drawn = true;
+		graphic = g;
 	}
 
-	void Sprite::incrementRectY(int inc) {
-		position.y += inc;
-	}
 	void Sprite::react(SDL_Event& event)
 	{
 	}

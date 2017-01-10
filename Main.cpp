@@ -18,7 +18,6 @@ int main(int argc, char* argv[]) {
 
 	Engine::GameSettings gameSettings = { "Space Invaders", 800, 600 , 60};
 	Engine::GameEngine gameEngine(gameSettings);
-	gameEngine.configure(gameSettings);
 
     if (!gameEngine.init())
         std::cout << "Failed to initialize game engine" << std::endl;
@@ -27,7 +26,7 @@ int main(int argc, char* argv[]) {
 	//gameEngine.addSprite(sprite);
  //   gameEngine.setPlayerPath("res/ship.png");
  //   gameEngine.loadBackgroundTexture("res/bg.png");
- // //  gameEngine.playBackgroundMusic("res/Solving1.ogg");
+ // //  gameEngine.setBackgroundMusic("res/Solving1.ogg");
  //   gameEngine.createTextTexture("res/djbgetdigital.ttf", "PRESS 'Y' TO START A NEW GAME", 48, 255, 255, 255);
  //   gameEngine.setNumberOfEnemies(25);
 	Invaders* invaders = new Invaders();

@@ -25,56 +25,41 @@ namespace Engine {
     class GameEngine
     {
     public:
-		static void configure(GameSettings settings);
         GameEngine();
         GameEngine(GameSettings game_settings);
 	    ~GameEngine();
-        bool init();
-	    void loop();
+
 		void setBackground(std::string path);
-	    void setPlayerPath(std::string path);
-        void playBackgroundMusic(std::string path);
-	    void render();
-	    void gameLoop();
-		bool hasCollision(Sprite& sprite);
-	    bool AreEqual(const Sprite& a, const Sprite& b);
-	    bool hasProjectileCollision(Sprite & sprite);
-        void setNumberOfEnemies(int newNumber) { numberOfEnemies = newNumber; }
-		Sprite * createSprite(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
-		void createProjectile(std::string path, SpaceGame::Player&);
-		void createTextTexture(std::string path,
-            std::string message,
-            int fontSize,
-            Uint8 rColor,
-            Uint8 gColor,
-            Uint8 bColor);
-        SDL_Texture* loadBackgroundTexture(std::string path);
-        int getScreenWidth() { return SCREEN_WIDTH; }
-		TextureShPtr createTexture(std::string path);
-	    GraphicShPtr createGraphic(std::string path);
-	    void addSprite(Sprite* sprite);
-	    void removeGameObject(std::string key);
+        void setBackgroundMusic(std::string path);
+
+		GraphicShPtr createTextGraphic(TTF_Font * font, std::string text, SDL_Color color);
+		GraphicShPtr createGraphic(std::string path);
+
+		void addSprite(Sprite* sprite);
 		void addProjectile(Sprite* projectile);
+		void removeGameObject(std::string key);
+
+		bool init();
+	    void gameLoop();
+
+		bool hasCollision(Sprite& sprite);
+	    bool hasProjectileCollision(Sprite & sprite);
+
+		int getScreenWidth() { return SCREEN_WIDTH; }
+		int getSreenHeight() { return SCREEN_HEIGHT; }
     protected:
     private:
 		int FPS;
 	    SpaceGame::Player* player;
         bool createWindow();
-        //void createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
 		SDL_Texture* newTexture(SDL_Surface*);
         void renderEverything();
-	    void startNewGame();
-		void createPlayer();
 		void toggleMusic();
 		bool musicPlaying;
 		int volume;
-		void moveAll(float dt);
 		void moveMovables();
-        void fireProjectile();
         void moveOrDestroyProjectile(std::vector<Sprite*> projectiles);
-        int getNumberOfEnemies() const { return numberOfEnemies; }
-        int playerX = 368;
-		int playerY = 500;
+		bool gameStarted = false;
         int numberOfEnemies;
         int movementDirection = 1;
         const int SCREEN_WIDTH = 800;
@@ -82,7 +67,6 @@ namespace Engine {
         const char* WINDOW_TITLE = "Space Invaders";
         SDL_Window* window;
         SDL_Surface* backgroundSurface;
-        SDL_Surface* getWindowSurface(SDL_Window* window);
         SDL_Texture* getTexture() const { return backgroundTexture; }
         SDL_Texture* backgroundTexture;
         SDL_Renderer* getRenderer() const { return renderer; }
@@ -93,8 +77,7 @@ namespace Engine {
         std::vector<Sprite*> projectiles;
 		std::vector<SpaceGame::Enemy*> gameSprites;
         std::unordered_map<std::string, Sprite*> gameObjects;
-        std::string playerPath;
-        bool gameStarted = false;
+
     };
 }
 #endif

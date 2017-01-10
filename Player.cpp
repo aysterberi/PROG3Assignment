@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "GameEngine.h"
 #include <iostream>
+#include "Text.h"
 
 namespace SpaceGame {
 
@@ -92,7 +93,16 @@ namespace SpaceGame {
 		{
 			//TODO: do something
 			std::cout << "Oops, I collided.";
-			//engine.createTextTexture("res/djbgetdigital.ttf", "Ha! You lose.", 48, 255, 255, 255);
+			Engine::Position textPosition{ 150,250 };
+			SDL_Color textColor{ 255, 255, 255 };
+			Engine::Text* text = new Engine::Text(
+				"res/djbgetdigital.ttf",
+				48, //font size
+				textPosition,
+				textColor, //white
+				"Ha! You lose.",
+				engine);
+			engine.addSprite(text);
 		}
 
 	}

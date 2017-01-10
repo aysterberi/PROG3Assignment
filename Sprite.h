@@ -23,10 +23,11 @@ namespace Engine {
 	class Sprite {
 	public:
 		Sprite(std::string path, Position, GameEngine& engine);
-		Sprite(SDL_Texture*, SDL_Rect, bool);
+		Sprite(Position pos);
 		virtual ~Sprite();
 		SDL_Texture* getTexture() const { return graphic->texture(); }
 		SDL_Rect getRect();
+		void setGraphic(GraphicShPtr graphic);
 		void setRectY(int newY) { rect.y = newY; }
 		void setRectX(int newX) { rect.x = newX; }
 		void incrementRectX(int inc);
