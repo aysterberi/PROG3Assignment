@@ -1,42 +1,37 @@
 #ifndef RESOURCELOADER_H
 #define RESOURCELOADER_H
 #include <SDL_hints.h>
+#include <unordered_map>
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <map>
 
-class ResourceLoader
+namespace Engine
 {
-public:
-	
-	/*
-	 * Represents the type of a specific
-	 * bundle. E.g. audio, graphics, text. 
-	 */
-	enum BundleType {audio, graphics, text};
-	/*
-	* ResourceBundles represent an abstract
-	* package of disk-locations for resources
-	* and a specific key with which to refer to these
-	* resources once loaded by the engine.
-	*
-	* Each bundle contains a unique bundle
-	* identifier, a type, and a dict for the vals.
-	* K = item_identifier, V = disk location path
-	* The type shall be verified by the various load functions 
-	* and a mismatch between declared bundle type
-	* and the type of load method shall cause a loading failure.
-	*/
-	struct ResourceBundle
-	{
-		Uint64 UUID;
-		BundleType type;
-		std::map<std::string, std::string> resources;
 
+	class ResourceLoader
+	{
+	public:
+		ResourceLoader();
+		~ResourceLoader();
+		//loads a texture from a file path
+		void loadTexture(std::string key, std::string path);
+		void loadFont(std::string key, std::string path, int ptsize);
+		void loadAudio(std::string key, std::string path);
+
+		//unloads a resource given a key, true if successful
+		bool unload(std::string key);
+
+		SDL_Texture* fetchTexture(std::string key);
+		TTF_Font* fetchFont(std::string key);
+		Mix_Music* fetchAudio(std::string key);
+
+	private:
+		static std::map<std::string, SDL_Texture> textureMap;
+		static std::map<std::string, TTF_Font> fontMap;
+		static std::map<std::string, Mix_Music> audioMap;
 	};
-	ResourceLoader();
-	~ResourceLoader();
-	void LoadAudioBundle(ResourceBundle bundle); //TODO: skapa en vettig bundle
-	void LoadGraphicsBundle(ResourceBundle bundle);
-	void LoadTextBundle(ResourceBundle bundle);
-};
+}
 
 #endif
