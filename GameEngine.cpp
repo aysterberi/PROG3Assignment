@@ -5,6 +5,7 @@
 #include <SDL_mixer.h>
 #include <iostream>
 #include <memory>
+#include "STimer.h"
 
 #define DEFAULT_FPS 60;
 namespace Engine {
@@ -79,7 +80,36 @@ namespace Engine {
 
 	void GameEngine::loop()
 	{
-		
+		bool quit = false;
+		SDL_Event e;
+		//seconds timer
+		STimer timer;
+
+		while(!quit)
+		{
+			while(SDL_PollEvent(&e) != 0)
+			{
+				if(e.type == SDL_QUIT)
+				{
+					quit = true;
+				}
+				for(auto sprite : sprites)
+				{
+					sprite->react(e);
+				}
+				float timeStep = timer.getTimeElapsed();
+				moveAll(timeStep);
+				timer.start();
+				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_RenderClear(renderer);
+				for(auto sprite : sprites)
+				{
+					sprite->render();
+				}
+				SDL_RenderPresent(renderer);
+			}
+		}
+
 	}
 	void GameEngine::gameLoop() {
 		bool quit = false;

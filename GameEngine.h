@@ -30,7 +30,8 @@ namespace Engine {
         GameEngine(GameSettings game_settings);
 	    ~GameEngine();
         bool init();
-        void setPlayerPath(std::string path);
+	    void loop();
+	    void setPlayerPath(std::string path);
         void playBackgroundMusic(std::string path);
 	    void render();
 	    void gameLoop();
