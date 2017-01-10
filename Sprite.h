@@ -33,8 +33,11 @@ namespace Engine {
 		bool isDrawn() const { return drawn; }
 		void setDrawn(bool newValue) { drawn = newValue; }
 		virtual void react(SDL_Event event);
+		void render() const;
 		virtual void tick(GameEngine& engine);
+		virtual Position getPosition() { return position;  }
 		virtual void setPosition(Position position);
+		virtual Velocity getVelocity() { return velocity;  }
 		virtual void setVelocity(Velocity velocity);
 		virtual void move(float dt);
 
@@ -46,7 +49,10 @@ namespace Engine {
 
 	private:
 		TextureShPtr texture_sh;
+		GraphicShPtr graphic;
 		SDL_Texture* texture;
+		int height;
+		int width;
 		SDL_Rect rect;
 		bool drawn;
 		Velocity velocity;

@@ -2,29 +2,31 @@
 #include "GameEngine.h"
 
 namespace Engine {
-	Sprite::Sprite(std::string path, Position)
+	Sprite::Sprite(std::string path, Position pos) :
+		drawn(true)
 	{
 		auto engine = GameEngine::instance();
-		texture_sh = engine.createTexture(path);
+		graphic = engine.createGraphic(path);
+		position = pos;
 	}
 	Sprite::Sprite(SDL_Texture * SpTexture,
-        SDL_Rect SpDstRect,
-        bool SpDrawn = true) 
-        : texture(SpTexture), rect(SpDstRect), drawn(SpDrawn) {
+		SDL_Rect SpDstRect,
+		bool SpDrawn = true)
+		: texture(SpTexture), rect(SpDstRect), drawn(SpDrawn) {
 
-    }
+	}
 
-    Sprite::~Sprite() {		
+	Sprite::~Sprite() {
 		SDL_DestroyTexture(texture);
-    }
+	}
 
-    void Sprite::incrementRectX(int inc) {
-        rect.x += inc;
-    }
+	void Sprite::incrementRectX(int inc) {
+		rect.x += inc;
+	}
 
-    void Sprite::incrementRectY(int inc) {
-        rect.y += inc;
-    }
+	void Sprite::incrementRectY(int inc) {
+		rect.y += inc;
+	}
 	void Sprite::react(SDL_Event event)
 	{
 	}
@@ -44,7 +46,12 @@ namespace Engine {
 		position.y += velocity.y * dt;
 	}
 
+	void Sprite::render() const
+	{
+		graphic->render(static_cast<int>(position.x), static_cast<int>(position.y));
+	}
 	void Sprite::tick(GameEngine & engine)
 	{
+
 	}
 }

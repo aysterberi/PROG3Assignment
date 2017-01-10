@@ -48,6 +48,7 @@ namespace Engine {
         SDL_Texture* loadBackgroundTexture(std::string path);
         int getScreenWidth() { return SCREEN_WIDTH; }
 		TextureShPtr createTexture(std::string path);
+	    GraphicShPtr createGraphic(std::string path);
     protected:
     private:
 		static GameEngine _instance;

@@ -190,6 +190,16 @@ namespace Engine {
 		TextureShPtr ptr(newTexture(surface), SDL_DestroyTexture);
 		return ptr;
 	}
+	GraphicShPtr GameEngine::createGraphic(std::string path)
+	{
+		SDL_Surface* surface = IMG_Load(path.c_str());
+		//create raw graphic pointer
+		SDL_Texture* texture = newTexture(surface);
+		//create new Graphic object and create a shared_ptr
+		GraphicShPtr ptr(new Graphic(texture, getRenderer()));
+		//return this to the Sprite
+		return ptr;
+	}
 	void GameEngine::startNewGame() {
 		gameObjects.erase("PRESS 'Y' TO START A NEW GAME"); // TODO: fix this
 		createPlayer();

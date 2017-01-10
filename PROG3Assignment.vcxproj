@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -31,8 +32,10 @@
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="Graphic.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="SmartPointers.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="STimer.h" />
     <ClInclude Include="Timer.h" />
