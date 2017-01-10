@@ -53,6 +53,7 @@ namespace Engine {
 	    GraphicShPtr createGraphic(std::string path);
 	    void addSprite(Sprite* sprite);
 	    void removeGameObject(std::string key);
+		void addProjectile(Sprite* projectile);
     protected:
     private:
 		int FPS;
@@ -61,7 +62,7 @@ namespace Engine {
         //void createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn = true);
 		SDL_Texture* newTexture(SDL_Surface*);
         void renderEverything();
-		void startNewGame();
+	    void startNewGame();
 		void createPlayer();
 		void toggleMusic();
 		bool musicPlaying;

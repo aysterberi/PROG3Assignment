@@ -78,41 +78,6 @@ namespace Engine {
 		return true;
 	}
 
-	void GameEngine::loop()
-	{
-		bool quit = false;
-		SDL_Event e;
-		//seconds timer
-		Timer timer;
-
-		while(!quit)
-		{
-			while(SDL_PollEvent(&e) != 0)
-			{
-				if(e.type == SDL_QUIT)
-				{
-					quit = true;
-				}
-				for(auto sprite : sprites)
-				{
-					sprite->react(e);
-				}
-				float timeStep = timer.getTimeElapsed() / 1000.f;
-				std::cout << "FPS is \t" << timeStep;
-				moveAll(timeStep);
-				timer.start();
-				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				SDL_RenderClear(renderer);
-				for(auto sprite : sprites)
-				{
-					sprite->render();
-				}
-				SDL_RenderPresent(renderer);
-			}
-		}
-
-	}
-
 	void GameEngine::gameLoop() {
 		bool quit = false;
 
@@ -129,7 +94,7 @@ namespace Engine {
 					case SDLK_ESCAPE: quit = true; break;
 					case SDLK_y:
 						if (!gameStarted) {
-							startNewGame();
+							//startNewGame();
 							gameStarted = true;
 						}
 						break;
@@ -142,6 +107,10 @@ namespace Engine {
 							if (sprite != nullptr)
 								sprite->react(event);
 						}
+						for (auto sprite : sprites)
+						{
+							sprite->react(event);
+						}
 						break;
 					}
 				}
@@ -150,10 +119,9 @@ namespace Engine {
 			int delay = nextTick - SDL_GetTicks();
 			if (delay > 0)
 				SDL_Delay(delay);
-			//moveMovables();
-			moveAll(100.0);
+			moveMovables();
+			//moveAll(100.0);
 			renderEverything();
-			render();
 		}
 	}
 
@@ -199,7 +167,11 @@ namespace Engine {
 			{
 				var->tick(*this);
 			}
-			player->tick(*this);
+			for (auto var : sprites)
+			{
+				var->tick(*this);
+			}
+			//player->tick(*this);
 			moveOrDestroyProjectile(projectiles);
 		}
 	}
@@ -211,7 +183,7 @@ namespace Engine {
 
 			for (auto i = 0; i < projectiles.size(); i++) {
 				auto projectile = projectiles.at(i);
-				if (projectile->getRect().y < 0) {
+				if (projectile->getPosition().y < 0) {
 					delete projectile;
 					projectiles.erase(projectiles.begin() + i);
 					break;
@@ -258,25 +230,6 @@ namespace Engine {
 	{
 		gameObjects.erase(key);
 	}
-	void GameEngine::startNewGame() {
-		gameObjects.erase("PRESS 'Y' TO START A NEW GAME"); // TODO: fix this
-		createPlayer();
-		int enemyX = 25; int enemyY = 5;
-		SpaceGame::Enemy* e = nullptr;
-		for (auto i = 0; i < numberOfEnemies; i++) {
-			SDL_Surface* surface = IMG_Load("res/enemy.png");
-			SDL_Texture* texture = newTexture(surface);
-			SDL_Rect rect = { enemyX, enemyY, surface->w, surface->h };
-			e = new SpaceGame::Enemy(texture, rect, true, 10);
-			gameSprites.emplace_back(e);
-			SDL_FreeSurface(surface);
-			enemyX += 70;
-			if (i != 0 && i % 10 == 0) {
-				enemyX = 25;
-				enemyY += 70;
-			}
-		}
-	}
 
 	SDL_Texture * Engine::GameEngine::newTexture(SDL_Surface* surface)
 	{
@@ -284,19 +237,9 @@ namespace Engine {
 		return texture;
 	}
 
-	Sprite* GameEngine::createSprite(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn)
-	{
-		SDL_Surface* surface = IMG_Load(path.c_str());
-		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-		int textureWidth = surface->w, textureHeight = surface->h;
-		SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
-		SDL_FreeSurface(surface);
-		Sprite* myTexture = new Sprite(texture, textureRectangle, drawn);
-		return myTexture;
-	}
 	void GameEngine::createProjectile(std::string path, SpaceGame::Player & player)
 	{
-		auto x = player.getRect().x + 30, y = player.getRect().y + 10;
+		auto x = player.getPosition().x + 30, y = player.getPosition().y + 10;
 		SDL_Surface* surface = IMG_Load(path.c_str());
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 		int textWidth = surface->w, textHeight = surface->h;
@@ -304,13 +247,6 @@ namespace Engine {
 		SDL_FreeSurface(surface);
 		Projectile* projectile = new Projectile(texture, textRect, true);
 		projectiles.emplace_back(projectile);
-	}
-	void GameEngine::createPlayer() {
-		SDL_Surface* surface = IMG_Load(playerPath.c_str());
-		SDL_Texture* texture = newTexture(surface);
-		SDL_Rect rect = { playerX, playerY, surface->w, surface->h };
-		player = new SpaceGame::Player(texture, rect, true);
-		SDL_FreeSurface(surface);
 	}
 
 	void GameEngine::toggleMusic() {
@@ -339,21 +275,9 @@ namespace Engine {
 		musicPlaying = true;
 	}
 
-	void GameEngine::render()
-	{
-		//SDL_RenderClear(renderer);
-		//for (auto sprite : sprites)
-		//{
-		//	sprite->render();
-		//}
-		//SDL_RenderPresent(renderer);
-
-	}
 	void GameEngine::renderEverything() {
 		SDL_RenderClear(renderer);
 		SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
-		if (player != nullptr)
-			SDL_RenderCopy(renderer, player->getTexture(), NULL, &player->getRect());
 		for (std::pair<std::string, Sprite*> var : gameObjects) {
 			if (var.second->isDrawn())
 				SDL_RenderCopy(renderer, var.second->getTexture(), NULL, &var.second->getRect());
@@ -372,29 +296,10 @@ namespace Engine {
 		SDL_RenderPresent(renderer);
 	}
 
-
-	void GameEngine::fireProjectile() {
-		//TODO: move to the player class
-		SDL_Surface* surface = IMG_Load("res/projectile.png");
-		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-		int projectileWidth = surface->w, projectileHeight = surface->h;
-		SDL_Rect projectileRectangle = { player->getRect().x + 30, player->getRect().y + 10, projectileWidth, projectileHeight };
-		SDL_FreeSurface(surface);
-		Sprite* projectileTexture = new Sprite(texture, projectileRectangle, true);
-		projectiles.emplace_back(projectileTexture);
+	void GameEngine::addProjectile(Sprite* projectile)
+	{
+		projectiles.emplace_back(projectile);
 	}
-
-	//void GameEngine::createObjectTexture(std::string path, std::string name, int initialPosX, int initialPosY, bool drawn)
-	//{
-	//    SDL_Surface* surface = IMG_Load(path.c_str());
-	//    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-	//    int textureWidth = surface->w, textureHeight = surface->h;
-	//    SDL_Rect textureRectangle = { initialPosX, initialPosY, textureWidth, textureHeight };
-	//    SDL_FreeSurface(surface);
-	//    Sprite* myTexture = new Sprite(texture, textureRectangle, drawn);
-	//    gameObjects.insert({ name, myTexture });
-	//}
-
 	void GameEngine::createTextTexture(std::string path, std::string message,
 		int fontSize, Uint8 rColor, Uint8 gColor, Uint8 bColor) {
 
@@ -428,10 +333,6 @@ namespace Engine {
 		backgroundTexture = SDL_CreateTextureFromSurface(renderer, adjustedSurface);
 		SDL_FreeSurface(adjustedSurface);
 		return backgroundTexture;
-	}
-
-	SDL_Surface* GameEngine::getWindowSurface(SDL_Window* window) {
-		return window != nullptr ? SDL_GetWindowSurface(window) : nullptr;
 	}
 
 	void GameEngine::setBackground(std::string path) {
