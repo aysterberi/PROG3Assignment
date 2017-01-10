@@ -37,10 +37,12 @@ namespace Engine {
 
 		void addSprite(Sprite* sprite);
 		void addProjectile(Sprite* projectile);
+		void addMessage(Sprite* sprite, int duration);
 		void removeGameObject(std::string key);
 
 		bool init();
 	    void gameLoop();
+		void stop();
 
 		bool hasCollision(Sprite& sprite);
 	    bool hasProjectileCollision(Sprite & sprite);
@@ -60,8 +62,6 @@ namespace Engine {
 		void moveMovables();
         void moveOrDestroyProjectile(std::vector<Sprite*> projectiles);
 		bool gameStarted = false;
-        int numberOfEnemies;
-        int movementDirection = 1;
         const int SCREEN_WIDTH = 800;
         const int SCREEN_HEIGHT = 600;
         const char* WINDOW_TITLE = "Space Invaders";
@@ -75,6 +75,7 @@ namespace Engine {
         Mix_Music* backgroundMusic;
 		std::vector<Sprite*> sprites;
         std::vector<Sprite*> projectiles;
+		std::vector<Sprite*> messages;
 		std::vector<SpaceGame::Enemy*> gameSprites;
         std::unordered_map<std::string, Sprite*> gameObjects;
 

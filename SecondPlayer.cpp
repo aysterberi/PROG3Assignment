@@ -3,6 +3,11 @@ namespace SpaceGame
 {
 	void SecondPlayer::react(SDL_Event & event)
 	{
+		//if we're dead
+		//we can't react
+		if (!alive)
+			return;
+
 		switch (event.key.keysym.sym)
 		{
 		case SDLK_j:

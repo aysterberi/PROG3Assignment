@@ -14,10 +14,12 @@ namespace SpaceGame {
 	    void tick(Engine::GameEngine &) override;
     protected:
 		bool shooting;
+		bool alive = true;
     private:
 		float maxSpeed = 20.0;
         void moveLeft();
         void moveRight();
+
     };
 }
 #endif

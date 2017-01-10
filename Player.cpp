@@ -12,6 +12,11 @@ namespace SpaceGame {
 
 	void Player::react(SDL_Event& event)
 	{
+		//if we're dead
+		//we can't react
+		if (!alive)
+			return;
+
 		switch (event.key.keysym.sym)
 		{
 		case SDLK_a:
@@ -91,18 +96,22 @@ namespace SpaceGame {
 		}
 		if (engine.hasCollision(*this))
 		{
-			//TODO: do something
-			std::cout << "Oops, I collided.";
-			Engine::Position textPosition{ 150,250 };
-			SDL_Color textColor{ 255, 255, 255 };
-			Engine::Text* text = new Engine::Text(
-				"res/djbgetdigital.ttf",
-				48, //font size
-				textPosition,
-				textColor, //white
-				"Ha! You lose.",
-				engine);
-			engine.addSprite(text);
+			if (alive)
+			{
+				Engine::Position textPosition{ 150,250 };
+				SDL_Color textColor{ 255, 255, 255 };
+				Engine::Text* text = new Engine::Text(
+					"res/djbgetdigital.ttf",
+					48, //font size
+					textPosition,
+					textColor, //white
+					"You lose!",
+					engine);
+				engine.addMessage(text, -1);
+				engine.stop();
+				alive = false;
+			}
+
 		}
 
 	}

@@ -156,18 +156,22 @@ namespace Engine {
 	//Loop logic
 	void GameEngine::moveMovables() {
 		if (gameStarted) {
-			//for (auto var : projectiles)
-			//{
-			//	var->tick(*this);
-			//}
+			for (auto var : projectiles)
+			{
+				var->tick(*this);
+			}
 			for (Sprite* var : sprites)
 			{
 				if (var != nullptr)
 					var->tick(*this);
 			}
 			//player->tick(*this);
-			//moveOrDestroyProjectile(projectiles);
+			moveOrDestroyProjectile(projectiles);
 		}
+	}
+	void GameEngine::stop()
+	{
+		gameStarted = false;
 	}
 	void GameEngine::moveOrDestroyProjectile(std::vector<Sprite*>) {
 		if (!projectiles.empty())
@@ -210,6 +214,10 @@ namespace Engine {
 		for (auto sprite : sprites)
 		{
 			sprite->render();
+		}
+		for (auto message : messages)
+		{
+			message->render();
 		}
 		SDL_RenderPresent(renderer);
 	}
@@ -263,13 +271,18 @@ namespace Engine {
 	}
 	GraphicShPtr GameEngine::createTextGraphic(TTF_Font* font, std::string text, SDL_Color color)
 	{
-		SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
+		SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
 		//create raw graphic pointer
-		SDL_Texture* texture = newTexture(surface);
-		//create new Graphic object and create a shared_ptr
-		GraphicShPtr ptr(new Graphic(texture, getRenderer(), surface->w, surface->h));
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+
+		int textWidth = textSurface->w, textHeight = textSurface->h;
+
 		//free surface
-		SDL_FreeSurface(surface);
+		SDL_FreeSurface(textSurface);
+
+		//create new Graphic object and create a shared_ptr
+		GraphicShPtr ptr(new Graphic(texture, getRenderer(), textWidth, textHeight));
+
 		//return this to the Sprite
 		return ptr;
 	}
@@ -282,6 +295,16 @@ namespace Engine {
 	void GameEngine::addProjectile(Sprite* projectile)
 	{
 		projectiles.emplace_back(projectile);
+	}
+	void GameEngine::addMessage(Sprite * sprite, int duration)
+	{
+		//permanent display, e.g. game over
+		if (duration < 0)
+		{
+			messages.emplace_back(sprite);
+		}
+
+		//todo: fading messages
 	}
 	void GameEngine::removeGameObject(std::string key)
 	{
