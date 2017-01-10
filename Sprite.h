@@ -37,6 +37,8 @@ namespace Engine {
 		virtual void tick(GameEngine& engine);
 		virtual Position getPosition() { return position;  }
 		virtual void setPosition(Position position);
+		virtual void addPositionX(int n);
+		virtual void addPositionY(int y);
 		virtual Velocity getVelocity() { return velocity;  }
 		virtual void setVelocity(Velocity velocity);
 		virtual void move(float dt);

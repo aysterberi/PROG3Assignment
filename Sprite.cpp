@@ -37,12 +37,23 @@ namespace Engine {
 	{
 		this->position = position;
 	}
+
+	void Sprite::addPositionX(int n)
+	{
+		position.x += n;
+	}
+
+	void Sprite::addPositionY(int n)
+	{
+		position.y += n;
+	}
+
 	void Sprite::move(float dt)
 	{
 		//move on x-axis
-		position.x += velocity.x * dt;
+		//position.x += velocity.x * dt;
 		//move on y-axis
-		position.y += velocity.y * dt;
+		//position.y += velocity.y * dt;
 	}
 
 	void Sprite::render() const
