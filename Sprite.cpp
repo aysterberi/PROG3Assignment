@@ -26,7 +26,7 @@ namespace Engine {
 	void Sprite::incrementRectY(int inc) {
 		rect.y += inc;
 	}
-	void Sprite::react(SDL_Event event)
+	void Sprite::react(SDL_Event& event)
 	{
 	}
 	void Sprite::setVelocity(Velocity velocity)

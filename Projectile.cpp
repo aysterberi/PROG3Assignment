@@ -4,7 +4,7 @@ namespace Engine {
     Projectile::~Projectile() {
         SDL_DestroyTexture(this->getTexture());
     }
-    void Projectile::react(SDL_Event)
+    void Projectile::react(SDL_Event & event)
     {
     }
     void Projectile::tick(GameEngine &engine)

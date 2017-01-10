@@ -10,7 +10,7 @@ namespace SpaceGame {
         SDL_DestroyTexture(this->getTexture());
     }
 
-    void Enemy::react(SDL_Event) {}
+    void Enemy::react(SDL_Event & event) {}
 
     void Enemy::tick(Engine::GameEngine &engine) {
 		if(engine.hasProjectileCollision(*this))

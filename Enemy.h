@@ -9,7 +9,7 @@ namespace SpaceGame {
     public:
         Enemy(SDL_Texture*, SDL_Rect, bool, int);
         ~Enemy();
-        void react(SDL_Event) override;
+        void react(SDL_Event&) override;
         void tick(Engine::GameEngine &engine) override;
         void invertDirection() { direction = -direction; }
     private:

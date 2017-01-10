@@ -9,8 +9,8 @@ namespace SpaceGame {
 
     }
 
-    void Player::react(SDL_Event event)
-    {
+    void Player::react(SDL_Event& event)
+    {	
         switch (event.key.keysym.sym)
         {
         case SDLK_a:

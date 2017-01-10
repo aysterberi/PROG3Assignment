@@ -32,7 +32,7 @@ namespace Engine {
 		void incrementRectY(int inc);
 		bool isDrawn() const { return drawn; }
 		void setDrawn(bool newValue) { drawn = newValue; }
-		virtual void react(SDL_Event event);
+		virtual void react(SDL_Event& event);
 		void render() const;
 		virtual void tick(GameEngine& engine);
 		virtual Position getPosition() { return position;  }

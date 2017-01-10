@@ -8,7 +8,7 @@ namespace SpaceGame {
     public:
         using Sprite::Sprite;
         ~Player();
-        void react(SDL_Event event) override;
+        void react(SDL_Event& event) override;
         void tick(Engine::GameEngine &) override;
     private:
         void moveLeft();
