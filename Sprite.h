@@ -21,7 +21,7 @@ namespace Engine {
 	};
 	class Sprite {
 	public:
-		Sprite(std::string path, Position);
+		Sprite(std::string path, Position, GameEngine& engine);
 		Sprite(SDL_Texture*, SDL_Rect, bool);
 		virtual ~Sprite();
 		SDL_Texture* getTexture() const { return texture; }

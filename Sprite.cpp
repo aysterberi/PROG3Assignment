@@ -2,9 +2,8 @@
 #include "GameEngine.h"
 
 namespace Engine {
-	Sprite::Sprite(std::string path, Position pos)
+	Sprite::Sprite(std::string path, Position pos, GameEngine & engine)
 	{
-		auto engine = GameEngine::instance();
 		graphic = engine.createGraphic(path);
 		position = pos;
 		drawn = true;
