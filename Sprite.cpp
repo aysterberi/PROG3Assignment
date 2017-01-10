@@ -2,12 +2,12 @@
 #include "GameEngine.h"
 
 namespace Engine {
-	Sprite::Sprite(std::string path, Position pos) :
-		drawn(true)
+	Sprite::Sprite(std::string path, Position pos)
 	{
 		auto engine = GameEngine::instance();
 		graphic = engine.createGraphic(path);
 		position = pos;
+		drawn = true;
 	}
 	Sprite::Sprite(SDL_Texture * SpTexture,
 		SDL_Rect SpDstRect,
@@ -48,7 +48,8 @@ namespace Engine {
 
 	void Sprite::render() const
 	{
-		graphic->render(static_cast<int>(position.x), static_cast<int>(position.y));
+		if (isDrawn())
+			graphic->render(static_cast<int>(position.x), static_cast<int>(position.y));
 	}
 	void Sprite::tick(GameEngine & engine)
 	{
