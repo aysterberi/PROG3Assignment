@@ -7,6 +7,7 @@ namespace SpaceGame {
         public Engine::Sprite
     {
     public:
+		using Sprite::Sprite;
         Enemy(SDL_Texture*, SDL_Rect, bool, int);
         ~Enemy();
         void react(SDL_Event&) override;
@@ -16,7 +17,7 @@ namespace SpaceGame {
         SDL_Texture* texture;
         SDL_Rect rect;
         bool drawn;
-        int direction;
+		int direction = 3;
     };
 
 }

@@ -11,11 +11,12 @@ namespace SpaceGame {
         void react(SDL_Event& event) override;
 	    void move(float timeStep) override;
 	    void tick(Engine::GameEngine &) override;
+    protected:
+		bool shooting;
     private:
 		float maxSpeed = 20.0;
         void moveLeft();
         void moveRight();
-		bool shooting;
     };
 }
 #endif

@@ -19,12 +19,17 @@ namespace Engine {
 		SDL_DestroyTexture(texture);
 	}
 
+	SDL_Rect Sprite::getRect()
+	{
+		return { static_cast<int>(position.x), static_cast<int>(position.y), graphic->width(), graphic->height() };
+	}
+
 	void Sprite::incrementRectX(int inc) {
-		rect.x += inc;
+		position.x += inc;
 	}
 
 	void Sprite::incrementRectY(int inc) {
-		rect.y += inc;
+		position.y += inc;
 	}
 	void Sprite::react(SDL_Event& event)
 	{

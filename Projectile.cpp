@@ -1,4 +1,5 @@
 #include "Projectile.h"
+#include <iostream>
 
 namespace Engine {
     Projectile::~Projectile() {
@@ -9,6 +10,7 @@ namespace Engine {
     }
     void Projectile::tick(GameEngine &engine)
     {
+		std::cout << "Projectile moving one step up.";
 		incrementRectY(-PROJECTILE_VELOCITY); //move up
 		//if (getRect().y < 0)
 		//{

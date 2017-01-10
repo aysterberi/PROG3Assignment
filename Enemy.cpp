@@ -17,13 +17,13 @@ namespace SpaceGame {
 		{
 			setDrawn(false);
 		}
-        this->incrementRectX(direction);
-        if (this->getRect().x > engine.getScreenWidth()) {
-            this->incrementRectY(150);
+        this->addPositionX(direction);
+        if (this->getPosition().x > engine.getScreenWidth()) {
+            this->addPositionY(150);
             invertDirection();
         }
-        else if (this->getRect().x < 0) {
-            this->incrementRectY(150);
+        else if (this->getPosition().x < 0) {
+            this->addPositionY(150);
             invertDirection();
         }
     }

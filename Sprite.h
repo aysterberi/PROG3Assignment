@@ -24,8 +24,8 @@ namespace Engine {
 		Sprite(std::string path, Position, GameEngine& engine);
 		Sprite(SDL_Texture*, SDL_Rect, bool);
 		virtual ~Sprite();
-		SDL_Texture* getTexture() const { return texture; }
-		SDL_Rect getRect() const { return rect; }
+		SDL_Texture* getTexture() const { return graphic->texture(); }
+		SDL_Rect getRect();
 		void setRectY(int newY) { rect.y = newY; }
 		void setRectX(int newX) { rect.x = newX; }
 		void incrementRectX(int inc);
