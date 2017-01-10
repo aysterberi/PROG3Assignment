@@ -1,5 +1,5 @@
-#ifndef SPRITE_H
-#define SPRITE_H
+#ifndef STIMER_H
+#define STIMER_H
 
 #include "Timer.h"
 
