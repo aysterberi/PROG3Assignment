@@ -289,6 +289,11 @@ namespace Engine {
 	void GameEngine::render()
 	{
 		SDL_RenderClear(renderer);
+		for (auto sprite : sprites)
+		{
+			sprite->render();
+		}
+		SDL_RenderPresent(renderer);
 
 	}
 	void GameEngine::renderEverything() {
@@ -402,7 +407,5 @@ namespace Engine {
 		IMG_Quit();
 		SDL_Quit();
 	}
-
-	GameEngine gameEngine;
 
 }
