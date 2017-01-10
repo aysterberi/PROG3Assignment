@@ -205,6 +205,11 @@ namespace Engine {
 		//return this to the Sprite
 		return ptr;
 	}
+
+	void GameEngine::addSprite(Sprite* sprite)
+	{
+		sprites.emplace_back(sprite);
+	}
 	void GameEngine::startNewGame() {
 		gameObjects.erase("PRESS 'Y' TO START A NEW GAME"); // TODO: fix this
 		createPlayer();

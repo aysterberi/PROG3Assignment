@@ -50,6 +50,7 @@ namespace Engine {
         int getScreenWidth() { return SCREEN_WIDTH; }
 		TextureShPtr createTexture(std::string path);
 	    GraphicShPtr createGraphic(std::string path);
+	    void addSprite(Sprite* sprite);
     protected:
     private:
 		static GameEngine _instance;
