@@ -77,6 +77,10 @@ namespace Engine {
 		return true;
 	}
 
+	void GameEngine::loop()
+	{
+		
+	}
 	void GameEngine::gameLoop() {
 		bool quit = false;
 
@@ -115,6 +119,7 @@ namespace Engine {
 			if (delay > 0)
 				SDL_Delay(delay);
 			//moveMovables();
+			moveAll(100.0);
 			renderEverything();
 			render();
 		}
@@ -146,6 +151,13 @@ namespace Engine {
 		return false;
 	}
 
+	void GameEngine::moveAll(float dt)
+	{
+		for (auto sprite : sprites)
+		{
+			sprite->move(dt);
+		}
+	}
 	void GameEngine::moveMovables() {
 		if (gameStarted) {
 			for (auto var : gameSprites) {

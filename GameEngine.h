@@ -64,7 +64,8 @@ namespace Engine {
 		void toggleMusic();
 		bool musicPlaying;
 		int volume;
-        void moveMovables();
+		void moveAll(float dt);
+		void moveMovables();
         void fireProjectile();
         void moveOrDestroyProjectile(std::vector<Sprite*> projectiles);
         int getNumberOfEnemies() const { return numberOfEnemies; }
