@@ -13,7 +13,6 @@ Engine::Graphic::Graphic(SDL_Texture * texture, SDL_Renderer * renderer, int wid
 
 void Engine::Graphic::render(int x, int y)
 {
-	//std::cout << "Render on a Graphics object is called\nPosition is x:" << x << "\ty:" << y;
 	SDL_Rect rect = { x,y, _width, _height };
 	SDL_RenderCopy(_renderer, _texture, NULL, &rect);
 }

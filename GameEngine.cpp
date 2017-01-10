@@ -132,14 +132,12 @@ namespace Engine {
 		{
 			SDL_Rect* a(&sprite.getRect());
 			SDL_Rect* b(&item->getRect());
-			if (SDL_HasIntersection(a, b))
+			if (item != &sprite)
 			{
-				crash = true;
-			}
-			if (item == &sprite)
-			{
-				//we can't crash into ourselves
-				crash = false;
+				if (SDL_HasIntersection(a, b))
+				{
+					crash = true;
+				}
 			}
 		}
 		return crash;

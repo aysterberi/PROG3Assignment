@@ -12,7 +12,6 @@ namespace SpaceGame {
         void react(SDL_Event& event) override;
 	    void move(float timeStep) override;
 	    void tick(Engine::GameEngine &) override;
-		void hello() { std::cout << "Player is being called" << std::endl; }
     protected:
 		bool shooting;
     private:
