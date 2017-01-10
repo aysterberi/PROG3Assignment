@@ -127,7 +127,7 @@ namespace Engine {
 
 	bool GameEngine::hasCollision(Sprite & sprite)
 	{
-		for (auto other : gameSprites) {
+		for (auto other : sprites) {
 			//if (!other->isDrawn())
 			//{
 			//	return false;
@@ -151,13 +151,6 @@ namespace Engine {
 		return false;
 	}
 
-	void GameEngine::moveAll(float dt)
-	{
-		for (auto sprite : sprites)
-		{
-			sprite->move(dt);
-		}
-	}
 	void GameEngine::moveMovables() {
 		if (gameStarted) {
 			for (auto var : gameSprites) {
@@ -278,10 +271,10 @@ namespace Engine {
 	void GameEngine::renderEverything() {
 		SDL_RenderClear(renderer);
 		SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
-		for (std::pair<std::string, Sprite*> var : gameObjects) {
-			if (var.second->isDrawn())
-				SDL_RenderCopy(renderer, var.second->getTexture(), NULL, &var.second->getRect());
-		}
+		//for (std::pair<std::string, Sprite*> var : gameObjects) {
+		//	if (var.second->isDrawn())
+		//		SDL_RenderCopy(renderer, var.second->getTexture(), NULL, &var.second->getRect());
+		//}
 		//for (auto var : gameSprites) {
 		//	if (var->isDrawn())
 		//		SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
