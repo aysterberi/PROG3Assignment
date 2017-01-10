@@ -2,6 +2,7 @@
 #include <string>
 #include "GameEngine.h"
 #include "Sprite.h"
+#include "Invaders.h"
 
 using namespace SpaceGame;
 
@@ -21,16 +22,15 @@ int main(int argc, char* argv[]) {
 
     if (!gameEngine.init())
         std::cout << "Failed to initialize game engine" << std::endl;
-	Engine::Position pos{ 25, 5 };
-	Engine::Sprite* sprite = new Engine::Sprite("res/enemy.png", pos, gameEngine);
-	gameEngine.addSprite(sprite);
-    gameEngine.setPlayerPath("res/ship.png");
-    gameEngine.loadBackgroundTexture("res/bg.png");
-  //  gameEngine.playBackgroundMusic("res/Solving1.ogg");
-    gameEngine.createTextTexture("res/djbgetdigital.ttf", "PRESS 'Y' TO START A NEW GAME", 48, 255, 255, 255);
-    gameEngine.setNumberOfEnemies(25);
-
-    gameEngine.gameLoop();
+	//Engine::Position pos{ 25, 5 };
+	//Player* sprite = new Player("res/ship.png", pos, gameEngine);
+	//gameEngine.addSprite(sprite);
+ //   gameEngine.setPlayerPath("res/ship.png");
+ //   gameEngine.loadBackgroundTexture("res/bg.png");
+ // //  gameEngine.playBackgroundMusic("res/Solving1.ogg");
+ //   gameEngine.createTextTexture("res/djbgetdigital.ttf", "PRESS 'Y' TO START A NEW GAME", 48, 255, 255, 255);
+ //   gameEngine.setNumberOfEnemies(25);
+	Invaders* invaders = new Invaders();
 
     return 0;
 }

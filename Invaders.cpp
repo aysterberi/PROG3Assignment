@@ -1,0 +1,48 @@
+#include "Invaders.h"
+#include <iostream>
+#include "SecondPlayer.h"
+
+
+namespace SpaceGame
+{
+	Invaders::Invaders()
+	{
+
+		Engine::GameSettings settings = { "Space Invaders II - The Recodening", 800, 600, 20 };
+		Engine::GameEngine engine(settings);
+
+		if (!engine.init())
+			std::cout << "Something broke real good." << std::endl;
+
+		engine.setBackground("res/bg.png");
+		Engine::Position startPosition{ 360, 500 }, secondPosition{400, 430};
+		Player* player = new Player("res/ship.png", startPosition, engine);
+		SecondPlayer* player2 = new SecondPlayer("res/ship.png", secondPosition, engine);
+		engine.addSprite(player);
+		engine.addSprite(player2);
+		createEnemies(25, engine);
+		engine.gameLoop();
+	}
+
+	void Invaders::createEnemies(int amount, Engine::GameEngine& context)
+	{
+		Engine::Position enemyPosition{ 25,5 };
+		Enemy* enemy = nullptr;
+		for (auto i = 0; i < amount; i++)
+		{
+			enemy = new Enemy("res/enemy.png", enemyPosition, context);
+			context.addSprite(enemy);
+			enemyPosition.x += 70;
+			if (i != 0 && i % 10 == 0)
+			{
+				enemyPosition.x = 25;
+				enemyPosition.y += 70;
+			}
+		}
+	}
+
+	Invaders::~Invaders()
+	{
+	}
+
+}

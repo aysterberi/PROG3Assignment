@@ -22,9 +22,11 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="Graphic.cpp" />
+    <ClCompile Include="Invaders.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="SecondPlayer.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="STimer.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -33,8 +35,10 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="Graphic.h" />
+    <ClInclude Include="Invaders.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="SecondPlayer.h" />
     <ClInclude Include="SmartPointers.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="STimer.h" />
