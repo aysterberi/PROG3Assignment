@@ -8,20 +8,34 @@ namespace SpaceGame
 	Invaders::Invaders()
 	{
 
+		//Configure the settings
 		Engine::GameSettings settings = { "Space Invaders II - The Recodening", 800, 600, 20 };
-		Engine::GameEngine engine(settings);
 
+		//Create the engine
+		Engine::GameEngine engine(settings);
+		
+		//Start the engine and its subsystems
 		if (!engine.init())
 			std::cout << "Something broke real good." << std::endl;
 
+		//Set background assets
 		engine.setBackground("res/bg.png");
+		engine.setBackgroundMusic("res/Solving1.ogg");
+
+		//create the players (could be extracted to own function)
 		Engine::Position startPosition{ 360, 500 }, secondPosition{400, 430};
 		Player* player = new Player("res/ship.png", startPosition, engine);
 		SecondPlayer* player2 = new SecondPlayer("res/ship.png", secondPosition, engine);
+
+		//add them to the engine
 		engine.addSprite(player);
 		engine.addSprite(player2);
+
+		//create our enemies
 		createEnemies(25, engine);
-		engine.gameLoop();
+
+		//start the loop
+		engine.loop();
 	}
 
 	void Invaders::createEnemies(int amount, Engine::GameEngine& context)
