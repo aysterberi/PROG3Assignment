@@ -106,7 +106,7 @@ namespace Engine {
 		SDL_GL_SetSwapInterval(0);
 		return true;
 	}
-	void GameEngine::gameLoop() {
+	void GameEngine::loop() {
 		bool quit = false;
 
 		while (!quit) {

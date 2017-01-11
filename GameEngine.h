@@ -41,7 +41,7 @@ namespace Engine {
 		void removeGameObject(std::string key);
 
 		bool init();
-	    void gameLoop();
+	    void loop();
 		void stop();
 
 		bool hasCollision(Sprite& sprite);
