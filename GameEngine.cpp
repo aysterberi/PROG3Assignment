@@ -179,28 +179,7 @@ namespace Engine {
 	{
 		gameStarted = false;
 	}
-	void GameEngine::handleProjectiles(std::vector<Sprite*>) {
-		if (!projectiles.empty())
-		{
-			for (auto i = 0; i < projectiles.size(); i++) {
-				auto projectile = projectiles.at(i);
-				if (projectile->getPosition().y < 0) {
-					delete projectile;
-					projectiles.erase(projectiles.begin() + i);
-					break;
-				}
-				for (auto var : gameSprites) {
-					if (SDL_HasIntersection(&projectile->getRect(), &var->getRect()) && var->isDrawn()) {
-						delete projectile;
-						projectiles.erase(projectiles.begin() + i);
-						var->setDrawn(false);
-						break;
-					}
-				}
-			}
-		}
-	}
-	void GameEngine::renderEverything() {
+    void GameEngine::renderEverything() {
 		SDL_RenderClear(renderer);
 		SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
 		//for (std::pair<std::string, Sprite*> var : gameObjects) {
@@ -246,7 +225,6 @@ namespace Engine {
 		}
 		return crash;
 	}
-
 	bool GameEngine::hasProjectileCollision(Sprite & sprite)
 	{
 			if(!projectiles.empty())
@@ -268,21 +246,6 @@ namespace Engine {
 		return false;
 	}
 
-	void GameEngine::destroyProjectiles()
-	{
-		if(!projectiles.empty())
-		{
-			for (int i = projectiles.size() - 1; i >= 0; i--)
-			{
-				if(!projectiles.at(i)->isDrawn())
-				{
-					Sprite* proj(projectiles[i]);
-					projectiles.erase(projectiles.begin() + i);
-					delete proj;
-				}
-			}
-		}
-	}
 	//Graphic utilities
 	GraphicShPtr GameEngine::createGraphic(std::string path)
 	{
@@ -337,6 +300,21 @@ namespace Engine {
 	void GameEngine::removeGameObject(std::string key)
 	{
 		gameObjects.erase(key);
+	}
+	void GameEngine::destroyProjectiles()
+	{
+		if (!projectiles.empty())
+		{
+			for (int i = projectiles.size() - 1; i >= 0; i--)
+			{
+				if (!projectiles.at(i)->isDrawn())
+				{
+					Sprite* proj(projectiles[i]);
+					projectiles.erase(projectiles.begin() + i);
+					delete proj;
+				}
+			}
+		}
 	}
 
 	//Music handling

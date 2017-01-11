@@ -61,7 +61,6 @@ namespace Engine {
 		bool musicPlaying;
 		int volume;
 		void moveMovables();
-        void handleProjectiles(std::vector<Sprite*> projectiles);
 		bool gameStarted = false;
         const int SCREEN_WIDTH = 800;
         const int SCREEN_HEIGHT = 600;
