@@ -47,6 +47,7 @@ namespace Engine {
 		bool hasCollision(Sprite& sprite);
 	    bool hasProjectileCollision(Sprite & sprite);
 
+
 		int getScreenWidth() { return SCREEN_WIDTH; }
 		int getSreenHeight() { return SCREEN_HEIGHT; }
     protected:
@@ -60,7 +61,7 @@ namespace Engine {
 		bool musicPlaying;
 		int volume;
 		void moveMovables();
-        void moveOrDestroyProjectile(std::vector<Sprite*> projectiles);
+        void handleProjectiles(std::vector<Sprite*> projectiles);
 		bool gameStarted = false;
         const int SCREEN_WIDTH = 800;
         const int SCREEN_HEIGHT = 600;
@@ -71,6 +72,7 @@ namespace Engine {
         SDL_Texture* backgroundTexture;
         SDL_Renderer* getRenderer() const { return renderer; }
         SDL_Renderer* createRenderer(SDL_Window* window);
+		void destroyProjectiles();
         SDL_Renderer* renderer;
         Mix_Music* backgroundMusic;
 		std::vector<Sprite*> sprites;

@@ -18,7 +18,6 @@ namespace Engine {
 	}
 
 	Sprite::~Sprite() {
-		SDL_DestroyTexture(texture);
 	}
 
 	SDL_Rect Sprite::getRect()

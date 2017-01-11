@@ -3,7 +3,7 @@
 
 namespace Engine {
     Projectile::~Projectile() {
-        SDL_DestroyTexture(this->getTexture());
+		Sprite::~Sprite();
     }
     void Projectile::react(SDL_Event & event)
     {
@@ -12,9 +12,9 @@ namespace Engine {
     {
 		//std::cout << "Projectile moving one step up.";
 		addPositionY(-PROJECTILE_VELOCITY); //move up
-		//if (getRect().y < 0)
-		//{
-		//	setDrawn(false);
-		//}
+		if(getPosition().y < 0)
+		{
+			setDrawn(false);
+		}
     }
 }

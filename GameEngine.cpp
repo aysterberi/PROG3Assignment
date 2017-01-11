@@ -156,28 +156,32 @@ namespace Engine {
 	//Loop logic
 	void GameEngine::moveMovables() {
 		if (gameStarted) {
+			//update all projectiles
 			for (auto var : projectiles)
 			{
-				var->tick(*this);
+				if (var != nullptr)
+				{
+					var->tick(*this);
+				}
+
 			}
+			//execute sprite logic
 			for (Sprite* var : sprites)
 			{
 				if (var != nullptr)
 					var->tick(*this);
 			}
-			//player->tick(*this);
-			moveOrDestroyProjectile(projectiles);
+			//clean up isDrawn() false
+			destroyProjectiles();
 		}
 	}
 	void GameEngine::stop()
 	{
 		gameStarted = false;
 	}
-	void GameEngine::moveOrDestroyProjectile(std::vector<Sprite*>) {
+	void GameEngine::handleProjectiles(std::vector<Sprite*>) {
 		if (!projectiles.empty())
 		{
-
-
 			for (auto i = 0; i < projectiles.size(); i++) {
 				auto projectile = projectiles.at(i);
 				if (projectile->getPosition().y < 0) {
@@ -186,7 +190,6 @@ namespace Engine {
 					break;
 				}
 				for (auto var : gameSprites) {
-
 					if (SDL_HasIntersection(&projectile->getRect(), &var->getRect()) && var->isDrawn()) {
 						delete projectile;
 						projectiles.erase(projectiles.begin() + i);
@@ -209,7 +212,10 @@ namespace Engine {
 		//		SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
 		//}
 		for (Sprite* var : projectiles) {
-			SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
+			if (var != nullptr)
+			{
+				SDL_RenderCopy(renderer, var->getTexture(), NULL, &var->getRect());
+			}
 		}
 		for (auto sprite : sprites)
 		{
@@ -243,18 +249,40 @@ namespace Engine {
 
 	bool GameEngine::hasProjectileCollision(Sprite & sprite)
 	{
-		for (auto projectile : projectiles)
-		{
-			if (!projectile->isDrawn())
+			if(!projectiles.empty())
 			{
-				return false;
+				for (int i = projectiles.size() - 1; i >= 0; i--)
+				{
+					if(projectiles.at(i)->isDrawn() && 
+						(SDL_HasIntersection(&sprite.getRect(), &projectiles.at(i)->getRect()))
+						)	
+					{
+						Sprite* proj(projectiles[i]);
+						projectiles.erase(projectiles.begin() + i);
+						delete proj;
+						return true;
+					}
+
+				}
 			}
-			if (SDL_HasIntersection(&sprite.getRect(), &projectile->getRect()))
-				return true;
-		}
 		return false;
 	}
 
+	void GameEngine::destroyProjectiles()
+	{
+		if(!projectiles.empty())
+		{
+			for (int i = projectiles.size() - 1; i >= 0; i--)
+			{
+				if(!projectiles.at(i)->isDrawn())
+				{
+					Sprite* proj(projectiles[i]);
+					projectiles.erase(projectiles.begin() + i);
+					delete proj;
+				}
+			}
+		}
+	}
 	//Graphic utilities
 	GraphicShPtr GameEngine::createGraphic(std::string path)
 	{
