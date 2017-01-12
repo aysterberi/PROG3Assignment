@@ -128,8 +128,6 @@ namespace Engine {
 						break;
 					case SDLK_F8: toggleMusic(); break;
 					default:
-						if (player != nullptr)
-							player->react(event);
 						for (auto sprite : gameSprites)
 						{
 							if (sprite != nullptr)
