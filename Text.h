@@ -1,3 +1,8 @@
+/*
+* Billy G. J. Beltran(bibe1744) & Joakim Berglund(jobe7147)
+* Contact details: billy@caudimordax.org, joakimberglund@live.se
+*/
+
 #ifndef TEXT_H
 #define TEXT_H
 #include "Sprite.h"

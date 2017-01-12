@@ -1,3 +1,8 @@
+/*
+* Billy G. J. Beltran(bibe1744) & Joakim Berglund(jobe7147)
+* Contact details: billy@caudimordax.org, joakimberglund@live.se
+*/
+
 #include "GameEngine.h"
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -122,7 +127,6 @@ namespace Engine {
 					case SDLK_ESCAPE: quit = true; break;
 					case SDLK_y:
 						if (!gameStarted) {
-							//startNewGame();
 							gameStarted = true;
 						}
 						break;
@@ -146,7 +150,6 @@ namespace Engine {
 			if (delay > 0)
 				SDL_Delay(delay);
 			moveMovables();
-			//moveAll(100.0);
 			renderEverything();
 		}
 	}
@@ -347,6 +350,7 @@ namespace Engine {
 		for (std::pair<std::string, Sprite*> var : gameObjects) {
 			delete var.second;
 		}
+
 		gameObjects.clear();
 		projectiles.clear();
 		Mix_FreeMusic(backgroundMusic);

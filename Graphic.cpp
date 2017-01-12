@@ -1,3 +1,8 @@
+/*
+* Billy G. J. Beltran(bibe1744) & Joakim Berglund(jobe7147)
+* Contact details: billy@caudimordax.org, joakimberglund@live.se
+*/
+
 #include "Graphic.h"
 #include "GameEngine.h"
 #include <iostream>
@@ -20,6 +25,7 @@ void Engine::Graphic::render(int x, int y)
 Engine::Graphic::~Graphic()
 {
 	SDL_DestroyTexture(_texture);
+    //SDL_DestroyRenderer(_renderer);
 	_renderer = nullptr;
 }
 
