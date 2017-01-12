@@ -215,9 +215,12 @@ namespace Engine {
 			SDL_Rect* b(&item->getRect());
 			if (item != &sprite)
 			{
-				if (SDL_HasIntersection(a, b))
+				if(item->isDrawn())
 				{
-					crash = true;
+					if (SDL_HasIntersection(a, b))
+					{
+						crash = true;
+					}
 				}
 			}
 		}
