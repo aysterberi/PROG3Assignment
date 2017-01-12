@@ -1,3 +1,8 @@
+/*
+* Billy G. J. Beltran(bibe1744) & Joakim Berglund(jobe7147)
+* Contact details: billy@caudimordax.org, joakimberglund@live.se
+*/
+
 #ifndef GRAPHIC_H
 #define GRAPHIC_H
 #include <SDL.h>

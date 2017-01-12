@@ -1,3 +1,8 @@
+/*
+* Billy G. J. Beltran(bibe1744) & Joakim Berglund(jobe7147)
+* Contact details: billy@caudimordax.org, joakimberglund@live.se
+*/
+
 #ifndef TIMER_H
 #define TIMER_H
 #include <SDL_stdinc.h>

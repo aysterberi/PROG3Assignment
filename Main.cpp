@@ -1,3 +1,8 @@
+/*
+* Billy G. J. Beltran(bibe1744) & Joakim Berglund(jobe7147)
+* Contact details: billy@caudimordax.org, joakimberglund@live.se
+*/
+
 #include <iostream>
 #include <string>
 #include "GameEngine.h"
