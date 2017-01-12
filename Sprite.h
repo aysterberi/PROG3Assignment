@@ -48,8 +48,8 @@ namespace Engine {
 		//deleting copy, assign constructors 
 		//to prevent value semantics
 		//i.e. enforce pointers and refs
-		//Sprite(const Sprite &other) = delete;
-		//Sprite& operator=(Sprite const &obj) = delete;
+		Sprite(const Sprite &other) = delete;
+		Sprite& operator=(Sprite const &obj) = delete;
 
 	private:
 		TextureShPtr texture_sh;
