@@ -12,7 +12,7 @@
 namespace SpaceGame {
 
 	Player::~Player() {
-
+        // Destruction is handled in the Graphic class
 	}
 
 	void Player::react(SDL_Event& event)
@@ -44,7 +44,6 @@ namespace SpaceGame {
 	{
 		if (shooting)
 		{
-			std::cout << "shooting!";
 			Engine::Projectile* shot = new Engine::Projectile(
 				"res/projectile.png",
 				{ getPosition().x + 30,	getPosition().y + 10 },
