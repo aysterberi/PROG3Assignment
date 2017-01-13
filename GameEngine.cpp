@@ -347,12 +347,11 @@ namespace Engine {
 
 	//destructor
 	GameEngine::~GameEngine() {
-		for (std::pair<std::string, Sprite*> var : gameObjects) {
-			delete var.second;
-		}
-
 		gameObjects.clear();
+        gameSprites.clear();
+        messages.clear();
 		projectiles.clear();
+        sprites.clear();
 		Mix_FreeMusic(backgroundMusic);
 		Mix_CloseAudio();
 		SDL_FreeSurface(backgroundSurface);
