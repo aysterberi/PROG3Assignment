@@ -25,7 +25,6 @@ void Engine::Graphic::render(int x, int y)
 Engine::Graphic::~Graphic()
 {
 	SDL_DestroyTexture(_texture);
-    //SDL_DestroyRenderer(_renderer);
 	_renderer = nullptr;
 }
 
