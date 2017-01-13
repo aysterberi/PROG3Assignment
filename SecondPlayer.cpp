@@ -31,8 +31,8 @@ namespace SpaceGame
 			break;
 		}
 	}
-	SecondPlayer::~SecondPlayer()
-	{
+	SecondPlayer::~SecondPlayer() {
+        // Destruction is handled in the Graphic class
 	}
 
 }
