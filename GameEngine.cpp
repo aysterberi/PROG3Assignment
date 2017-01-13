@@ -336,11 +336,11 @@ namespace Engine {
 	}
 
 	//internal utilities
-	SDL_Texture * GameEngine::newTexture(SDL_Surface* surface)
-	{
+	SDL_Texture * GameEngine::newTexture(SDL_Surface* surface) {
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 		return texture;
 	}
+
 	SDL_Renderer* GameEngine::createRenderer(SDL_Window* window) {
 		return SDL_CreateRenderer(window, -1, 0);
 	}
