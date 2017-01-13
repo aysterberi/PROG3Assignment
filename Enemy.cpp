@@ -20,12 +20,12 @@ namespace SpaceGame {
 			setDrawn(false);
 		}
         this->addPositionX(direction);
-        if (this->getPosition().x > engine.getScreenWidth()) {
-            this->addPositionY(150);
+        if (this->getPosition().x > engine.getScreenWidth() - 40) {
+            this->addPositionY(50);
             invertDirection();
         }
         else if (this->getPosition().x < 0) {
-            this->addPositionY(150);
+            this->addPositionY(50);
             invertDirection();
         }
     }
